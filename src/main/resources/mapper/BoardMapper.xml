@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liz.workspace.mapper.BoardMapper">
+
+    <!-- BoardVO -->
+    <resultMap id="boardList" type="BoardVO">
+        <result column="board_no" property="boardNo"/>
+        <result column="category" property="category"/>
+        <result column="user_name" property="userName"/>
+        <result column="user_no" property="userNo"/>
+        <result column="password" property="password"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="create_date" property="createDate"/>
+        <result column="modify_date" property="modifyDate"/>
+        <result column="view_count" property="viewCount"/>
+    </resultMap>
+
+    <!-- fileVO -->
+    <resultMap id="fileVO" type="FileVO">
+        <result column="file_no" property="fileNo"/>
+        <result column="file_origin_name" property="fileOriginName"/>
+        <result column="file_change_name" property="fileChangeName"/>
+        <result column="file_origin_path" property="fileOriginPath"/>
+        <result column="file_change_path" property="fileChangePath"/>
+    </resultMap>
+
+    <!-- replyVO -->
+    <resultMap id="replyVO" type="ReplyVO">
+        <result column="reply_no" property="replyNo"/>
+        <result column="reply_content" property="replyContent"/>
+        <result column="reply_date" property="replyDate"/>
+    </resultMap>
+
+    <select id="boardCount" resultType="int">
+        SELECT count(board_no) AS count
+        FROM board
+    </select>
+
+    <!-- 게시판 목록 -->
+    <select id="getBoardList" resultMap="boardList">
+        select category, user_name, title, view_count, create_date, modify_date
+        from board
+        order by board_no desc;
+    </select>
+
+    <!-- 조회수 증가 -->
+    <!--    <update id="updateViewCount">
+            UPDATE board SET view_count = view_count + #{amount}
+            WHERE board_no =
+                  #{board_no}
+        </update>-->
+
+
+</mapper>

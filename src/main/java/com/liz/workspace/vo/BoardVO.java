@@ -1,15 +1,14 @@
 package com.liz.workspace.vo;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
+import lombok.*;
 
 import java.util.Date;
 
 @NoArgsConstructor
-@Setter
+@AllArgsConstructor
 @Getter
+@Setter
 @Data
 public class BoardVO {
     private int boardNo;

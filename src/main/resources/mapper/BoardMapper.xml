@@ -32,6 +32,30 @@
         <result column="reply_date" property="replyDate"/>
     </resultMap>
 
+   <!-- <resultMap id="boardDetail" type="BoardVO">
+        <id column="board_no" property="boardNo"/>
+        <result column="category" property="category"/>
+        <result column="user_name" property="userName"/>
+        <result column="user_no" property="userNo"/>
+        <result column="password" property="password"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="create_date" property="createDate"/>
+        <result column="modify_date" property="modifyDate"/>
+        <result column="view_count" property="viewCount"/>
+        &lt;!&ndash; <collection property="boardReply" ofType="com.liz.vo.ReplyVO" column="board_no=boardNo"javaType="List" ">
+            <id column="reply_no" property="replyNo" /> <result column="reply_content"property="replyContent" />
+             <result column="reply_date" property="replyDate"/> </collection> &ndash;&gt;
+        <collection property="boardNo" column="board_no" javaType="List" ofType="FileVO">
+            <id property="fileNo" column="file_no"/>
+            <result property="fileOriginName" column="file_origin_name"/>
+            <result property="fileChangeName" column="file_change_name"/>
+            <result property="fileOriginPath" column="file_origin_path"/>
+            <result property="fileChangePath" column="file_change_path"/>
+
+        </collection>
+    </resultMap>-->
+
     <!-- 총 게시글수 -->
     <select id="boardCount" resultType="int">
         SELECT count(board_no) AS count
@@ -51,16 +75,15 @@
         FROM board
         where board_no > 0
         order by board_no desc
-        LIMIT #{startRow}, #{pageAmount};
+        LIMIT #{startRow}, #{pageAmount}
     </select>
 
     <!-- 게시판 등록 -->
-<!--<insert id="">
-    INSERT INTO board
+    <insert id="writeBoard"  parameterType="boardVO">
+        INSERT INTO board
         (`board_no`, `category`, `user_name`, `user_no`, `password`, `title`, `content`)
-    VALUES
-        (#{boardNo}, #{category}, #{user_name},#{user_no}, #{password}, #{title}, #{content});
-</insert>-->
+        VALUES (#{boardNo}, #{category}, #{userName}, #{userNo}, #{password}, #{title}, #{content})
+    </insert>
 
 
     <!--조회수 증가 -->
@@ -71,16 +94,16 @@
     </update>-->
 
     <!-- 검색 참고-->
-<!--<select id="">
-    select * from
-    ( select
-    row rn, board_no, user_name, title, view_count, create_date, modify_date
-    from board
-    where
-    (title like '%Test%' or content like '%Test%')
-    and rownum <= 20
-    )
-    where rn > 10;
-</select>-->
+    <!--<select id="">
+        select * from
+        ( select
+        row rn, board_no, user_name, title, view_count, create_date, modify_date
+        from board
+        where
+        (title like '%Test%' or content like '%Test%')
+        and rownum <= 20
+        )
+        where rn > 10;
+    </select>-->
 
 </mapper>

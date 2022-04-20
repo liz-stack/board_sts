@@ -12,4 +12,6 @@ public interface BoardService {
     List<BoardVO> getBoardList();
 
     List<BoardVO> getBoardsByCri(Criteria cri);
+
+    void writeBoard(BoardVO boardVO);
 }

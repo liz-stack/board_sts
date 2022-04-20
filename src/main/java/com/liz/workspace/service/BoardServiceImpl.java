@@ -37,6 +37,10 @@ public class BoardServiceImpl implements BoardService {
         return boardMapper.getBoardsByCri(cri);
     }
 
+    @Override
+    public void writeBoard(BoardVO boardVO) {
+        boardMapper.writeBoard(boardVO);
+    }
 
     //TODO : 220419조회수 update
     /*public int updateViewCount(int boardNo) {

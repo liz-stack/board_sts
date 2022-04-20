@@ -21,4 +21,6 @@ public class BoardVO {
     private Date createDate;
     private Date modifyDate;
     private int viewCount;
+    /*private FileVO fileVO;*/
+
 }

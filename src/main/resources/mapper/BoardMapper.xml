@@ -32,24 +32,55 @@
         <result column="reply_date" property="replyDate"/>
     </resultMap>
 
+    <!-- 총 게시글수 -->
     <select id="boardCount" resultType="int">
         SELECT count(board_no) AS count
         FROM board
+        WHERE board_no > 0
     </select>
 
     <!-- 게시판 목록 -->
     <select id="getBoardList" resultMap="boardList">
-        select category, user_name, title, view_count, create_date, modify_date
-        from board
-        order by board_no desc;
+        SELECT category, user_name, title, view_count, create_date, modify_date
+        FROM board
+        order by board_no desc
     </select>
 
-    <!-- 조회수 증가 -->
-    <!--    <update id="updateViewCount">
-            UPDATE board SET view_count = view_count + #{amount}
-            WHERE board_no =
-                  #{board_no}
-        </update>-->
+    <select id="getBoardsByCri" resultMap="boardList">
+        SELECT category, user_name, title, view_count, create_date, modify_date
+        FROM board
+        where board_no > 0
+        order by board_no desc
+        LIMIT #{startRow}, #{pageAmount};
+    </select>
 
+    <!-- 게시판 등록 -->
+<!--<insert id="">
+    INSERT INTO board
+        (`board_no`, `category`, `user_name`, `user_no`, `password`, `title`, `content`)
+    VALUES
+        (#{boardNo}, #{category}, #{user_name},#{user_no}, #{password}, #{title}, #{content});
+</insert>-->
+
+
+    <!--조회수 증가 -->
+    <!--<update id="viewCount">
+        UPDATE board
+        SET view_count = view_count + 1
+        WHERE board_no =  100
+    </update>-->
+
+    <!-- 검색 참고-->
+<!--<select id="">
+    select * from
+    ( select
+    row rn, board_no, user_name, title, view_count, create_date, modify_date
+    from board
+    where
+    (title like '%Test%' or content like '%Test%')
+    and rownum <= 20
+    )
+    where rn > 10;
+</select>-->
 
 </mapper>

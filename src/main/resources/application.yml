@@ -2,7 +2,7 @@ mybatis:
   # xml file location
   mapper-locations: classpath:mapper/*.xml
   # The location of the entity class
-  type-aliases-package: com.liz.workspace.vo
+  type-aliases-package: com.liz.workspace.domain
 
 spring:
   mvc:

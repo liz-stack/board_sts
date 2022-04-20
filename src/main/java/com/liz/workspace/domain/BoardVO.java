@@ -1,4 +1,4 @@
-package com.liz.workspace.vo;
+package com.liz.workspace.domain;
 
 
 import lombok.*;

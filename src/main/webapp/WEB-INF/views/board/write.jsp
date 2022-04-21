@@ -37,7 +37,7 @@
                </c:if>
         </div>--%>
         <!-- Contact Section Form-->
-        <form action="#" method="post" enctype="multipart/form-data" id="writeForm">
+        <form action="/board/write" method="post" enctype="multipart/form-data" id="writeForm">
             <label for="category">카테고리 선택</label>
             <select class="form-control" id="category">
                 <option>JAVA</option>
@@ -61,9 +61,10 @@
                 <label for="content">내용</label>
                 <textarea class="form-control" id="content" rows="20"></textarea>
             </div>
-            <%--TODO: 220420 취소 버튼 누르면 sql에러. pk를 ai로 바꿔줘야한다는데 fk에러--%>
-            <input type="submit" id="cancelWrite" value="취소" class="button" onclick="location.href='board/list.jsp'">
-            <input type="submit" id="saveWrite" value="저장" class="button">
+            <%--SOLVED: 220420 취소 버튼 누르면 sql에러. pk를 ai로 바꿔줘야한다는데 fk에러 (input type 바꿔서 해결)--%>
+            <%--TODO: 220421 취소 버튼 alert--%>
+            <input type="button" id="cancelWrite" value="취소" onclick="location.href='/board/list'"></input>
+            <input type="submit" id="saveWrite" value="저장" class="button"></input>
         </form>
 
     </div>

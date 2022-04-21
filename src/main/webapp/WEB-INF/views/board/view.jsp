@@ -1,78 +1,86 @@
+<%@ include file="../layout/header.jsp" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<style>
+    .page_head {
+        border-bottom: black solid 1px;
+    }
 
-<%@ include file="../layout/header.jsp" %>
-<%@page import="java.util.ArrayList" %>
-<%@page import="java.sql.SQLException" %>
-<%@page import="java.util.Date" %>
-<script>
+    .title {
+        font-size: large;
 
-</script>
-<!-- Contact Section-->
-<section class="page-section" id="contact">
-    <div class="container">
-        <!-- Contact Section Heading-->
-        <h2
-                class="page-section-heading text-center text-uppercase text-secondary mb-0">게시글
-            상세보기</h2>
-        <!-- Icon Divider-->
-        <div class="divider-custom">
-            <div class="divider-custom-line"></div>
-            <div class="divider-custom-icon">
-                <i class="fas fa-star"></i>
-            </div>
-            <div class="divider-custom-line"></div>
-        </div>
+    }
 
-        <div>
-            <button type="button" class="btn btn-primary"
-                    onclick="location.href='/board/list?pageNo=${ pageNo }&type=${ cri.type }&keyword=${ cri.keyword }'">
-                게시글 목록
-            </button>
-
-            <%--   <c:if test="${ id eq board.user_no || no eq 'admin' }">
-                   <form action="/board/remove" method="POST">
-                       <input type="hidden" name="boardNo" value="${ board.num }">
-                       <input type="hidden" name="pageNo" value="${ pageNum }">
-                       <button type="submit" class="btn btn-primary">게시글 삭제</button>
-                   </form>
-                   <button onclick="location.href='/board/modify?boardNo=${ board.num }&pageNo=${ pageNo }'">수정</button>
-               </c:if>--%>
-        </div>
-        <!-- Contact Section Form-->
-        <form>
-            <div class="form-group">
-                <label for="exampleFormControlInput1">Email address</label>
-                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
-            </div>
-            <div class="form-group">
-                <label for="exampleFormControlSelect1">Example select</label>
-                <select class="form-control" id="exampleFormControlSelect1">
-                    <option>카테고리</option>
-                    <option>작성자</option>
-                    <option>비밀번호</option>
-                    <option>제목</option>
-                    <option>내용</option>
-                    <option>파일첨부</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="exampleFormControlSelect2">Example multiple select</label>
-                <select multiple class="form-control" id="exampleFormControlSelect2">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="exampleFormControlTextarea1">Example textarea</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-            </div>
-        </form>
-
+</style>
+<div class="con_lf mt-3">
+    <div class="col pt-3">
+        <br/>
+        <h2>게시판 - 목록</h2>
+        <br/>
     </div>
+      <div class="page_section" id="detail">
+            <div class="board_detail content_container" style=" padding: 20px; line-height: 1.8em;">
+                <div class="ppage_head">
+                    <div class="detail top" style="float: left;">${boardDetail}</div>
+                    <div class="detail top" style="float: right;">수정일시</div>&nbsp;&nbsp;
+                    <div class="detail top" style="float: right;">등록일시&nbsp;&nbsp;</div>&nbsp;&nbsp;
+                </div>
+                <br/>
+                <div class="page_head">
+                    <div class="detail title" style="float: left;">카테고리:</div>
+                    <div class="detail title" style="float: left;" id="title">제목</div>&nbsp;&nbsp;
+                    <div class="detail count" style="float: right;">조회수 :</div>&nbsp;&nbsp;
+                </div>
+                <%--본문--%>
+                <div class="card content" style=" padding: 20px; line-height: 1.8em;">
+                    <div class="card">
+                        <div class="card-body">본문</div>
+                    </div>
+                    <div>
+                        첨부파일
+                    </div>
+                    <div>
+                        댓글
+                    </div>
+                </div>
+
+            </div>
+            <br/>
+        </div>
+
+        <div class="box-footer">
+            <button class="btn btn" id="listbtn">목록</button>
+            <button class="btn btn" id="updatebtn">수정</button>
+            <button class="btn btn" id="deletebtn">삭제</button>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+
+</div>
+
 </section>
 <%@ include file="../layout/footer.jsp" %>
+
+<script>
+    //목록 버튼을 눌렀을 때 처리
+    document.getElementById("listbtn").addEventListener("click", function () {
+        location.href = "list";
+    });
+
+    <c:if test = "${user.email == vo.email}">
+    //삭제 버튼을 눌렀을 때 처리
+    document.getElementById("deletebtn").addEventListener("click", function () {
+        location.href = "delete?bno=" + ${vo.bno};
+    });
+
+    //수정 버튼을 눌렀을 때 처리
+    document.getElementById("updatebtn").addEventListener("click", function () {
+        location.href = "update?bno=" + ${vo.bno};
+    });
+    </c:if>

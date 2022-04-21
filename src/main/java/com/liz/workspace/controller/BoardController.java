@@ -7,9 +7,7 @@ import com.liz.workspace.service.BoardServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,40 +21,38 @@ public class BoardController {
     //전체 게시글 조회
     @GetMapping("/list")
     public String getBoardList(Model model, Criteria cri) {
-/*
-        ModelAndView mv = new ModelAndView("/board/list"); //view 설정
-        List<BoardVO> boardList = boardServiceImpl.getBoardList(); //게시판 목록 조회
-        int boardCount = boardServiceImpl.boardCount(); //총 게시글수
-         mv.addObject("boardList", boardList);
-        mv.addObject("boardCount", boardCount);
-*/
-
         List<BoardVO> boardList = boardServiceImpl.getBoardsByCri(cri);
-
         int totalCount = boardServiceImpl.getBoardCount(cri);
-
         PageDTO pageDTO = new PageDTO(cri, totalCount);
-
         model.addAttribute("boardCount", totalCount);
         model.addAttribute("boardList", boardList);
         model.addAttribute("pageMaker", pageDTO);
         return "/board/list";
     }
 
-
+    //글작성 화면 불러오기
     @GetMapping("/write")
     public String writeForm(){
         return "board/write";
     }
 
+    //글 작성
     @PostMapping("/write")
     public String writeBoard(BoardVO boardVO){
-        boardServiceImpl.writeBoard(boardVO);
-        return "redirect:/board/list";//TODO: 220420 list->view 페이지로
+        return "/board/view";
+    }
+
+    //상세보기
+    @GetMapping("/view")
+    public String getBoardDetail(Model model, int boardNo){
+        model.addAttribute("boardDetail", boardServiceImpl.getBoardDetail(boardNo));
+        return "/board/view";
     }
 
 
     //TODO: 220419 조회수 증가 로직
+
+
 
 }
 

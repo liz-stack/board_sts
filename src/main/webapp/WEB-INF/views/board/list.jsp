@@ -48,7 +48,7 @@
         });
     });
 </script>
-
+<script src="https://kit.fontawesome.com/1f04f2c2db.js" crossorigin="anonymous"></script>
 <div class="container mt-3">
     <br/>
     <h2>게시판 - 목록</h2>
@@ -57,23 +57,34 @@
     <%-- TODO : 220418 등록일 기간검색 사이즈 수정   --%>
     <%-- TODO : 220418 검색시 전체카테고리 드롭다운, 기간 + 작성자+ 제목 + 내용 검색 기능  --%>
     <%-- TODO : 220418 날짜 검색기 script 분리 --%>
-    <div class="input-group mb-3 form-row">
-        <input type="text" id="startDate" placeholder="2022.04.18">
-        <input type="text" id="endDate" placeholder="2022.04.20">
-
-        <div class="input-group-prepend">
-            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">카테고리
-            </button>
-            <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">Action</a> <a class="dropdown-item" href="#">Another action</a> <a
-                    class="dropdown-item" href="#">Something
-                else here</a>
+    <div class="card border">
+        <br/>
+        <div class="input-group mb-3 form-row">
+            <%--TODO: 220421 등록일 가운데정렬--%>
+            <span style="padding:7px; align-content: center" >등록일</span>
+           <%-- <div class="input-group-addon">
+                <i class="fa fa-calendar fa-xl"  aria-hidden="true" style="padding: 2px"></i>
+            </div>--%>
+            <input type="text" id="startDate" placeholder="2022.04.18" style="width:120px; text-align:center"> &nbsp;
+            <%--<div class="input-group-addon">
+                <i class="fa fa-calendar fa-xl" aria-hidden="true" style="padding: 2px"></i>
+            </div>--%>
+            <input type="text" id="endDate" placeholder="2022.04.20" style="width:120px; text-align:center">
+            <span style="padding:7px;"></span>
+            <%--TODO:220420 카테고리 드롭다운 안됨--%>
+            <div class="input-group-prepend">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">카테고리
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">Action</a> <a class="dropdown-item" href="#">Another action</a> <a
+                        class="dropdown-item" href="#">Something
+                    else here</a>
+                </div>
             </div>
+            <input type="text" class="form-control" aria-label="Text input with dropdown button">
+            <button type="submit" class="btn btn-primary">검색</button>
         </div>
-        <input type="text" class="form-control" aria-label="Text input with dropdown button">
-        <button type="submit" class="btn btn-primary">검색</button>
-
     </div>
     <br/>
 
@@ -118,8 +129,7 @@
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
-                <%--  <li class="page-item previous"><a class="page-link"
-                                           href="/board/list?pageNo=${ pageMaker.startPage - 1 }">이전 </a></li>--%>
+
             </c:if>
             <c:forEach var="i" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
                 <li class="page-item"><a class="page-link" href="/board/list?pageNo=${i}">${i}</a></li>
@@ -132,4 +142,6 @@
     </nav>
 
 </div>
+
+
 <%@ include file="../layout/footer.jsp" %>

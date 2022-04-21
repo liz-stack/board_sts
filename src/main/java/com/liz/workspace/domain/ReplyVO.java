@@ -16,4 +16,5 @@ public class ReplyVO {
     private int replyNo;
     private String replyContent;
     private Date replyDate;
+    private int boardNo;
 }

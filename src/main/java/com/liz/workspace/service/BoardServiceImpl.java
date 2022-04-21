@@ -31,15 +31,22 @@ public class BoardServiceImpl implements BoardService {
     //페이징 출력
     @Override
     public List<BoardVO> getBoardsByCri(Criteria cri) {
-
         int startRow = (cri.getPageNo() - 1) * cri.getPageAmount();
         cri.setStartRow(startRow);
         return boardMapper.getBoardsByCri(cri);
     }
 
+    /* 글 작성 */
     @Override
     public void writeBoard(BoardVO boardVO) {
+        System.out.println("boardVO:"+boardVO);
         boardMapper.writeBoard(boardVO);
+    }
+
+
+    @Override
+    public String getBoardDetail(int boardNo) {
+        return boardMapper.getBoardDetail(boardNo);
     }
 
     //TODO : 220419조회수 update

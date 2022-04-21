@@ -4,6 +4,7 @@ package com.liz.workspace.domain;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,6 +22,6 @@ public class BoardVO {
     private Date createDate;
     private Date modifyDate;
     private int viewCount;
-    /*private FileVO fileVO;*/
 
+    private List<FileVO> fileList;
 }

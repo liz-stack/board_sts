@@ -14,5 +14,5 @@ public class FileVO {
         private String fileChangeName;
         private String fileOriginPath;
         private String fileChangePath;
-
+        private int boardNo;
 }

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor //Mapper 생성자
@@ -26,6 +25,8 @@ public class BoardServiceImpl implements BoardService {
       //페이징 출력
     @Override
     public List<BoardVO> getBoardList(Criteria cri) {
+        int startRow = (cri.getPageNo() - 1) * cri.getPageAmount();
+        cri.setStartRow(startRow);
         return boardMapper.getBoardList(cri);
     }
 

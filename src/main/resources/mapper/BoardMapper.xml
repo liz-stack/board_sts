@@ -46,22 +46,23 @@
     </select>
 
     <!-- 게시판 목록 -->
-    <select id="getBoardList" resultMap="boardList">
+ <!--   <select id="getBoardList" resultMap="boardList">
         SELECT board_no, category, user_name, title, view_count, create_date, modify_date
         FROM board
-        where board_no > 0
-        order by board_no desc
-        LIMIT #{pageStart}, #{pageAmount}
-    </select>
-
-    <!-- 페이징 -->
-    <!--<select id="getBoardsByCri" resultMap="boardList">
-        SELECT board_no, category, user_name, title, view_count, create_date, modify_date
-        FROM board
-        where board_no > 0
         order by board_no desc
         LIMIT #{pageNo}, #{pageAmount}
-    </select>-->
+    </select>
+-->
+    <!-- 페이징 -->
+    <select id="getBoardList" resultMap="boardList">
+        <![CDATA[
+        SELECT board_no, category, user_name, title, view_count, create_date, modify_date
+        FROM board
+        where board_no > 0
+        order by board_no desc
+        LIMIT #{startRow}, #{pageAmount}
+        ]]>
+    </select>
 
     <!-- 게시판 등록 -->
     <insert id="writeBoard"  parameterType="boardVO">

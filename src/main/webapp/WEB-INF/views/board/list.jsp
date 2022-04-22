@@ -86,11 +86,19 @@
                     <option>Database</option>
                 </select>
             </div>
-            <input type="text" class="form-control" aria-label="Text input with dropdown button">
-            <button type="submit" class="btn btn-primary">검색</button>
+                <div class="search-form">
+                    <form action="/board/list" method="GET">
+                        <input
+                                class="form-control" aria-label="Text input with dropdown button" style="width: 300px; display: inline;"
+                                type="text" name="keyword" value="${ pageMaker.cri.keyword }" />
+                        <button type="submit" class="btn btn-primary">검색</button>
+                    </form>
+                </div>
         </div>
     </div>
     <br/>
+    <%--검색--%>
+
 
     총 ${boardCount}건
     <table class="table table-hover">
@@ -109,7 +117,7 @@
         <c:forEach items="${getBoardList}" var="board">
             <tr>
                 <td><c:out value="${board.category}"/></td>
-                <td><a href="/board/view?boardNo=${board.boardNo}&${pageMaker.cri.pageNo}"><c:out
+                <td><a href="/board/view?boardNo=${board.boardNo}"><c:out
                         value="${board.title}"/></a></td>
                 <td><c:out value="${board.userName}"/></td>
                 <td><c:out value="${board.viewCount}"/></td>
@@ -119,33 +127,53 @@
         </c:forEach>
         </tbody>
     </table>
-    <form id="moveForm" method="get">
+
+
+    <nav aria-label="Contacts Page Navigation">
+        <ul class="pagination justify-content-center m-0">
+            <c:if test="${ pageMaker.prev eq true }">
+                <li class="page-item"><a class="page-link"
+                                         href="/board/list?pageNo=${ pageMaker.startPage - 1 }">Previous</a></li>
+            </c:if>
+            <c:forEach var="idx" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+                <li class="page-item">
+                    <a class="page-link" href="/board/list?pageNo=${ idx }&type=${ pageMaker.cri.type }&keyword=${ pageMaker.cri.keyword }">${ idx }</a></li>
+            </c:forEach>
+            <c:if test="${ pageMaker.next eq true }">
+                <li class="page-item"><a class="page-link"
+                                         href="/board/list?pageNo=${ pageMaker.endPage + 1 }">Next</a></li>
+            </c:if>
+        </ul>
+    </nav>
+
+
+    <%--
+    <form id='actionForm' method="get">
         <input type="hidden" name="pageNo" value="${pageMaker.cri.pageNo}">
         <input type="hidden" name="pageAmount" value="${pageMaker.cri.pageAmount}">
-    </form>
+    </form>--%>
 
-    <div class="card-footer">
-        <nav aria-label="Contacts Page Navigation">
-            <ul class="pagination justify-content-center m-0">
-                <c:if test="${pageMaker.prev}">
-                    <li class="page-item"><a class="page-link"
-                                             href="/board/list?pageNo=${pageMaker.startPage-1}">&lsaquo;</a></li>
-                </c:if>
-                <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
-                    <li class="page-item" <c:out value="${pageMaker.cri.pageNo == idx ? 'class=active' : ''}"/>><a
-                            class="page-link" href="/board/list?pageNo=${idx}">${idx}</a></li>
-                </c:forEach>
-                <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-                    <li class="page-item"><a class="page-link"
-                                             href="/board/list?pageNo=${pageMaker.endPage + 1}">&rsaquo;</a></li>
-                </c:if></ul>
-        </nav>
-    </div>
 
     <div>
         <button class="btn" id="listenbtn" onclick="location.href='/board/list'">목록</button>
     </div>
 </div>
+<%--<script type="text/javascript">
+    $(document)
+        .ready(
+            function() {
+                $(".paginate_button a").on(
+                    "click",
+                    function(e) {
 
+                        e.preventDefault();
 
+                        console.log('click');
+
+                        actionForm.find("input[name='pageNo']")
+                            .val($(this).attr("href"));
+                        actionForm.submit();
+                    });
+            });
+</script>--%>
 <%@ include file="../layout/footer.jsp" %>

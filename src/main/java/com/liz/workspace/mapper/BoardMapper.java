@@ -12,7 +12,6 @@ public interface BoardMapper {
 
     int getBoardCount(Criteria cri);
     List<BoardVO> getBoardList(Criteria cri);
-
     void writeBoard(BoardVO boardVO);
 
     BoardVO getBoardDetail(int boardNo);

@@ -2,7 +2,7 @@ package com.liz.workspace.controller;
 
 import com.liz.workspace.domain.BoardVO;
 import com.liz.workspace.domain.Criteria;
-import com.liz.workspace.domain.PageMaker;
+import com.liz.workspace.domain.PageDTO;
 import com.liz.workspace.service.BoardServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -22,18 +22,11 @@ public class BoardController {
     //전체 게시글 조회
     @GetMapping("/list")
     public String getBoardList(Criteria cri, Model model) {
-
         List<BoardVO> boardList = boardServiceImpl.getBoardList(cri);
-
         int boardCount = boardServiceImpl.getBoardCount(cri);
 
-        PageMaker pageMaker = new PageMaker();
-        pageMaker.setCri(cri);
-        pageMaker.setBoardCount(boardCount);
+        PageDTO pageMaker = new PageDTO(cri, boardCount);
 
-        System.out.println(cri);
-        System.out.println(boardCount);
-        System.out.println("startPage: "+ pageMaker.getStartPage());
         model.addAttribute("getBoardCount", boardCount);
         model.addAttribute("getBoardList", boardList);
         model.addAttribute("pageMaker", pageMaker);

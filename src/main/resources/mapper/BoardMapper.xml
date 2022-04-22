@@ -32,14 +32,14 @@
         <result column="reply_date" property="replyDate"/>
     </resultMap>
 
-    <!--TODO: 220420 resultMap 1:N, 1:N 따로 매핑해야되는지? -->
+    <!--TODO: 220420 resultMap_ board+ collection filevo -->
     <!--<resultMap id="boardDetail" type="boardDetail" >
         <collection column="board_no" property=""  resultMap="fileMap">
         </collection>
     </resultMap>&ndash;&gt;-->
 
     <!-- 총 게시글수 -->
-    <select id="boardCount" resultType="int">
+    <select id="getBoardCount" resultType="int">
         SELECT count(board_no) AS count
         FROM board
         WHERE board_no > 0
@@ -47,19 +47,21 @@
 
     <!-- 게시판 목록 -->
     <select id="getBoardList" resultMap="boardList">
-        SELECT category, user_name, title, view_count, create_date, modify_date
-        FROM board
-        order by board_no desc
-    </select>
-
-    <!-- 페이징 -->
-    <select id="getBoardsByCri" resultMap="boardList">
-        SELECT category, user_name, title, view_count, create_date, modify_date
+        SELECT board_no, category, user_name, title, view_count, create_date, modify_date
         FROM board
         where board_no > 0
         order by board_no desc
-        LIMIT #{startRow}, #{pageAmount}
+        LIMIT #{pageStart}, #{pageAmount}
     </select>
+
+    <!-- 페이징 -->
+    <!--<select id="getBoardsByCri" resultMap="boardList">
+        SELECT board_no, category, user_name, title, view_count, create_date, modify_date
+        FROM board
+        where board_no > 0
+        order by board_no desc
+        LIMIT #{pageNo}, #{pageAmount}
+    </select>-->
 
     <!-- 게시판 등록 -->
     <insert id="writeBoard"  parameterType="boardVO">
@@ -71,17 +73,23 @@
 
     <!-- 게시판 상세보기 -->
     <select id="getBoardDetail" resultMap="boardList">
-        select user_name, create_date, modify_date, category, title, view_count, content
+        select board_no, user_name, create_date, modify_date, category, title, view_count, content
         from board
-        where board_no=101
+        where board_no=#{boardNo}
     </select>
 
-    <!--조회수 증가 -->
-    <!--<update id="viewCount">
+    <!-- 조회수 증가 -->
+    <update id="boardHit">
         UPDATE board
         SET view_count = view_count + 1
-        WHERE board_no =  100
-    </update>-->
+        WHERE board_no =  #{boardNo}
+    </update>
+
+    <!-- 글 수정 -->
+    <update id="editBoard" >
+        UPDATE board SET user_name=#{userName}, password=#{password}, title =#{title}, content=#{content}, modify_date=#{modifyDate}
+        WHERE board_no = #{boardNo}
+    </update>
 
     <!-- 검색 참고-->
     <!--<select id="">

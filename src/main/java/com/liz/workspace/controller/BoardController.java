@@ -2,12 +2,13 @@ package com.liz.workspace.controller;
 
 import com.liz.workspace.domain.BoardVO;
 import com.liz.workspace.domain.Criteria;
-import com.liz.workspace.domain.PageDTO;
+import com.liz.workspace.domain.PageMaker;
 import com.liz.workspace.service.BoardServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -20,39 +21,64 @@ public class BoardController {
 
     //전체 게시글 조회
     @GetMapping("/list")
-    public String getBoardList(Model model, Criteria cri) {
-        List<BoardVO> boardList = boardServiceImpl.getBoardsByCri(cri);
-        int totalCount = boardServiceImpl.getBoardCount(cri);
-        PageDTO pageDTO = new PageDTO(cri, totalCount);
-        model.addAttribute("boardCount", totalCount);
-        model.addAttribute("boardList", boardList);
-        model.addAttribute("pageMaker", pageDTO);
+    public String getBoardList(Criteria cri, Model model) {
+
+        List<BoardVO> boardList = boardServiceImpl.getBoardList(cri);
+
+        int boardCount = boardServiceImpl.getBoardCount(cri);
+
+        PageMaker pageMaker = new PageMaker();
+        pageMaker.setCri(cri);
+        pageMaker.setBoardCount(boardCount);
+
+        System.out.println(cri);
+        System.out.println(boardCount);
+        System.out.println("startPage: "+ pageMaker.getStartPage());
+        model.addAttribute("getBoardCount", boardCount);
+        model.addAttribute("getBoardList", boardList);
+        model.addAttribute("pageMaker", pageMaker);
         return "/board/list";
     }
 
-    //글작성 화면 불러오기
+    /* 글 작성 */
+    //TODO: 220420 redirect하면 제목, 작성자, 내용 null _ redirectAttributes 사용해보기
     @GetMapping("/write")
-    public String writeForm(){
+    public String writeForm() {
         return "board/write";
     }
 
-    //글 작성
     @PostMapping("/write")
-    public String writeBoard(BoardVO boardVO){
+    public String writeBoard(BoardVO boardVO) {
         return "/board/view";
     }
 
-    //상세보기
+
+    /* 글 상세보기 */
     @GetMapping("/view")
-    public String getBoardDetail(Model model, int boardNo){
-        model.addAttribute("boardDetail", boardServiceImpl.getBoardDetail(boardNo));
-        return "/board/view";
+    public ModelAndView getBoardDetail(@RequestParam(value = "boardNo", defaultValue = "") int boardNo) {
+        //TODO : 220419 조회수 update 작동 안됨
+        boardServiceImpl.boardHit(boardNo);
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("/board/view");
+        mav.addObject("boardDetail", boardServiceImpl.getBoardDetail(boardNo));
+        return mav;
     }
 
+    /* 글 수정 */
+    @GetMapping("/modify")
+    public ModelAndView editForm(@RequestParam int boardNo) {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("/board/modify");
+        mav.addObject("editBoard", boardServiceImpl.getBoardDetail(boardNo));
+        return mav;
+    }
 
-    //TODO: 220419 조회수 증가 로직
-
-
-
+    /*TODO: 저장 누르면 boardNo=0으로 넘어감*/
+    @PostMapping("/modify")
+    public String editBoard(@ModelAttribute BoardVO boardVO) {
+        boardServiceImpl.editBoard(boardVO);
+        System.out.println(boardVO.getBoardNo());
+        return "/board/view";
+    }
 }
 

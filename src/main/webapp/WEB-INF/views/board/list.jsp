@@ -1,5 +1,3 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <%@ include file="../layout/header.jsp" %>
@@ -48,6 +46,20 @@
         });
     });
 </script>
+<style>
+    #startDate {
+        width: 120px;
+        height: 40px;
+        text-align: center
+    }
+
+    #endDate {
+        width: 120px;
+        height: 40px;
+        text-align: center
+    }
+
+</style>
 <script src="https://kit.fontawesome.com/1f04f2c2db.js" crossorigin="anonymous"></script>
 <div class="container mt-3">
     <br/>
@@ -61,26 +73,18 @@
         <br/>
         <div class="input-group mb-3 form-row">
             <%--TODO: 220421 등록일 가운데정렬--%>
-            <span style="padding:7px; align-content: center" >등록일</span>
-           <%-- <div class="input-group-addon">
-                <i class="fa fa-calendar fa-xl"  aria-hidden="true" style="padding: 2px"></i>
-            </div>--%>
-            <input type="text" id="startDate" placeholder="2022.04.18" style="width:120px; text-align:center"> &nbsp;
-            <%--<div class="input-group-addon">
-                <i class="fa fa-calendar fa-xl" aria-hidden="true" style="padding: 2px"></i>
-            </div>--%>
-            <input type="text" id="endDate" placeholder="2022.04.20" style="width:120px; text-align:center">
+            <span style="padding:7px; align-content: center">등록일</span>
+            <input type="text" id="startDate" placeholder="2022.04.18"> &nbsp;
+            <input type="text" id="endDate" placeholder="2022.04.20">
             <span style="padding:7px;"></span>
             <%--TODO:220420 카테고리 드롭다운 안됨--%>
             <div class="input-group-prepend">
-                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">카테고리
-                </button>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">Action</a> <a class="dropdown-item" href="#">Another action</a> <a
-                        class="dropdown-item" href="#">Something
-                    else here</a>
-                </div>
+                <label for="category">카테고리 선택</label>
+                <select class="form-control" id="category">
+                    <option>JAVA</option>
+                    <option>Javascript</option>
+                    <option>Database</option>
+                </select>
             </div>
             <input type="text" class="form-control" aria-label="Text input with dropdown button">
             <button type="submit" class="btn btn-primary">검색</button>
@@ -101,12 +105,12 @@
         </tr>
         </thead>
         <tbody id="myTable">
-        <%--TODO: 220420 제목이 너무 길면 줄여서 보여주기, 작성자/조회수 한줄로 나오게 --%>
-        <c:forEach items="${boardList}" var="board">
+        <%--TODO: 220420 제목이 너무 길면 줄여서 보여주기, 작성자/조회수 한줄로 나오게 간격 조정--%>
+        <c:forEach items="${getBoardList}" var="board">
             <tr>
                 <td><c:out value="${board.category}"/></td>
-                <!-- TODO: 링크-->
-                <td><a href="/board/view?${board.boardNo}"><c:out value="${board.title}"/></a></td>
+                <td><a href="/board/view?boardNo=${board.boardNo}&${pageMaker.cri.pageNo}"><c:out
+                        value="${board.title}"/></a></td>
                 <td><c:out value="${board.userName}"/></td>
                 <td><c:out value="${board.viewCount}"/></td>
                 <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${board.createDate}"/></td>
@@ -120,27 +124,27 @@
         <input type="hidden" name="pageAmount" value="${pageMaker.cri.pageAmount}">
     </form>
 
-    <nav aria-label="Page navigation example" style="display: flex; justify-content: center;">
-        <ul class="pagination">
-            <%-- TODO: 220420 이전, 다음버튼 안나옴--%>
-            <c:if test="${pageMaker.prev}">
-                <li class="page-item">
-                    <a class="page-link" href="/board/list?pageNo=${ pageMaker.startPage - 1 }" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
+    <div class="card-footer">
+        <nav aria-label="Contacts Page Navigation">
+            <ul class="pagination justify-content-center m-0">
+                <c:if test="${pageMaker.prev}">
+                    <li class="page-item"><a class="page-link"
+                                             href="/board/list?pageNo=${pageMaker.startPage-1}">&lsaquo;</a></li>
+                </c:if>
+                <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
+                    <li class="page-item" <c:out value="${pageMaker.cri.pageNo == idx ? 'class=active' : ''}"/>><a
+                            class="page-link" href="/board/list?pageNo=${idx}">${idx}</a></li>
+                </c:forEach>
+                <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+                    <li class="page-item"><a class="page-link"
+                                             href="/board/list?pageNo=${pageMaker.endPage + 1}">&rsaquo;</a></li>
+                </c:if></ul>
+        </nav>
+    </div>
 
-            </c:if>
-            <c:forEach var="i" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-                <li class="page-item"><a class="page-link" href="/board/list?pageNo=${i}">${i}</a></li>
-            </c:forEach>
-            <c:if test="${pageMaer.next eq true}">
-                <a class="page-link" href="/board/list?pageNo=${ pageMaker.endPage + 1 }" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span></a>
-            </c:if>
-        </ul>
-    </nav>
-
+    <div>
+        <button class="btn" id="listenbtn" onclick="location.href='/board/list'">목록</button>
+    </div>
 </div>
 
 

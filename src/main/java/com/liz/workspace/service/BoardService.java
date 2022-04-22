@@ -10,12 +10,12 @@ public interface BoardService {
     /*글 목록*/
     int getBoardCount(Criteria cri);
 
-    List<BoardVO> getBoardList();
-
-    List<BoardVO> getBoardsByCri(Criteria cri);
+    List<BoardVO> getBoardList(Criteria cri);
 
     /*글 작성*/
     void writeBoard(BoardVO boardVO);
-    String getBoardDetail(int boardNo);
+    BoardVO getBoardDetail(int boardNo);
+    void boardHit(int boardNo);
+    void editBoard(BoardVO boardVO);
 
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor //Mapper 생성자
@@ -19,21 +20,13 @@ public class BoardServiceImpl implements BoardService {
     //총 게시글수
     @Override
     public int getBoardCount(Criteria cri) {
-        return boardMapper.boardCount(cri);
+        return boardMapper.getBoardCount(cri);
     }
 
-    //게시판 글목록
+      //페이징 출력
     @Override
-    public List<BoardVO> getBoardList() {
-        return boardMapper.getBoardList();
-    }
-
-    //페이징 출력
-    @Override
-    public List<BoardVO> getBoardsByCri(Criteria cri) {
-        int startRow = (cri.getPageNo() - 1) * cri.getPageAmount();
-        cri.setStartRow(startRow);
-        return boardMapper.getBoardsByCri(cri);
+    public List<BoardVO> getBoardList(Criteria cri) {
+        return boardMapper.getBoardList(cri);
     }
 
     /* 글 작성 */
@@ -45,12 +38,17 @@ public class BoardServiceImpl implements BoardService {
 
 
     @Override
-    public String getBoardDetail(int boardNo) {
+    public BoardVO getBoardDetail(int boardNo) {
         return boardMapper.getBoardDetail(boardNo);
     }
 
-    //TODO : 220419조회수 update
-    /*public int updateViewCount(int boardNo) {
-        return boardMapper.updateViewCount(boardNo);
-    }*/
+    @Override
+    public void boardHit(int boardNo) {
+        boardMapper.boardHit(boardNo);
+    }
+
+    @Override
+    public void editBoard(BoardVO boardVO) {
+        boardMapper.editBoard(boardVO);
+    }
 }

@@ -10,12 +10,14 @@ import java.util.List;
 public interface BoardMapper {
 
 
-    List<BoardVO> getBoardList();
-    List<BoardVO> getBoardsByCri(Criteria cri);
+    int getBoardCount(Criteria cri);
+    List<BoardVO> getBoardList(Criteria cri);
 
-    int boardCount(Criteria cri);
     void writeBoard(BoardVO boardVO);
-    String getBoardDetail(int boardNo);
 
-    // void updateViewCount(int boardNo);
+    BoardVO getBoardDetail(int boardNo);
+    void boardHit(int boardNo);
+
+    void editBoard(BoardVO boardVO);
+
 }

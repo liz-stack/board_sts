@@ -26,16 +26,6 @@
             <div class="divider-custom-line"></div>
         </div>
 
-      <%--  <div>
-               <c:if test="${ id eq board.user_no }">
-                   <form action="/board/remove" method="POST">
-                       <input type="hidden" name="boardNo" value="${ board.num }">
-                       <input type="hidden" name="pageNo" value="${ pageNum }">
-                       <button type="submit" class="btn btn-primary">게시글 삭제</button>
-                   </form>
-                   <button onclick="location.href='/board/modify?boardNo=${ board.num }&pageNo=${ pageNo }'">수정</button>
-               </c:if>
-        </div>--%>
         <!-- Contact Section Form-->
         <form action="/board/write" method="post" enctype="multipart/form-data" id="writeForm">
             <label for="category">카테고리 선택</label>
@@ -51,6 +41,8 @@
             <div class="form-group" >
                 <label for="password" >비밀번호</label>
                 <input type="password" class="form-control" id="password" placeholder="비밀번호">
+            </div>
+            <div class="form-group" >
                 <input type="password" class="form-control" id="verifyPassword" placeholder="비밀번호 확인">
             </div>
             <div class="form-group">
@@ -59,10 +51,10 @@
             </div>
             <div class="form-group">
                 <label for="content">내용</label>
-                <textarea class="form-control" id="content" rows="20"></textarea>
+                <textarea class="form-control" id="content" rows="15"></textarea>
             </div>
             <%--SOLVED: 220420 취소 버튼 누르면 sql에러. pk를 ai로 바꿔줘야한다는데 fk에러 (input type 바꿔서 해결)--%>
-            <%--TODO: 220421 취소 버튼 alert--%>
+            <%--TODO: 220421 취소,저장 버튼 alert--%>
             <input type="button" id="cancelWrite" value="취소" onclick="location.href='/board/list'"></input>
             <input type="submit" id="saveWrite" value="저장" class="button"></input>
         </form>

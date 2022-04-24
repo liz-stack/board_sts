@@ -46,13 +46,13 @@
     </select>
 
     <!-- 게시판 목록 -->
- <!--   <select id="getBoardList" resultMap="boardList">
-        SELECT board_no, category, user_name, title, view_count, create_date, modify_date
-        FROM board
-        order by board_no desc
-        LIMIT #{pageNo}, #{pageAmount}
-    </select>
--->
+    <!--   <select id="getBoardList" resultMap="boardList">
+           SELECT board_no, category, user_name, title, view_count, create_date, modify_date
+           FROM board
+           order by board_no desc
+           LIMIT #{pageNo}, #{pageAmount}
+       </select>
+   -->
     <!-- 페이징 -->
     <select id="getBoardList" resultMap="boardList">
         <![CDATA[
@@ -65,30 +65,43 @@
     </select>
 
     <!-- 게시판 등록 -->
-    <insert id="writeBoard"  parameterType="boardVO" useGeneratedKeys="true"
+    <insert id="writeBoard" parameterType="boardVO" useGeneratedKeys="true"
             keyProperty="boardNo">
         INSERT INTO board
-        (`board_no`, `category`, `user_name`, `user_no`, `password`, `title`, `content`, 'create_date', 'modify_date', 'view_count')
-        VALUES (#{boardNo}, #{category}, #{userName}, #{userNo}, #{password}, #{title}, #{content}, now(), null, '0')
+            (`board_no`, `category`, `user_name`, `password`, `title`, `content`)
+        VALUES
+            (#{boardNo}, #{category}, #{userName}, #{password}, #{title}, #{content})
     </insert>
 
     <!-- 게시판 상세보기 -->
     <select id="getBoardDetail" resultMap="boardList">
-        select board_no, user_name, create_date, modify_date, category, title, view_count, content
+        select board_no,
+               user_name,
+               create_date,
+               modify_date,
+               category,
+               title,
+               view_count,
+               content
         from board
-        where board_no=#{boardNo}
+        where board_no = #{boardNo}
     </select>
 
     <!-- 조회수 증가 -->
     <update id="updateViewCount" parameterType="int"><![CDATA[
         UPDATE board
         SET view_count = view_count + 1
-        WHERE board_no =  #{boardNo}
+        WHERE board_no = #{boardNo}
         ]]></update>
 
     <!-- 글 수정 -->
-    <update id="editBoard" >
-        UPDATE board SET user_name=#{userName}, password=#{password}, title =#{title}, content=#{content}, modify_date=#{modifyDate}
+    <update id="editBoard">
+        UPDATE board
+        SET user_name=#{userName},
+            password=#{password},
+            title =#{title},
+            content=#{content},
+            modify_date=#{modifyDate}
         WHERE board_no = #{boardNox` }
     </update>
 

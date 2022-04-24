@@ -24,7 +24,7 @@
             <form action="/board/write" method="post" id="writeForm" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="category">카테고리 선택</label>
-                    <select class="form-control" id="category">
+                    <select class="form-control" id="category" name="category">
                         <option>JAVA</option>
                         <option>Javascript</option>
                         <option>Database</option>
@@ -43,11 +43,11 @@
                 </div>
                 <div class="form-group">
                     <label for="title">제목</label>
-                    <textarea class="form-control" id="title" rows="1"></textarea>
+                    <textarea class="form-control" id="title" name="title" rows="1"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="content">내용</label>
-                    <textarea class="form-control" id="content" rows="15"></textarea>
+                    <textarea class="form-control" id="content" name="content" rows="15"></textarea>
                 </div>
                 <%--SOLVED: 220420 취소 버튼 누르면 sql에러. pk를 ai로 바꿔줘야한다는데 fk에러 (input type 바꿔서 해결)--%>
                 <%--TODO: 220421 취소,저장 버튼 alert--%>

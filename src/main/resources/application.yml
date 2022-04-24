@@ -3,6 +3,8 @@ mybatis:
   mapper-locations: classpath:mapper/*.xml
   # The location of the entity class
   type-aliases-package: com.liz.workspace.domain
+  configuration:
+    map-underscore-to-camel-case: true
 
 spring:
   mvc:
@@ -15,3 +17,4 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: 1234
+

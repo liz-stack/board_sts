@@ -32,7 +32,7 @@
         <result column="reply_date" property="replyDate"/>
     </resultMap>
 
-    <!--TODO: 220420 resultMap_ board+ collection filevo -->
+    <!--TODO: 220420 resultMap_ board+collection => fileVo -->
     <!--<resultMap id="boardDetail" type="boardDetail" >
         <collection column="board_no" property=""  resultMap="fileMap">
         </collection>
@@ -65,12 +65,12 @@
     </select>
 
     <!-- 게시판 등록 -->
-    <insert id="writeBoard"  parameterType="boardVO">
+    <insert id="writeBoard"  parameterType="boardVO" useGeneratedKeys="true"
+            keyProperty="boardNo">
         INSERT INTO board
-        (`board_no`, `category`, `user_name`, `user_no`, `password`, `title`, `content`)
-        VALUES (#{boardNo}, #{category}, #{userName}, #{userNo}, #{password}, #{title}, #{content})
+        (`board_no`, `category`, `user_name`, `user_no`, `password`, `title`, `content`, 'create_date', 'modify_date', 'view_count')
+        VALUES (#{boardNo}, #{category}, #{userName}, #{userNo}, #{password}, #{title}, #{content}, now(), null, '0')
     </insert>
-
 
     <!-- 게시판 상세보기 -->
     <select id="getBoardDetail" resultMap="boardList">
@@ -80,16 +80,16 @@
     </select>
 
     <!-- 조회수 증가 -->
-    <update id="boardHit">
+    <update id="updateViewCount" parameterType="int"><![CDATA[
         UPDATE board
         SET view_count = view_count + 1
         WHERE board_no =  #{boardNo}
-    </update>
+        ]]></update>
 
     <!-- 글 수정 -->
     <update id="editBoard" >
         UPDATE board SET user_name=#{userName}, password=#{password}, title =#{title}, content=#{content}, modify_date=#{modifyDate}
-        WHERE board_no = #{boardNo}
+        WHERE board_no = #{boardNox` }
     </update>
 
     <!-- 검색 참고-->

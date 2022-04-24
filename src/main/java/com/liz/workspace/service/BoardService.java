@@ -14,8 +14,9 @@ public interface BoardService {
 
     /*글 작성*/
     void writeBoard(BoardVO boardVO);
+
     BoardVO getBoardDetail(int boardNo);
-    void boardHit(int boardNo);
+    int updateViewCount(int boardNo);
     void editBoard(BoardVO boardVO);
 
 }

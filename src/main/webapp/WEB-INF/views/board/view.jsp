@@ -1,6 +1,13 @@
 <%@ include file="../layout/header.jsp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-
+<script>
+    /* 웹브라우저 back키 누를때 페이지 리로딩 */
+    window.onpageshow = function (event) {
+        if (event.persisted) {
+            document.location.reload();
+        }
+    }
+</script>
 <style>
 
     .con_lf {
@@ -18,13 +25,13 @@
 
     <div class="row">
         <div class="boardDetail col-md-1">${boardDetail.userName}</div>
-        <%--TODO: 220421 클릭시 수정일 sysdate로--%>
+        <%--TODO: 220421 수정 클릭시 수정일 sysdate로--%>
         <div class="boardDetail">수정일시
             <fmt:formatDate pattern="yyyy-MM-dd HH:mm"
-                                                            value="${boardDetail.modifyDate}"/>
+                            value="${boardDetail.modifyDate}"/>
         </div>&nbsp;&nbsp;&nbsp;
         <div class="boardDetail col-md-4">등록일시 <fmt:formatDate pattern="yyyy-MM-dd HH:mm"
-                                                            value="${boardDetail.createDate}"/>
+                                                               value="${boardDetail.createDate}"/>
             &nbsp;&nbsp;
         </div>&nbsp;&nbsp;
     </div>
@@ -39,9 +46,10 @@
 
     <%--본문--%>
     <div class="form-group">
-        <textarea type="textarea" class="form-control" name="content" rows="15" readonly>${boardDetail.content}</textarea>
+        <textarea type="textarea" class="form-control" name="content" rows="15"
+                  readonly>${boardDetail.content}</textarea>
     </div>
-    <div class="form-group"><label for="InputSubject1">파일첨부</label>
+    <div class="form-group"><label>파일첨부</label>
         <input id="fileInput" filestyle="" type="file" data-class-button="btn btn-default"
                data-class-input="form-control" data-button-text="" data-icon-name="fa fa-upload"
                class="form-control" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);">
@@ -53,30 +61,28 @@
     </div>
 
     <div class="card mb-2">
-    <div class="card-header bg-light">
-        <i class="fa fa-comment fa"></i> REPLY
+        <div class="card-header bg-light">
+            <i class="fa fa-comment fa"></i> REPLY
+        </div>
+        <div class="card-body">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    <button type="button" class="btn btn-dark mt-3" onClick="javascript:addReply();">post reply</button>
+                </li>
+            </ul>
+        </div>
     </div>
-    <div class="card-body">
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                <button type="button" class="btn btn-dark mt-3" onClick="javascript:addReply();">post reply</button>
-            </li>
-        </ul>
+    <div class="box-footer" style="display: flex; justify-content: center;">
+        <button class="btn btn-dark mt-3" id="listbtn" onclick="location.href='/board/list'">목록</button>
+        <button class="btn btn-dark mt-3" id="updatebtn"
+                onclick="location.href='/board/modify?boardNo=${boardDetail.boardNo}'">수정
+        </button>
+        <button class="btn btn-dark mt-3" id="deletebtn">삭제</button>
     </div>
 </div>
 <%--댓글--%>
 
-
-</div>
-<div class="box-footer" style="display: flex; justify-content: center;">
-    <button class="btn btn-dark mt-3" id="listbtn" onclick="location.href='/board/list'">목록</button>
-    <button class="btn btn-dark mt-3" id="updatebtn" onclick="location.href='/board/modify?boardNo=${boardDetail.boardNo}'">수정</button>
-    <button class="btn btn-dark mt-3" id="deletebtn">삭제</button>
-</div>
-</div>
-
-</div>
 
 <br/>
 
@@ -110,4 +116,4 @@
         })
     });
 
-
+</script>

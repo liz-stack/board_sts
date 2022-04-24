@@ -22,7 +22,7 @@ public class BoardServiceImpl implements BoardService {
         return boardMapper.getBoardCount(cri);
     }
 
-      //페이징 출력
+    //페이징 출력
     @Override
     public List<BoardVO> getBoardList(Criteria cri) {
         int startRow = (cri.getPageNo() - 1) * cri.getPageAmount();
@@ -37,15 +37,14 @@ public class BoardServiceImpl implements BoardService {
         boardMapper.writeBoard(boardVO);
     }
 
-
     @Override
     public BoardVO getBoardDetail(int boardNo) {
         return boardMapper.getBoardDetail(boardNo);
     }
 
     @Override
-    public void boardHit(int boardNo) {
-        boardMapper.boardHit(boardNo);
+    public int updateViewCount(int boardNo) {
+        return boardMapper.updateViewCount(boardNo);
     }
 
     @Override

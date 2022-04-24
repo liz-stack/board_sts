@@ -29,6 +29,7 @@ public class PageDTO {
         }
 
         // 이전
+        //11이면 true, 1이면 false
         prev = startPage > 1;
         // 다음
         next = endPage < realEnd;

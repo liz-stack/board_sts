@@ -25,7 +25,6 @@
 
     <div class="row">
         <div class="boardDetail col-md-1">${boardDetail.userName}</div>
-        <%--TODO: 220421 수정 클릭시 수정일 sysdate로--%>
         <div class="boardDetail">수정일시
             <fmt:formatDate pattern="yyyy-MM-dd HH:mm"
                             value="${boardDetail.modifyDate}"/>

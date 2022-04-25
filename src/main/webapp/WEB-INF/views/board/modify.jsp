@@ -17,7 +17,8 @@
         <br/>
 
         <!-- Contact Section Form-->
-        <form action="/board/modify" method="post" enctype="multipart/form-data" id="writeForm">
+        <form action="/board/modify?boardNo={boardNo}" method="put" enctype="multipart/form-data" id="editForm">
+            <div class="form-control" id="boardNo" name="boardNo">${editBoard.boardNo}</div>
             <div class="form-group">
                 <label>카테고리</label>
                 <span type="category" class="form-control" id="category" readOnly>${editBoard.category}</span>
@@ -28,9 +29,10 @@
                         pattern="yyyy-MM-dd HH:mm"
                         value="${editBoard.createDate}"/></span>
             </div>
+            <%--TODO: 220425 수정 버튼 누르면 수정일 now()생성--%>
             <div class="form-group">
                 <label>수정 일시</label>
-                <span type="modifyDate" class="form-control" id="modifyDate" readOnly><fmt:formatDate
+                <span type="modifyDate" class="form-control" id="modifyDate" name="modifyDate" readOnly><fmt:formatDate
                         pattern="yyyy-MM-dd HH:mm"
                         value="${editBoard.modifyDate}"/></span>
             </div>
@@ -39,20 +41,21 @@
                 <span type="viewCount" class="form-control" id="viewCount" readOnly>${editBoard.viewCount}</span>
             </div>
             <div class="form-group">
-                <label for="writer">작성자</label>
-                <input type="writer" class="form-control" id="writer" value="${editBoard.userName}">
+                <label for="userName">작성자</label>
+                <input type="writer" class="form-control" id="userName" name="userName" value="${editBoard.userName}">
             </div>
             <div class="form-group">
                 <label for="password">비밀번호</label>
-                <input type="password" class="form-control" id="password" placeholder="비밀번호">${editBoard.password}
+                <input type="password" class="form-control" id="password" name="password"
+                       placeholder="비밀번호">${editBoard.password}
             </div>
             <div class="form-group">
                 <label for="title">제목</label>
-                <textarea class="form-control" id="title" rows="1">${editBoard.title}</textarea>
+                <textarea class="form-control" id="title" name="title" rows="1">${editBoard.title}</textarea>
             </div>
             <div class="form-group">
                 <label for="content">내용</label>
-                <textarea class="form-control" id="content" rows="20">${editBoard.content}</textarea>
+                <textarea class="form-control" id="content" name="content" rows="20">${editBoard.content}</textarea>
             </div>
             <%--TODO: 220421 취소 버튼 alert--%>
             <input type="button" id="cancelWrite" value="취소" onclick="location.href='/board/list'"></input>

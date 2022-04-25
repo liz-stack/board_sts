@@ -48,7 +48,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public void editBoard(BoardVO boardVO) {
-        boardMapper.editBoard(boardVO);
+    public void editBoard(int boardNo) {
+        boardMapper.editBoard(boardNo);
     }
 }

@@ -16,6 +16,6 @@ public interface BoardMapper {
     BoardVO getBoardDetail(int boardNo);
     int updateViewCount(int boardNo);
 
-    void editBoard(BoardVO boardVO);
+    void editBoard(int boardNo);
 
 }

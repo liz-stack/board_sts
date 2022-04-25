@@ -101,8 +101,8 @@
             password=#{password},
             title =#{title},
             content=#{content},
-            modify_date=#{modifyDate}
-        WHERE board_no = #{boardNox` }
+            modify_date= now()
+        WHERE board_no = #{boardNo}
     </update>
 
     <!-- 검색 참고-->

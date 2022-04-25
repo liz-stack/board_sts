@@ -26,9 +26,13 @@
     <div class="row">
         <div class="boardDetail col-md-1">${boardDetail.userName}</div>
         <div class="boardDetail">수정일시
-            <fmt:formatDate pattern="yyyy-MM-dd HH:mm"
-                            value="${boardDetail.modifyDate}"/>
+            <c:choose>
+                <c:when test="${empty board.modifyDate}">&#45;</c:when>
+                <c:otherwise><fmt:formatDate pattern="yyyy-MM-dd HH:mm"
+                                             value="${board.modifyDate}"/></c:otherwise>
+            </c:choose>
         </div>&nbsp;&nbsp;&nbsp;
+
         <div class="boardDetail col-md-4">등록일시 <fmt:formatDate pattern="yyyy-MM-dd HH:mm"
                                                                value="${boardDetail.createDate}"/>
             &nbsp;&nbsp;

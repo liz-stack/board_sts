@@ -19,9 +19,9 @@
         <section class="page-section" id="contact">
             <!-- Contact Section Heading-->
 
-
             <!-- Contact Section Form-->
             <form action="/board/write" method="post" id="writeForm" enctype="multipart/form-data">
+              <%--  <input type="hidden" name="boardNo" value="${}">--%>
                 <div class="form-group">
                     <label for="category">카테고리 선택</label>
                     <select class="form-control" id="category" name="category">
@@ -48,6 +48,9 @@
                 <div class="form-group">
                     <label for="content">내용</label>
                     <textarea class="form-control" id="content" name="content" rows="15"></textarea>
+                </div>
+                <div>
+                    <input type="hidden" class="form-control" name="">
                 </div>
                 <%--SOLVED: 220420 취소 버튼 누르면 sql에러. pk를 ai로 바꿔줘야한다는데 fk에러 (input type 바꿔서 해결)--%>
                 <%--TODO: 220421 취소,저장 버튼 alert--%>

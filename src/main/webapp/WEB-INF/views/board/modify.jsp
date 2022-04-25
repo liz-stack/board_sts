@@ -1,9 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <%@ include file="../layout/header.jsp" %>
-<%@page import="java.util.ArrayList" %>
-<%@page import="java.sql.SQLException" %>
-<%@page import="java.util.Date" %>
+
 <script>
 
 </script>
@@ -17,8 +15,9 @@
         <br/>
 
         <!-- Contact Section Form-->
-        <form action="/board/modify?boardNo={boardNo}" method="put" enctype="multipart/form-data" id="editForm">
-            <div class="form-control" id="boardNo" name="boardNo">${editBoard.boardNo}</div>
+        <form role="form" action="${pageContext.request.contextPath}/board/modify?boardNo={boardNo}" id="editForm" method="POST"
+              enctype="multipart/form-data">
+            <input type="hidden" id="boardNo" name="boardNo" value="${editBoard.boardNo}">
             <div class="form-group">
                 <label>카테고리</label>
                 <span type="category" class="form-control" id="category" readOnly>${editBoard.category}</span>
@@ -59,12 +58,18 @@
             </div>
             <%--TODO: 220421 취소 버튼 alert--%>
             <input type="button" id="cancelWrite" value="취소" onclick="location.href='/board/list'"></input>
-            <input type="submit" id="saveWrite" value="저장" class="button"></input>
+            <button type="submit" id="modifyWrite modBtn" value="저장"></button>
         </form>
 
     </div>
 </section>
 <script>
-
+    $(document).ready(function () {
+            const formObj = $("form[role=form]");
+            $(".modBtn").on("click", function () {
+                formObj.submit();
+            });
+        }
+    );
 </script>
 <%@ include file="../layout/footer.jsp" %>

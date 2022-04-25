@@ -44,8 +44,8 @@ public class BoardController {
     @PostMapping("/write")
     public String writeBoard(BoardVO boardVO) {
         boardServiceImpl.writeBoard(boardVO);
-        log.info("글번호 : "+ boardVO.getBoardNo());
-        log.info("조회수: "+ boardVO.getViewCount());
+        log.info("글번호 : " + boardVO.getBoardNo());
+        log.info("조회수: " + boardVO.getViewCount());
         return "/board/view";
     }
 
@@ -66,21 +66,26 @@ public class BoardController {
 
     /* 글 수정 */
     @GetMapping("/modify")
-    public ModelAndView editForm(@RequestParam int boardNo) {
+    public ModelAndView editForm(@RequestParam int boardNo, BoardVO boardVO) {
+        log.info("수정!");
         ModelAndView mav = new ModelAndView();
         mav.setViewName("/board/modify");
         mav.addObject("editBoard", boardServiceImpl.getBoardDetail(boardNo));
         return mav;
     }
 
-    @PutMapping("/modify")
-    public String editBoard(@PathVariable int boardNo){
-        boardServiceImpl.editBoard(boardNo);
-        log.info("글번호: "+ boardNo);
-        return "/board/list";
+    @PostMapping("/modify")
+    public String editBoard(BoardVO boardVO, RedirectAttributes attr) { //@PathVariable : url에 있는 정보를 긁어오고 싶은 경우
+        log.info("editBoard: " + boardVO);
+        boardServiceImpl.editBoard(boardVO);
+        attr.addFlashAttribute("msg", "modSuccess" );
+        return "redirect:/board/view?boardNo="+boardVO.getBoardNo();
     }
 
-
-
+    @PostMapping("/delete")
+    public String deleteBoard(BoardVO boardVO){
+        boardServiceImpl.deleteBoard(boardVO.getBoardNo());
+        return "redirect:/board/list";
+    }
 }
 

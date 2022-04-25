@@ -37,18 +37,25 @@ public class BoardServiceImpl implements BoardService {
         boardMapper.writeBoard(boardVO);
     }
 
+    /*글 상세보기*/
     @Override
     public BoardVO getBoardDetail(int boardNo) {
         return boardMapper.getBoardDetail(boardNo);
     }
 
     @Override
-    public int updateViewCount(int boardNo) {
+    public int updateViewCount(int boardNo) {    //조회수 증가
         return boardMapper.updateViewCount(boardNo);
     }
 
+    /* 글 수정 */
     @Override
-    public void editBoard(int boardNo) {
-        boardMapper.editBoard(boardNo);
+    public void editBoard(BoardVO boardVO) {
+        boardMapper.editBoard(boardVO);
+    }
+
+    @Override
+    public void deleteBoard(int boardNo) {
+        boardMapper.deleteBoard(boardNo);
     }
 }

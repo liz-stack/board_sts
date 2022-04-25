@@ -2,11 +2,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <script>
     /* 웹브라우저 back키 누를때 페이지 리로딩 */
-    window.onpageshow = function (event) {
-        if (event.persisted) {
-            document.location.reload();
-        }
-    }
+    /*   window.onpageshow = function (event) {
+           if (event.persisted) {
+               document.location.reload();
+           }
+       }*/
 </script>
 <style>
 
@@ -49,7 +49,7 @@
 
     <%--본문--%>
     <div class="form-group">
-        <textarea type="textarea" class="form-control" name="content" rows="15"
+        <textarea class="form-control" name="content" rows="15"
                   readonly>${boardDetail.content}</textarea>
     </div>
     <div class="form-group"><label>파일첨부</label>
@@ -76,11 +76,12 @@
             </ul>
         </div>
     </div>
+    <form role="form" method="post">
+        <input type="hidden" name="boardNo" value="${boardDetail.boardNo}">
+    </form>
     <div class="box-footer" style="display: flex; justify-content: center;">
         <button class="btn btn-dark mt-3" id="listbtn" onclick="location.href='/board/list'">목록</button>
-        <button class="btn btn-dark mt-3" id="updatebtn"
-                onclick="location.href='/board/modify?boardNo=${boardDetail.boardNo}'">수정
-        </button>
+        <button class="btn btn-dark mt-3" id="modbtn">수정</button>
         <button class="btn btn-dark mt-3" id="deletebtn">삭제</button>
     </div>
 </div>
@@ -90,23 +91,9 @@
 <br/>
 
 
-</section>
 <%@ include file="../layout/footer.jsp" %>
 
 <script>
-    <c:if test = "${user.email == vo.email}">
-    //삭제 버튼을 눌렀을 때 처리
-    document.getElementById("deletebtn").addEventListener("click", function () {
-        location.href = "delete?bno=" + ${vo.bno};
-    });
-
-    //수정 버튼을 눌렀을 때 처리
-    document.getElementById("updatebtn").addEventListener("click", function () {
-        location.href = "update?bno=" + ${vo.bno};
-    });
-
-    </c:if>
-
     $(document).ready(function () {
         $("#fileInput").on('change', function () { // 값이 변경되면
             if (window.FileReader) { // modern browser
@@ -118,5 +105,21 @@
             $("#userfile").val(filename);
         })
     });
+    //수정버튼
 
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        const formObj = $("form[role=form]");
+        $(".modbtn").on("click", function () {
+            formObj.attr("method", "get");
+            formObj.attr("action", "modify");
+            formObj.submit();
+        });
+    });
+
+    const result = "${msg}"; //상수처리
+    if (result === "modSuccess") { // 동등비교
+        alert("게시글이 수정되었습니다.")
+    }
 </script>

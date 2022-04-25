@@ -69,8 +69,7 @@
             keyProperty="boardNo">
         INSERT INTO board
             (`board_no`, `category`, `user_name`, `password`, `title`, `content`)
-        VALUES
-            (#{boardNo}, #{category}, #{userName}, #{password}, #{title}, #{content})
+        VALUES (#{boardNo}, #{category}, #{userName}, #{password}, #{title}, #{content})
     </insert>
 
     <!-- 게시판 상세보기 -->
@@ -95,15 +94,22 @@
         ]]></update>
 
     <!-- 글 수정 -->
-    <update id="editBoard">
+    <update id="editBoard"><![CDATA[
         UPDATE board
         SET user_name=#{userName},
-            password=#{password},
+            password =#{password},
             title =#{title},
             content=#{content},
             modify_date= now()
         WHERE board_no = #{boardNo}
-    </update>
+    ]]></update>
+
+    <!--글 삭제-->
+    <delete id="deleteBoard">
+        DELETE
+        FROM board
+        WHERE board_no = #{boardNo}
+    </delete>
 
     <!-- 검색 참고-->
     <!--<select id="">

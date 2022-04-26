@@ -97,115 +97,46 @@
     });*/
 
     // -------------------------------------
-    $(document).ready(function () {
-
-        /*
-                var title = $("#title").val();
-                var userName = $("#userName").val();
-                var content = $("#content").val();
-                var password = $("#password").val();
-                var verifyPassword = $("#verifyPassword").val();
-        */
-        function checkAll() {
-            if (!checkUserName(form.username.value)) {
-                console.log("작성자 이름확인")
-                return false;
-            } else if (!checkPassword(form.password.value,
-                form.verifyPassword.value)) {
-                console.log("비밀번호 확인")
-                return false;
-            } else if (!checkTitle(form.title.value)) {
-                console.log("제목 확인")
-                return false;
-            } else if (!checkContent(form.content.value)) {
-                console.log("내용 확인")
-                return false;
-            }
-            return true;
-        }
+ $(document).ready(function () {
 
 
-        function checkExistData(value, dataName) {
-            if (value == "") {
-                alert(dataName + " 입력해주세요!");
-                return false;
-            }
-            return true;
-        }
+     function chaeckAll() {
+         // 이름 체크
+         var userName = document.getElementById('userName');
+         if (userName.value == "" || userName.value.length > 3) {
+             alert('이름을 입력하시오.');
+             userName.focus();
+         }
 
+         // 비밀번호 체크
+         var password = document.getElementById('password');
+         if (password.value.length < 3 || password.value.length > 13) {
+             alert('비밀번호는 3자이상 12자이하로 입력하세요.');
+             password.select();
+             return false;
+         }
+         // 비밀번호 확인 체크
+         var verifyPassword = document.getElementById('verifyPassword');
+         if (password.value != verifyPassword.value) {
+             alert('암호가 다릅니다. 다시 입력하세요.');
+             password.select();
+             verifyPassword.value = "";
+         }
+         // 제목 체크
+         var title = document.getElementById('title');
+         if (title.value.length < 2 || title.value.length > 6) {
+             alert('이름 2자이상 5자이하로 입력하세요.');
+             title.select();
+             return false;
 
-        function checkUserName(userName) {
-            //작성자명 입력되었는지 확인
-            if (!checkExistData(userName, "작성자를"))
-                return false;
-
-            var nameRegExp = /^[가-힣]{2,4}$/; //작성자 이름 유효성 검사
-            if (!nameRegExp.test(userName)) {
-                alert("이름은 2~4글자 한글로 입력해야합니다.");
-                return false;
-            }
-            return true; //확인이 완료되었을 때
-        }
-
-        function checkPassword(password, verifyPassword) {
-            //비밀번호가 입력되었는지 확인하기
-            if (!checkExistData(password, "비밀번호를"))
-                return false;
-            //비밀번호 확인이 입력되었는지 확인하기
-            if (!checkExistData(verifyPassword, "비밀번호 확인을"))
-                return false;
-
-            var password1RegExp = /(^[a-zA-z0-9]|[`~!@@#$%^&*|₩₩₩'₩";:₩/?]){4,16}$/; //비밀번호 유효성 검사
-            if (!password1RegExp.test(password)) {
-                alert("비밀번호는 영문,숫자, 특수문자 포함 4~16자리로 입력해야합니다!");
-                form.password.value = "";
-                form.verifyPassword.focus();
-                return false;
-            }
-            //
-            if (password != verifyPassword) {
-                alert("비밀번호가 일치하지 않습니다.");
-                form.password.value = "";
-                form.verifyPassword.value = "";
-                form.verifyPassword.focus();
-                return false;
-            }
-        }
-
-        //TODO 220426 : select박스
-        function checkCategory() {
-            var checkCategory = document.getElementsByName("category");
-
-            //체크된 값이 하나라도 있을경우 바로 true
-            if (checkCategory.val()) {
-                return true
-            }
-            alert("카테고리를 선택해주세요!");
-            return false;
-        }
-
-        function checkTitle(title) {
-            //작성자명 입력되었는지 확인
-            if (!checkExistData(title, "제목을"))
-                return false;
-            if (title.length < 4 || title.length > 2000) {
-                alert("제목은 4자 이상 16글자 미만이어야합니다.")
-                return false;
-            }
-            return true; //확인이 완료되었을 때
-        }
-
-        function checkContent(content) {
-            //작성자명 입력되었는지 확인
-            if (!checkExistData(content, "내용을"))
-                return false;
-            if (content.length < 4 || content.length > 2000) {
-                alert("내용은 4자 이상 2000자 미만이어야합니다.")
-                return false;
-            }
-            return true; //확인이 완료되었을 때
-        }
-    });
-
+         }
+         var content = document.getElementById('content');
+         if (content.value.length < 2 || content.value.length > 6) {
+             alert('이름 2자이상 5자이하로 입력하세요.');
+             content.select();
+             return false;
+         }
+     }
+ });
 </script>
 <%@ include file="../layout/footer.jsp" %>

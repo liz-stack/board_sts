@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <%@ include file="../layout/header.jsp" %>
-<%@page import="java.util.ArrayList" %>
-<%@page import="java.sql.SQLException" %>
-<%@page import="java.util.Date" %>
 
 <script>
 
@@ -17,7 +14,7 @@
         <h2>게시판 - 수정</h2>
         <br/>
 
-        <form action="/board/modify" method="post" enctype="multipart/form-data" >
+        <form action="${path}/board/modify" method="post" enctype="multipart/form-data" >
             <div class="form-group">
                 <label>카테고리</label>
                 <span type="category" class="form-control" id="category" readOnly>${boardDetail.category}</span>

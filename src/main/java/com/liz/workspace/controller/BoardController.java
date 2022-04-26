@@ -48,7 +48,7 @@ public class BoardController {
         boardServiceImpl.writeBoard(boardVO);
         log.info("글번호 : " + boardVO.getBoardNo());
         log.info("조회수: " + boardVO.getViewCount());
-        rttr.addFlashAttribute("msg", "regSuccess");
+        rttr.addFlashAttribute("msg", "regSuccess"); //게시글 등록 후 임시데이터(그 순간만)를 쏘는 방법
         return "redirect:/board/list";
     }
 
@@ -69,28 +69,31 @@ public class BoardController {
 
     /* 글 수정 */
     @GetMapping("/modify")
-    public String editForm(@RequestParam int boardNo, Model model) {
+    public String editForm(@RequestParam("boardNo") int boardNo, Model model) {
         /*ModelAndView mav = new ModelAndView();
         mav.setViewName("/board/modify");
         mav.addObject("", boardServiceImpl.getBoardDetail(boardNo));
         return mav;*/
-        BoardVO boardDetail = boardServiceImpl.getBoardDetail(boardNo);
-        model.addAttribute("boardDetail", boardDetail);
+        model.addAttribute("boardDetail", boardServiceImpl.getBoardDetail(boardNo));
         return "/board/modify";
     }
 
     //TODO: 220426 수정시 리턴화면 목록-> 해당글 상세보기 화면으로
     @PostMapping("/modify")
-    public String editBoard(@RequestParam("boardNo") int boardNo, BoardVO boardVO) { //c.f. @PathVariable : url에 있는 정보를 긁어오고 싶은 경우
+    public String editBoard(BoardVO boardVO, RedirectAttributes rttr) { //c.f. @PathVariable : url에 있는 정보를 긁어오고 싶은 경우
+        log.info("수정처리!" + boardVO.getBoardNo());
         boardServiceImpl.editBoard(boardVO);
-        return "/board/view";
+        rttr.addFlashAttribute("msg", "modSuccess");
+        int boardNo = boardVO.getBoardNo();
+        return "redirect:/board/view?boardNo="+boardNo;
     }
 
     /* 글 삭제 */
     @RequestMapping("/delete")
-    public String deleteBoard(@RequestParam("boardNo") int boardNo) {
+    public String deleteBoard(@RequestParam("boardNo") int boardNo, RedirectAttributes rttr) {
         boardServiceImpl.deleteBoard(boardNo);
-        return "/board/list";
+        rttr.addFlashAttribute("msg", "delSuccess");
+        return "redirect:/board/list";
     }
 
 

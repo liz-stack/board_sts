@@ -4,7 +4,6 @@
 
 <%@ include file="../layout/header.jsp" %>
 
-
 <!-- Contact Section-->
 <div class="contentContainer">
     <br/>
@@ -61,7 +60,6 @@
 </div>
 
 <script>
-
     function checkAll() {
         if (!checkUserName(form.username.value)) {
             console.log("작성자 이름확인")
@@ -159,7 +157,12 @@
         }
         return true; //확인이 완료되었을 때
     }
+</script>
+<script>
+    const result = "${msg}";
+    if (result === "regSuccess") {
+        alert("게시글 등록이 완료되었습니다.")
+    }
 
 </script>
-
 <%@ include file="../layout/footer.jsp" %>

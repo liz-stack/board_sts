@@ -26,11 +26,12 @@
     <div class="row">
         <div class="boardDetail col-md-1">${boardDetail.userName}</div>
         <div class="boardDetail">수정일시
-            <c:choose>
-                <c:when test="${empty board.modifyDate}">&#45;</c:when>
+            <%--<c:choose>
+                <c:when test="${empty board.modifyDate}"><span>&#45;</span></c:when>
                 <c:otherwise><fmt:formatDate pattern="yyyy-MM-dd HH:mm"
                                              value="${board.modifyDate}"/></c:otherwise>
-            </c:choose>
+            </c:choose>--%>
+            <fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${board.modifyDate}"/>
         </div>&nbsp;&nbsp;&nbsp;
 
         <div class="boardDetail col-md-4">등록일시 <fmt:formatDate pattern="yyyy-MM-dd HH:mm"

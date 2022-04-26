@@ -94,13 +94,13 @@
         ]]></update>
 
     <!-- 글 수정 -->
-    <update id="editBoard"><![CDATA[
+    <update id="editBoard" ><![CDATA[
         UPDATE board
-        SET user_name=#{userName},
-            password =#{password},
-            title =#{title},
-            content=#{content},
-            modify_date= now()
+        SET user_name = #{userName},
+            password = #{password},
+            title = #{title},
+            content = #{content},
+            modify_date = now()
         WHERE board_no = #{boardNo}
     ]]></update>
 

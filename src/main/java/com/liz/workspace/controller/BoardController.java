@@ -8,9 +8,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -66,24 +68,25 @@ public class BoardController {
 
     /* 글 수정 */
     @GetMapping("/modify")
-    public ModelAndView editForm(@RequestParam int boardNo) {
-        ModelAndView mav = new ModelAndView();
+    public String editForm(@RequestParam int boardNo, Model model) {
+        /*ModelAndView mav = new ModelAndView();
         mav.setViewName("/board/modify");
-        mav.addObject("editBoard", boardServiceImpl.getBoardDetail(boardNo));
-        return mav;
+        mav.addObject("", boardServiceImpl.getBoardDetail(boardNo));
+        return mav;*/
+        BoardVO boardDetail = boardServiceImpl.getBoardDetail(boardNo);
+        model.addAttribute("boardDetail", boardDetail);
+        return "/board/modify";
     }
 
     @PostMapping("/modify")
-    public String editBoard(BoardVO boardVO, RedirectAttributes rttr) { //@PathVariable : url에 있는 정보를 긁어오고 싶은 경우
+    public String editBoard(@RequestParam("boardNo") int boardNo, BoardVO boardVO) { //c.f. @PathVariable : url에 있는 정보를 긁어오고 싶은 경우
         boardServiceImpl.editBoard(boardVO);
-        log.info("editBoard: " + boardVO);
-        rttr.addFlashAttribute("result", "modify success");
-        return "/board/view"; //?boardNo="+boardVO.getBoardNo()
+        return "/board/list";
     }
 
     /* 글 삭제 */
     @PostMapping("/delete")
-    public String deleteBoard(BoardVO boardVO){
+    public String deleteBoard(BoardVO boardVO) {
         boardServiceImpl.deleteBoard(boardVO.getBoardNo());
         return "redirect:/board/list";
     }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -43,11 +44,12 @@ public class BoardController {
     }
 
     @PostMapping("/write")
-    public String writeBoard(BoardVO boardVO) {
+    public String writeBoard(BoardVO boardVO, RedirectAttributes rttr) {
         boardServiceImpl.writeBoard(boardVO);
         log.info("글번호 : " + boardVO.getBoardNo());
         log.info("조회수: " + boardVO.getViewCount());
-        return "/board/view";
+        rttr.addFlashAttribute("msg", "regSuccess");
+        return "redirect:/board/list";
     }
 
 
@@ -81,7 +83,7 @@ public class BoardController {
     @PostMapping("/modify")
     public String editBoard(@RequestParam("boardNo") int boardNo, BoardVO boardVO) { //c.f. @PathVariable : url에 있는 정보를 긁어오고 싶은 경우
         boardServiceImpl.editBoard(boardVO);
-        return "/board/list";
+        return "/board/view";
     }
 
     /* 글 삭제 */
@@ -94,7 +96,7 @@ public class BoardController {
 
     /* 예외처리*/
     @ExceptionHandler({NullPointerException.class, SQLException.class, IOException.class})
-    public Object nullEx(Exception e) {
+    public Object CustomEx(Exception e) {
         log.error(e.getMessage());
         return "board/list";
     }

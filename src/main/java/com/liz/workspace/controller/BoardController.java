@@ -8,12 +8,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 @Slf4j
@@ -78,6 +77,7 @@ public class BoardController {
         return "/board/modify";
     }
 
+    //TODO: 220426 수정시 리턴화면 목록-> 해당글 상세보기 화면으로
     @PostMapping("/modify")
     public String editBoard(@RequestParam("boardNo") int boardNo, BoardVO boardVO) { //c.f. @PathVariable : url에 있는 정보를 긁어오고 싶은 경우
         boardServiceImpl.editBoard(boardVO);
@@ -85,10 +85,30 @@ public class BoardController {
     }
 
     /* 글 삭제 */
-    @PostMapping("/delete")
-    public String deleteBoard(BoardVO boardVO) {
-        boardServiceImpl.deleteBoard(boardVO.getBoardNo());
-        return "redirect:/board/list";
+    @RequestMapping("/delete")
+    public String deleteBoard(@RequestParam("boardNo") int boardNo) {
+        boardServiceImpl.deleteBoard(boardNo);
+        return "/board/list";
     }
+
+
+    /* 예외처리*/
+    @ExceptionHandler({NullPointerException.class, SQLException.class, IOException.class})
+    public Object nullEx(Exception e) {
+        log.error(e.getMessage());
+        return "board/list";
+    }
+
+   /* @ExceptionHandler({})
+    public Object sqlEx(SQLException e) {
+        log.error(e.getMessage());
+        return "board/list";
+    }
+    @ExceptionHandler({IOException.class})
+    public Object ioEx(IOException e) {
+        log.error(e.getMessage());
+        return "board/list";
+    }*/
+
 }
 

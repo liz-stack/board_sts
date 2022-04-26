@@ -7,7 +7,40 @@
 <%@page import="java.sql.SQLException" %>
 <%@page import="java.util.Date" %>
 <script>
+    $(function () {
+        $('#saveWrite').click(function () {
+            var title = $("#title").val();
+            var userName = $("#userName").val();
+            var content = $("#content").val();
+            var password = $("#password").val();
+            var verifyPassword = $("#verifyPassword").val();
 
+            if (!title) {
+                alert("제목을 입력해주세요");
+                return false;
+            } else if (!userName) {
+                alert("작성자를 입력해주세요");
+                return false;
+            } else if (!content) {
+                alert("내용을 입력해주세요");
+                return false;
+            } else if (!password && !verifyPassword) {
+                alert("비밀번호를 입력해주세요");
+                return false;
+            }
+
+            if (password != verifyPassword) {
+                alert("비밀번호가 일치 하지 않습니다");
+                return false;
+            } else {
+                alert("게시글이 등록되었습니다.");
+                return true;
+            }
+
+
+        });
+
+    });
 </script>
 <!-- Contact Section-->
 <div class="contentContainer">
@@ -21,7 +54,7 @@
 
             <!-- Contact Section Form-->
             <form action="/board/write" method="post" id="writeForm" enctype="multipart/form-data">
-              <%--  <input type="hidden" name="boardNo" value="${}">--%>
+                <%--  <input type="hidden" name="boardNo" value="${}">--%>
                 <div class="form-group">
                     <label for="category">카테고리 선택</label>
                     <select class="form-control" id="category" name="category">
@@ -54,8 +87,10 @@
                 </div>
                 <%--SOLVED: 220420 취소 버튼 누르면 sql에러. pk를 ai로 바꿔줘야한다는데 fk에러 (input type 바꿔서 해결)--%>
                 <%--TODO: 220421 취소,저장 버튼 alert--%>
-                <input type="button" class="btn btn-secondary" id="cancelWrite" value="취소" onclick="location.href='/board/list'"></input>
-                <input type="submit" class="btn btn-secondary" id="saveWrite" value="저장" class="button" style="float: right"></input>
+                <input type="button" class="btn btn-secondary" id="cancelWrite" value="취소"
+                       onclick="location.href='/board/list'"></input>
+                <input type="submit" class="btn btn-secondary" id="saveWrite" value="저장" class="button"
+                       style="float: right"></input>
             </form>
         </section>
     </div>

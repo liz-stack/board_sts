@@ -81,7 +81,7 @@
     <div class="btnWrap" style="display: flex; justify-content: center;">
         <a class="btn btn-dark mt-3" id="listbtn" href="/board/list">목록</a> <%--href="/board/list"--%>
         <a class="btn btn-dark mt-3" id="modbtn" href="/board/modify?boardNo=${boardDetail.boardNo}">수정</a>
-        <a class="btn btn-dark mt-3" id="deletebtn">삭제</a>
+        <a class="btn btn-dark mt-3" id="deletebtn" href="/board/delete?boardNo=${boardDetail.boardNo}">삭제</a>
     </div>
     <form id="detailForm" action="/board/modify" method="post">
         <input type="hidden" id="boardNo" name="boardNo" value="${boardDetail.boardNo}">

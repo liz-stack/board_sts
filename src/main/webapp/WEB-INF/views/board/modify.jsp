@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <%@ include file="../layout/header.jsp" %>
+<%@page import="java.util.ArrayList" %>
+<%@page import="java.sql.SQLException" %>
+<%@page import="java.util.Date" %>
 
 <script>
 
@@ -15,19 +18,19 @@
         <br/>
 
         <!-- Contact Section Form-->
-        <form role="form" action="${pageContext.request.contextPath}/board/modify?boardNo={boardNo}" id="editForm" method="POST"
-              enctype="multipart/form-data">
-            <input type="hidden" id="boardNo" name="boardNo" value="${editBoard.boardNo}">
+        <form action="/board/modify" method="post" enctype="multipart/form-data" id="editForm">
+            <div class="form-control">
+                <input type="hidden" id="boardNo" name="boardNo">${editBoard.boardNo}
+            </div>
             <div class="form-group">
                 <label>카테고리</label>
                 <span type="category" class="form-control" id="category" readOnly>${editBoard.category}</span>
             </div>
-            <div class="form-group">
+
                 <label>등록 일시</label>
                 <span type="createDate" class="form-control" id="createDate" readOnly> <fmt:formatDate
                         pattern="yyyy-MM-dd HH:mm"
                         value="${editBoard.createDate}"/></span>
-            </div>
             <%--TODO: 220425 수정 버튼 누르면 수정일 now()생성--%>
             <div class="form-group">
                 <label>수정 일시</label>
@@ -57,13 +60,13 @@
                 <textarea class="form-control" id="content" name="content" rows="20">${editBoard.content}</textarea>
             </div>
             <%--TODO: 220421 취소 버튼 alert--%>
-            <input type="button" id="cancelWrite" value="취소" onclick="location.href='/board/list'"></input>
-            <button type="submit" id="modifyWrite modBtn" value="저장"></button>
+            <button class="btn btn-secondary" type="button" id="cancelWrite" onclick="location.href='/board/list'">취소</button>
+            <button class="btn btn-secondary" type="submit" id="modifyWrite modBtn">저장</button>
         </form>
 
     </div>
 </section>
-<script>
+<%--<script>
     $(document).ready(function () {
             const formObj = $("form[role=form]");
             $(".modBtn").on("click", function () {
@@ -71,5 +74,5 @@
             });
         }
     );
-</script>
+</script>--%>
 <%@ include file="../layout/footer.jsp" %>

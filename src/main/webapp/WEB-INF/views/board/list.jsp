@@ -186,21 +186,10 @@
 </div>
 
 <%--<script type="text/javascript">
-    $(document)
-        .ready(
-            function() {
-                $(".paginate_button a").on(
-                    "click",
-                    function(e) {
-
-                        e.preventDefault();
-
-                        console.log('click');
-
-                        actionForm.find("input[name='pageNo']")
-                            .val($(this).attr("href"));
-                        actionForm.submit();
-                    });
-            });
+    $(document).ready(function (){
+        var result = '<c:out value="${result}"';
+            if(!(result==''))
+                alert("게시글이 수정되었습니다.");
+    })
 </script>--%>
 <%@ include file="../layout/footer.jsp" %>

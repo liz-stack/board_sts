@@ -76,14 +76,15 @@
             </ul>
         </div>
     </div>
-    <form role="form" method="post">
-        <input type="hidden" name="boardNo" value="${boardDetail.boardNo}">
-    </form>
-    <div class="box-footer" style="display: flex; justify-content: center;">
-        <button class="btn btn-dark mt-3" id="listbtn" onclick="location.href='/board/list'">목록</button>
-        <button class="btn btn-dark mt-3" id="modbtn">수정</button>
-        <button class="btn btn-dark mt-3" id="deletebtn">삭제</button>
+
+    <div class="btnWrap" style="display: flex; justify-content: center;">
+        <a class="btn btn-dark mt-3" id="listbtn" href="/board/list">목록</a> <%--href="/board/list"--%>
+        <a class="btn btn-dark mt-3" id="modbtn" href="/board/modify?boardNo=${boardDetail.boardNo}">수정</a>
+        <a class="btn btn-dark mt-3" id="deletebtn">삭제</a>
     </div>
+    <form id="detailForm" action="/board/modify" method="post">
+        <input type="hidden" id="boardNo" name="boardNo" value="${boardDetail.boardNo}">
+    </form>
 </div>
 <%--댓글--%>
 
@@ -92,7 +93,7 @@
 
 
 <%@ include file="../layout/footer.jsp" %>
-
+<%--
 <script>
     $(document).ready(function () {
         $("#fileInput").on('change', function () { // 값이 변경되면
@@ -105,10 +106,22 @@
             $("#userfile").val(filename);
         })
     });
-    //수정버튼
-
 </script>
-<script type="text/javascript">
+<script>
+    let form = $("#detailForm");
+
+    $("#listbtn").on("click", function (e) {
+        form.find("#boardNo").remove();
+        form.attr("action", "/board/list");
+        form.submit;
+    });
+
+    $("#modbtn").on("click", function (e) {
+        form.attr("action", "/board/list");
+        form.submit;
+    });
+</script>--%>
+<%--<script type="text/javascript">
     $(document).ready(function () {
         const formObj = $("form[role=form]");
         $(".modbtn").on("click", function () {
@@ -122,4 +135,4 @@
     if (result === "modSuccess") { // 동등비교
         alert("게시글이 수정되었습니다.")
     }
-</script>
+</script>--%>

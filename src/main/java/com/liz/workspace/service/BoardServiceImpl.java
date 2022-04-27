@@ -1,6 +1,6 @@
 package com.liz.workspace.service;
 
-import com.liz.workspace.domain.BoardVO;
+import com.liz.workspace.domain.BoardDTO;
 import com.liz.workspace.domain.Criteria;
 import com.liz.workspace.mapper.BoardMapper;
 import lombok.RequiredArgsConstructor;
@@ -24,22 +24,33 @@ public class BoardServiceImpl implements BoardService {
 
     //페이징 출력
     @Override
-    public List<BoardVO> getBoardList(Criteria cri) {
+    public List<BoardDTO> getBoardList(Criteria cri) {
         int startRow = (cri.getPageNo() - 1) * cri.getPageAmount();
         cri.setStartRow(startRow);
         return boardMapper.getBoardList(cri);
     }
 
+    // 글 작성시 유효성 체크
+   /* public Map<String, String> validateHandling(Errors errors) {
+        Map<String, String> validatorResult = new HashMap<>();
+
+        for (FieldError error : errors.getFieldErrors()) {
+            String validKeyName = String.format("valid_%s", error.getField());
+            validatorResult.put(validKeyName, error.getDefaultMessage());
+        }
+        return validatorResult;
+    }*/
+
     /* 글 작성 */
     @Override
-    public void writeBoard(BoardVO boardVO) {
-        System.out.println("boardVO:"+boardVO);
-        boardMapper.writeBoard(boardVO);
+    public void writeBoard(BoardDTO boardDTO) {
+
+        boardMapper.writeBoard(boardDTO);
     }
 
     /*글 상세보기*/
     @Override
-    public BoardVO getBoardDetail(int boardNo) {
+    public BoardDTO getBoardDetail(int boardNo) {
         return boardMapper.getBoardDetail(boardNo);
     }
 
@@ -50,8 +61,8 @@ public class BoardServiceImpl implements BoardService {
 
     /* 글 수정 */
     @Override
-    public void editBoard(BoardVO boardVO) {
-        boardMapper.editBoard(boardVO);
+    public void editBoard(BoardDTO boardDTO) {
+        boardMapper.editBoard(boardDTO);
     }
 
     @Override

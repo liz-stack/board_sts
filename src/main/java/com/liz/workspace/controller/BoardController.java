@@ -1,6 +1,6 @@
 package com.liz.workspace.controller;
 
-import com.liz.workspace.domain.BoardVO;
+import com.liz.workspace.domain.BoardDTO;
 import com.liz.workspace.domain.Criteria;
 import com.liz.workspace.domain.PageDTO;
 import com.liz.workspace.service.BoardServiceImpl;
@@ -8,12 +8,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.io.IOException;
-import java.sql.SQLException;
+import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
@@ -27,7 +29,7 @@ public class BoardController {
     //전체 게시글 조회
     @GetMapping("/list")
     public String getBoardList(Criteria cri, Model model) throws Exception {
-        List<BoardVO> boardList = boardServiceImpl.getBoardList(cri);
+        List<BoardDTO> boardList = boardServiceImpl.getBoardList(cri);
         int boardCount = boardServiceImpl.getBoardCount(cri);
 
         PageDTO pageMaker = new PageDTO(cri, boardCount);
@@ -44,10 +46,20 @@ public class BoardController {
     }
 
     @PostMapping("/write")
-    public String writeBoard(BoardVO boardVO, RedirectAttributes rttr) throws Exception {
-        boardServiceImpl.writeBoard(boardVO);
-        log.info("글번호 : " + boardVO.getBoardNo());
-        log.info("조회수: " + boardVO.getViewCount());
+    public String writeBoard(@Valid BoardDTO boardDTO, BindingResult bindingResult, RedirectAttributes rttr) {
+        log.info("error: " + bindingResult.hasErrors());
+
+        if (bindingResult.hasErrors()) { //에러 존재하는지 확인하고 처리
+            List<ObjectError> list = bindingResult.getAllErrors();
+            //유효성 통과 못한 필드와 메시지를 핸들링
+            for (ObjectError e : list) {
+                log.info(e.getDefaultMessage());
+            }
+            return "/board/list";
+        }
+        boardServiceImpl.writeBoard(boardDTO);
+        log.info("글번호 : " + boardDTO.getBoardNo());
+        log.info("조회수: " + boardDTO.getViewCount());
         rttr.addFlashAttribute("msg", "regSuccess"); //게시글 등록 후 임시데이터(그 순간만)를 쏘는 방법
         return "redirect:/board/list";
     }
@@ -80,12 +92,12 @@ public class BoardController {
 
     //TODO: 220426 수정시 리턴화면 목록-> 해당글 상세보기 화면으로
     @PostMapping("/modify")
-    public String editBoard(BoardVO boardVO, RedirectAttributes rttr) throws Exception { //c.f. @PathVariable : url에 있는 정보를 긁어오고 싶은 경우
-        log.info("수정처리!" + boardVO.getBoardNo());
-        boardServiceImpl.editBoard(boardVO);
+    public String editBoard(BoardDTO boardDTO, RedirectAttributes rttr) throws Exception { //c.f. @PathVariable : url에 있는 정보를 긁어오고 싶은 경우
+        log.info("수정처리!" + boardDTO.getBoardNo());
+        boardServiceImpl.editBoard(boardDTO);
         rttr.addFlashAttribute("msg", "modSuccess");
-        int boardNo = boardVO.getBoardNo();
-        return "redirect:/board/view?boardNo="+boardNo;
+        int boardNo = boardDTO.getBoardNo();
+        return "redirect:/board/view?boardNo=" + boardNo;
     }
 
     /* 글 삭제 */
@@ -96,6 +108,12 @@ public class BoardController {
         return "redirect:/board/list";
     }
 
+/*
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        binder.setValidator(new UserInfoValidator());
+    }
+*/
 
     /* 예외처리*/
     /*@ExceptionHandler({NullPointerException.class, SQLException.class, IOException.class})

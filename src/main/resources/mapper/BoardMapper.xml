@@ -3,7 +3,7 @@
 <mapper namespace="com.liz.workspace.mapper.BoardMapper">
 
     <!-- BoardVO -->
-    <resultMap id="boardList" type="BoardVO">
+    <resultMap id="boardList" type="BoardDTO">
         <result column="board_no" property="boardNo"/>
         <result column="category" property="category"/>
         <result column="user_name" property="userName"/>
@@ -65,7 +65,7 @@
     </select>
 
     <!-- 게시판 등록 -->
-    <insert id="writeBoard" parameterType="boardVO" useGeneratedKeys="true"
+    <insert id="writeBoard" parameterType="boardDTO" useGeneratedKeys="true"
             keyProperty="boardNo">
         INSERT INTO board
             (`board_no`, `category`, `user_name`, `password`, `title`, `content`)

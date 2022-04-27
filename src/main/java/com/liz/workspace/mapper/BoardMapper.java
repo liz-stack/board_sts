@@ -1,6 +1,6 @@
 package com.liz.workspace.mapper;
 
-import com.liz.workspace.domain.BoardVO;
+import com.liz.workspace.domain.BoardDTO;
 import com.liz.workspace.domain.Criteria;
 import org.springframework.stereotype.Repository;
 
@@ -10,13 +10,13 @@ import java.util.List;
 public interface BoardMapper {
 
     int getBoardCount(Criteria cri);
-    List<BoardVO> getBoardList(Criteria cri);
-    void writeBoard(BoardVO boardVO);
+    List<BoardDTO> getBoardList(Criteria cri);
+    void writeBoard(BoardDTO boardDTO);
 
-    BoardVO getBoardDetail(int boardNo);
+    BoardDTO getBoardDetail(int boardNo);
     int updateViewCount(int boardNo);
 
-    void editBoard(BoardVO boardVO);
+    void editBoard(BoardDTO boardDTO);
     void deleteBoard(int boardNo);
 
 }

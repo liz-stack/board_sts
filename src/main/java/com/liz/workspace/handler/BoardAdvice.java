@@ -1,14 +1,17 @@
 package com.liz.workspace.handler;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 //@ControllerAdvice("com.liz.workspace.controller")
 //@RestController
-public class ExceptionHandler {
+public class BoardAdvice {
+
+    /*@ExceptionHandler(ConstraintViolationException.class)
+    public String constraintViolationException(ConstraintViolationException e, RedirectAttributes rttr){
+        rttr.addFlashAttribute("msg", e.getMessage());
+        return "redirect:/system/error";
+    }*/
 
   /*  @ExceptionHandler(value =NullPointerException.class)
     public Map<String, String> handleException(Exception e) {
@@ -19,3 +22,4 @@ public class ExceptionHandler {
     }
 */
 }
+

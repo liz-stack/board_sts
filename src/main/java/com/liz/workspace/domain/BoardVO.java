@@ -6,12 +6,10 @@ import lombok.*;
 import java.util.Date;
 import java.util.List;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
 @Data
 public class BoardVO {
+
+
     private int boardNo;
     private String category;
     private String userName;

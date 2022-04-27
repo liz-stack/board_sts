@@ -26,7 +26,7 @@ public class BoardController {
 
     //전체 게시글 조회
     @GetMapping("/list")
-    public String getBoardList(Criteria cri, Model model) {
+    public String getBoardList(Criteria cri, Model model) throws Exception {
         List<BoardVO> boardList = boardServiceImpl.getBoardList(cri);
         int boardCount = boardServiceImpl.getBoardCount(cri);
 
@@ -39,12 +39,12 @@ public class BoardController {
 
     /* 글 작성 */
     @GetMapping("/write")
-    public String writeForm() {
+    public String writeForm() throws Exception {
         return "board/write";
     }
 
     @PostMapping("/write")
-    public String writeBoard(BoardVO boardVO, RedirectAttributes rttr) {
+    public String writeBoard(BoardVO boardVO, RedirectAttributes rttr) throws Exception {
         boardServiceImpl.writeBoard(boardVO);
         log.info("글번호 : " + boardVO.getBoardNo());
         log.info("조회수: " + boardVO.getViewCount());
@@ -55,7 +55,7 @@ public class BoardController {
 
     /* 글 상세보기 */
     @RequestMapping("/view")
-    public ModelAndView getBoardDetail(@RequestParam("boardNo") int boardNo) {
+    public ModelAndView getBoardDetail(@RequestParam("boardNo") int boardNo) throws Exception {
         //TODO: 220425 새로고침해도 조회수 올라가지 않게 수정
         boardServiceImpl.updateViewCount(boardNo); //boardNo 넘김
         ModelAndView mav = new ModelAndView();
@@ -69,7 +69,7 @@ public class BoardController {
 
     /* 글 수정 */
     @GetMapping("/modify")
-    public String editForm(@RequestParam("boardNo") int boardNo, Model model) {
+    public String editForm(@RequestParam(value = "boardNo") int boardNo, Model model) throws Exception {
         /*ModelAndView mav = new ModelAndView();
         mav.setViewName("/board/modify");
         mav.addObject("", boardServiceImpl.getBoardDetail(boardNo));
@@ -80,7 +80,7 @@ public class BoardController {
 
     //TODO: 220426 수정시 리턴화면 목록-> 해당글 상세보기 화면으로
     @PostMapping("/modify")
-    public String editBoard(BoardVO boardVO, RedirectAttributes rttr) { //c.f. @PathVariable : url에 있는 정보를 긁어오고 싶은 경우
+    public String editBoard(BoardVO boardVO, RedirectAttributes rttr) throws Exception { //c.f. @PathVariable : url에 있는 정보를 긁어오고 싶은 경우
         log.info("수정처리!" + boardVO.getBoardNo());
         boardServiceImpl.editBoard(boardVO);
         rttr.addFlashAttribute("msg", "modSuccess");
@@ -90,7 +90,7 @@ public class BoardController {
 
     /* 글 삭제 */
     @RequestMapping("/delete")
-    public String deleteBoard(@RequestParam("boardNo") int boardNo, RedirectAttributes rttr) {
+    public String deleteBoard(@RequestParam("boardNo") int boardNo, RedirectAttributes rttr) throws Exception {
         boardServiceImpl.deleteBoard(boardNo);
         rttr.addFlashAttribute("msg", "delSuccess");
         return "redirect:/board/list";
@@ -98,11 +98,11 @@ public class BoardController {
 
 
     /* 예외처리*/
-    @ExceptionHandler({NullPointerException.class, SQLException.class, IOException.class})
+    /*@ExceptionHandler({NullPointerException.class, SQLException.class, IOException.class})
     public Object CustomEx(Exception e) {
         log.error(e.getMessage());
         return "board/list";
-    }
+    }*/
 
    /* @ExceptionHandler({})
     public Object sqlEx(SQLException e) {

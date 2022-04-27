@@ -14,8 +14,8 @@
         <section class="page-section" id="contact">
             <!-- Contact Section Heading-->
 
-            <!-- Contact Section Form-->
-            <form name="form" method="post" id="writeForm" action="${path}/board/write" onsubmit="return checkAll()">
+            <!-- Contact Section Form--> <%-- onsubmit="return writeForm();"--%>
+            <form name="writeForm" method="post" id="writeForm" action="${path}/board/write"> <%--onsubmit="return checkAll()"--%>
                 <%--  <input type="hidden" name="boardNo" value="${}">--%>
                 <div class="form-group">
                     <label for="category">카테고리 선택</label>
@@ -34,7 +34,7 @@
                     <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호">
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" id="verifyPassword" name="verifyPassword"
+                    <input type="verifyPassword" class="form-control" id="verifyPassword" name="verifyPassword"
                            placeholder="비밀번호 확인">
                 </div>
                 <div class="form-group">
@@ -45,22 +45,21 @@
                     <label for="content">내용</label>
                     <textarea class="form-control" id="content" name="content" rows="15"></textarea>
                 </div>
-                <div>
-                    <input type="hidden" class="form-control" name="">
-                </div>
                 <%--SOLVED: 220420 취소 버튼 누르면 sql에러. pk를 ai로 바꿔줘야한다는데 fk에러 (input type 바꿔서 해결)--%>
                 <%--TODO: 220421 취소,저장 버튼 alert--%>
-                <input type="button" class="btn btn-secondary" id="cancelWrite" value="취소"
+                <input type="button" class="btn btn-secondary" id="cancleBtn" value="취소"
                        onclick="location.href='/board/list'"></input>
-                <input type="submit" class="btn btn-secondary" id="saveWrite" value="저장" class="button"
+                <input type="submit" class="btn btn-secondary" id="saveBtn" value="저장" class="button"
                        style="float: right"></input>
             </form>
         </section>
     </div>
 </div>
+<%@ include file="../layout/footer.jsp" %>
 
-<script>
+<%--<script>
     function checkAll() {
+    e.preventDefault();
         if (!checkUserName(form.username.value)) {
             console.log("작성자 이름확인")
             return false;
@@ -157,7 +156,90 @@
         }
         return true; //확인이 완료되었을 때
     }
+</script>--%>
+
+<script>
+    $(document).ready(function(){
+        $('#saveBtn').submit(function(){
+           return writeFormChk();
+        });
+    });
+
+    function writeFormChk() {
+        e.preventDefault();
+        var category = document.getElementById("category");
+        var userName = document.getElementById("userName");
+        var password = document.getElementById("password");
+        var verifyPassword = document.getElementById("verifyPassword");
+        var title = document.getElementById("title");
+        var content = document.getElementById("content");
+
+        if(category.value == ""){
+            alert("카테고리를 입력하세요.")
+            category.focus();
+            return false;
+        }
+
+        /* userName 유효성검사*/
+        var userNameChk = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]{3,5}$/;
+
+        if(userName.value == ""){
+            alert("작성자를 입력하세요.")
+            userName.focus();
+            return false;
+        }
+        if(!userNameChk.test(userName.value)){
+            alert("이름은 3~5글자 한글로만 입력해야합니다.");
+            userName.value = "";
+            userName.focus();
+            return false;
+        }
+
+        /*비밃번호 유효성검사 */
+        var passwordChk = /(^[a-zA-z0-9]|[`~!@@#$%^&*|₩₩₩'₩";:₩/?]){4,16}$/; //비밀번호 유효성 검사
+        if(password.value == ""){
+            alert("비밀번호를 입력하세요.")
+            password.focus();
+            return false;
+        }
+        if(!passwordChk.test(password.value)){
+            alert("비밀번호는 영문, 숫자, 특수문자 포함 4~16자리로 입력해야합니다!");
+            password.value = "";
+            password.focus();
+            return false;
+        }
+        if(password.value !== verifyPassword.value){
+            alert("비밀번호가 일치하지 않습니다.")
+            verifyPassword.focus();
+            return false;
+        }
+
+        /* title 유효성검사 */
+        if(title.value == ""){
+            alert("제목을 입력하세요.")
+            title.focus();
+            return false;
+        }
+        if (title.value>2000 || title.value < 4) {
+            alert("제목을 입력하세요.")
+            title.focus();
+            return false;
+        }
+
+        /* 내용 유효성 검사 */
+        if(content.value == ""){
+            alert("내용을 입력하세요.")
+            content.focus();
+            return false;
+        }
+        if (content.value>2000 || content.value < 4) {
+            alert("제목은 4자 이상 2000자 미만이어야 합니다.")
+            content.focus();
+            return false;
+        }
+    }
 </script>
+
 <script>
     const result = "${msg}";
     if (result === "regSuccess") {
@@ -165,4 +247,3 @@
     }
 
 </script>
-<%@ include file="../layout/footer.jsp" %>

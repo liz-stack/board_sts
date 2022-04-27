@@ -30,6 +30,10 @@ dependencies {
     implementation 'javax.servlet:jstl'
     //implementation 'org.slf4j:slf4j-api:2.0.0-alpha7'
     implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
+
+    /*validation*/
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
    /* implementation group: 'org.slf4j', name: 'slf4j-api', version: '2.0.0-alpha7'
     // https://mvnrepository.com/artifact/mysql/mysql-connector-java
     // https://mvnrepository.com/artifact/org.slf4j/slf4j-nop

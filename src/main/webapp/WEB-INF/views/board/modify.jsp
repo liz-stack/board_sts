@@ -25,7 +25,7 @@
                         pattern="yyyy-MM-dd HH:mm"
                         value="${boardDetail.createDate}"/></span
             </div>
-            <%--TODO: 220425 수정 버튼 누르면 수정일 now()생성--%>
+
             <div class="form-group">
                 <label>수정 일시</label>
                 <span type="modifyDate" class="form-control" id="modifyDate" name="modifyDate" readOnly><fmt:formatDate
@@ -38,7 +38,7 @@
             </div>
             <div class="form-group">
                 <label for="userName">작성자</label>
-                <input type="writer" class="form-control" id="userName" name="userName" value="${editBoard.userName}">
+                <input type="writer" class="form-control" id="userName" name="userName" value="${boardDetail.userName}">
             </div>
             <div class="form-group">
                 <label for="password">비밀번호</label>

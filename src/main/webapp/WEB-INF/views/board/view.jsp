@@ -81,12 +81,12 @@
 
     <div class="boxFooter" style="display: flex; justify-content: center;">
         <form role="form" method="post">
-            <input type="hidden" id="boardNo" name="boardNo" value="${boardDetail.boardNo}">
+            <input type="hidden" name="boardNo" value="${boardDetail.boardNo}">
         </form>
         <button type="submit" class="btn btn-dark mt-3 listBtn">목록</button>
         <%--href="/board/list"--%>
         <button type="submit" class="btn btn-dark mt-3 modBtn">수정</button>
-        <button type="submit" class="btn btn-dark mt-3 deleteBtn">삭제</button>
+        <button type="submit" class="btn btn-dark mt-3 delBtn" >삭제</button> <%--TODO 220427 : 삭제안됨--%>
     </div>
 
 </div>
@@ -98,8 +98,8 @@
 
 <%@ include file="../layout/footer.jsp" %>
 <script>
-    $(document).ready(function () {
-        /* $("#fileInput").on('change', function () { // 값이 변경되면
+        /*     $(document).ready(function () {
+$("#fileInput").on('change', function () { // 값이 변경되면
              if (window.FileReader) { // modern browser
                  var filename = $(this)[0].files[0].name;
              } else { // old IE
@@ -107,10 +107,8 @@
              }
              // 추출한 파일명 삽입
              $("#userfile").val(filename);
-         })*/
-
-
-    });
+         })    });
+*/
 
 </script>
 <script type="text/javascript">
@@ -125,6 +123,9 @@
         alert("게시글이 삭제되었습니다.")
     };
 
+
+</script>
+<script>
     $(document).ready(function () {
 
         let formObj = $("form[role='form']");
@@ -132,7 +133,7 @@
         console.log(formObj); //init [form, prevObject: init(1), context: document, selector: "form[role='form']"]
 
         $('.listBtn').on("click", function () {
-          self.location = "/board/list"
+            self.location = "/board/list"
         });
 
         $(`.modBtn`).on("click", function () {
@@ -147,5 +148,6 @@
         });
 
     });
+
 
 </script>

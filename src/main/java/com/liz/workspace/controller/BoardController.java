@@ -47,11 +47,11 @@ public class BoardController {
 
     @PostMapping("/write")
     public String writeBoard(@Valid BoardDTO boardDTO, BindingResult bindingResult, RedirectAttributes rttr) {
-        log.info("error: " + bindingResult.hasErrors());
+        log.info("에러확인: " + bindingResult.hasErrors());
 
         if (bindingResult.hasErrors()) { //에러 존재하는지 확인하고 처리
             List<ObjectError> list = bindingResult.getAllErrors();
-            //유효성 통과 못한 필드와 메시지를 핸들링
+            //에러 리스트
             for (ObjectError e : list) {
                 log.info(e.getDefaultMessage());
             }
@@ -108,12 +108,6 @@ public class BoardController {
         return "redirect:/board/list";
     }
 
-/*
-    @InitBinder
-    protected void initBinder(WebDataBinder binder) {
-        binder.setValidator(new UserInfoValidator());
-    }
-*/
 
     /* 예외처리*/
     /*@ExceptionHandler({NullPointerException.class, SQLException.class, IOException.class})

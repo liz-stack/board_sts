@@ -11,10 +11,8 @@
     <%--TODO: 220420 form좀 이쁘게 바꾸고 싶다--%>
     <div class="container">
         <section class="page-section" id="contact">
-            <!-- Contact Section Heading-->
-
             <!-- Contact Section Form--> <%-- onsubmit="return writeForm();"--%>
-            <form name="form" method="post" id="writeForm" onsubmit="return checkAll()"> <%--onsubmit="return checkAll()"--%>
+            <form name="form" method="post" id="writeForm" action="${path}/board/write" onsubmit="return checkAll()"> <%--onsubmit="return checkAll()"--%>
                 <%--  <input type="hidden" name="boardNo" value="${}">--%>
                 <div class="form-group">
                     <label for="category">카테고리 선택</label>
@@ -47,9 +45,9 @@
                 <%--SOLVED: 220420 취소 버튼 누르면 sql에러. pk를 ai로 바꿔줘야한다는데 fk에러 (input type 바꿔서 해결)--%>
                 <%--TODO: 220421 취소,저장 버튼 alert--%>
                 <input type="button" class="btn btn-secondary" id="cancleBtn" value="취소"
-                       onclick="location.href='/board/list'"></input>
+                       onclick="location.href='/board/list'">
                 <input type="submit" class="btn btn-secondary" id="saveBtn" value="저장" class="button"
-                       style="float: right"></input>
+                       style="float: right">
             </form>
         </section>
     </div>

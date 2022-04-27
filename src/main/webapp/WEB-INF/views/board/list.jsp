@@ -126,8 +126,9 @@
 
                         <td><c:out value="${board.category}"/></td>
                         <td style=" white-space:nowrap; overflow:hidden; text-overflow: ellipsis;"><a class='move'
-                                href='<c:out value="/board/view?boardNo=${board.boardNo}"/>'> <c:out
-                                value="${board.title}"/></a></td>
+                                                                                                      href='<c:out value="/board/view?boardNo=${board.boardNo}"/>'>
+                            <c:out
+                                    value="${board.title}"/></a></td>
                         <td><c:out value="${board.userName}"/></td>
                         <td><c:out value="${board.viewCount}"/></td>
                         <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${board.createDate}"/></td>
@@ -163,7 +164,7 @@
                 </c:if>
                 <%--TODO: 220422 endPage의 총 개수? 조건추가해야--%>
                 <li class="page-item"><a class="page-link"
-                                         href="/board/list?pageNo=${ pageMaker.endPage}">&raquo; </a></li>
+                                         href="/board/list?pageNo=${ pageMaker.totalPage}">&raquo; </a></li>
             </ul>
         </nav>
 
@@ -204,12 +205,14 @@
         alert("게시글 삭제가 완료되었습니다.");
     }
 
-
-$(".move").on("click", function (e){    //게시물 제목을 클릭했을때 이동
-    e.preventDefault(); //페이지 이동 방지
-    actionForm.append("<input type='hidden' name='boardNo' value='' "+
-    $(this).attr("href")+"'>");
+/*
+    $(".move").on("click", function (e) {    //게시물 제목을 클릭했을때 이동
+        e.preventDefault(); //페이지 이동 방지
+        actionForm.append("<input type='hidden' name='bno' value='"
+            + $(this).attr(
+                "href")
+            + "'>");
         actionForm.attr("action", "/board/view");
         actionForm.submit();
-});
+    });*/
 </script>

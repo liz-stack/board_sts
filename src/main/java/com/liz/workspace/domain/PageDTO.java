@@ -1,6 +1,7 @@
 package com.liz.workspace.domain;
 
 import lombok.Data;
+
 @Data
 public class PageDTO {
     private int startPage; // 페이징 블럭 안에서의 시작페이지
@@ -11,6 +12,7 @@ public class PageDTO {
     private final int PAGE_BLOCK = 10; // 페이지블록 구성하는 최대 페이지 개수
 
     private int totalCount; // 전체 글 개수
+    private int totalPage; // 끝페이지
     private Criteria cri; // 요청 페이지번호, 한 페이지당 글 개수
 
     public PageDTO(Criteria cri, int totalCount) {
@@ -28,11 +30,15 @@ public class PageDTO {
             endPage = realEnd;
         }
 
-        // 이전
-        //11이면 true, 1이면 false
+        // 이전 ex.11이면 true, 1이면 false
         prev = startPage > 1;
         // 다음
         next = endPage < realEnd;
+
+        totalPage = totalCount / PAGE_BLOCK;
+        if (totalCount > PAGE_BLOCK * totalPage) {
+            totalPage++;
+        }
 
     }
 

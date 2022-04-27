@@ -58,17 +58,16 @@
     function checkAll() {
         if (!checkUserName(document.writeForm.username.value)) {
             console.log("작성자 이름확인")
-            event.preventDefault();
         } else if (!checkPassword(document.writeForm.password.value,
             document.writeForm.verifyPassword.value)) {
             console.log("비밀번호 확인")
-            event.preventDefault();
+            return false;
         } else if (!checkTitle(document.writeForm.title.value)) {
             console.log("제목 확인")
-            event.preventDefault();
+            return false;
         } else if (!checkContent(document.writeForm.content.value)) {
             console.log("내용 확인")
-            event.preventDefault();
+            return false;
         }
         return true;
     }
@@ -106,11 +105,11 @@
     function checkPassword(password, verifyPassword) {
         //비밀번호가 입력되었는지 확인하기
         if (!checkExistData(password, "비밀번호를"))
-        return false;
+            return false;
         //비밀번호 확인이 입력되었는지 확인하기
         if (!checkExistData(verifyPassword, "비밀번호 확인을"))
 
-        var passwordRegExp = /(^[a-zA-z0-9]|[~!@#$%^&*()_+|<>?:{}]){4,16}$/; //비밀번호 유효성 검사
+            var passwordRegExp = /(^[a-zA-z0-9]|[~!@#$%^&*()_+|<>?:{}]){4,16}$/; //비밀번호 유효성 검사
         if (!passwordRegExp.test(password)) {
             alert("비밀번호는 영문,숫자, 특수문자 포함 4~16자리로 입력해야합니다!");
             document.writeForm.password = "";
@@ -143,7 +142,7 @@
     function checkTitle(title) {
         //작성자명 입력되었는지 확인
         if (!checkExistData(title, "제목을"))
-        return false;
+            return false;
         if (title.length < 4 || title.length > 2000) {
             alert("제목은 4자 이상 16글자 미만이어야합니다.")
             return false;
@@ -154,7 +153,7 @@
     function checkContent(content) {
         //작성자명 입력되었는지 확인
         if (!checkExistData(content, "내용을"))
-        return false;
+            return false;
         if (content.length < 4 || content.length > 2000) {
             alert("내용은 4자 이상 2000자 미만이어야합니다.")
             return false;

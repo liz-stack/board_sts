@@ -58,8 +58,8 @@ public class BoardController {
             return "/board/list";
         }
         boardServiceImpl.writeBoard(boardDTO);
-        log.info("글번호 : " + boardDTO.getBoardNo());
-        log.info("조회수: " + boardDTO.getViewCount());
+       // log.info("글번호 : " + boardDTO.getBoardNo());
+       // log.info("조회수: " + boardDTO.getViewCount());
         rttr.addFlashAttribute("msg", "regSuccess"); //게시글 등록 후 임시데이터(그 순간만)를 쏘는 방법
         return "redirect:/board/list";
     }

@@ -111,7 +111,7 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th class="col-md-1">카테고리</th>
+                    <th class="col-md-1.1">카테고리</th>
                     <th class="col-md-5">제목</th>
                     <th class="col-md-1">작성자</th>
                     <th class="col-md-1">조회수</th>
@@ -125,8 +125,8 @@
                     <tr>
 
                         <td><c:out value="${board.category}"/></td>
-                        <td style=" white-space:nowrap; overflow:hidden; text-overflow: ellipsis;"><a
-                                href="/board/view?boardNo=${board.boardNo}"><c:out
+                        <td style=" white-space:nowrap; overflow:hidden; text-overflow: ellipsis;"><a class='move'
+                                href='<c:out value="/board/view?boardNo=${board.boardNo}"/>'> <c:out
                                 value="${board.title}"/></a></td>
                         <td><c:out value="${board.userName}"/></td>
                         <td><c:out value="${board.viewCount}"/></td>
@@ -143,32 +143,38 @@
         </div>
 
         <nav aria-label="Contacts Page Navigation">
-            <ul class="pagination justify-content-center m-0">
+            <ul class="pagination justify-content-center">
                 <li class="page-item"><a class="page-link"
                                          href="/board/list?pageNo=1">&laquo; </a></li>
                 <c:if test="${ pageMaker.prev eq true }">
-                    <%--TODO: 현재 페이지 표시--%>
                     <li class="page-item"><a class="page-link"
                                              href="/board/list?pageNo=${ pageMaker.startPage - 1 }">&lsaquo;</a></li>
                 </c:if>
                 <c:forEach var="idx" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-                    <li class="page-item">
+                    <%--현재 페이지 표시--%>
+                    <li class="page-item"  <c:out value="${pageMaker.cri.pageNo == idx ? 'class=active' : ''}"/> >
                         <a class="page-link"
                            href="/board/list?pageNo=${idx}&type=${ pageMaker.cri.type }&keyword=${ pageMaker.cri.keyword }">${ idx }</a>
                     </li>
                 </c:forEach>
                 <c:if test="${ pageMaker.next eq true }">
                     <li class="page-item"><a class="page-link"
-                                             href="/board/list?pageNo=${ pageMaker.endPage+1}">&rsaquo; </a></li>
+                                             href="/board/list?pageNo=${ pageMaker.endPage + 1}">&rsaquo; </a></li>
                 </c:if>
-                <%--TODO: 220422 1페이지에서 맨끝 클릭할경우 pageNo=10으로 이동.. 조건추가해야--%>
+                <%--TODO: 220422 endPage의 총 개수? 조건추가해야--%>
                 <li class="page-item"><a class="page-link"
                                          href="/board/list?pageNo=${ pageMaker.endPage}">&raquo; </a></li>
             </ul>
         </nav>
 
+        <form id='actionForm' action="/board/list" method="get">
+            <input type="hidden" name="pageNo" value="${pageMaker.cri.pageNo}">
+            <input type="hidden" name="pageAmount" value="${pageMaker.cri.pageAmount}">
+        </form>
 
         <div>
+            <button class="btn  btn-secondary mt-3" id="listenbtn" onclick="location.href='/board/list'">목록</button>
+
             <button class="btn btn-secondary mt-3" style="float: right; clear: both;" id="write"
                     onclick="location.href='/board/write'">등록
             </button>
@@ -176,15 +182,7 @@
 
     </div>
 
-    <form id='actionForm' method="get">
-        <input type="hidden" name="pageNo" value="${pageMaker.cri.pageNo}">
-        <input type="hidden" name="pageAmount" value="${pageMaker.cri.pageAmount}">
-    </form>
 
-
-    <div>
-        <button class="btn" id="listenbtn" onclick="location.href='/board/list'">목록</button>
-    </div>
 </div>
 </div>
 
@@ -206,4 +204,12 @@
         alert("게시글 삭제가 완료되었습니다.");
     }
 
+
+$(".move").on("click", function (e){    //게시물 제목을 클릭했을때 이동
+    e.preventDefault(); //페이지 이동 방지
+    actionForm.append("<input type='hidden' name='boardNo' value='' "+
+    $(this).attr("href")+"'>");
+        actionForm.attr("action", "/board/view");
+        actionForm.submit();
+});
 </script>

@@ -11,7 +11,7 @@
     <div class="container">
         <section class="page-section" id="contact">
             <!-- Contact Section Form--> <%-- onsubmit="return writeForm();"--%>
-            <form name="writeForm" method="post" id="writeForm"
+            <form name="writeForm" method="post" id="writeForm" action="/board/list"
                   onsubmit="return checkAll();"> <%--onsubmit="return checkAll()"--%>
                 <%--  <input type="hidden" name="boardNo" value="${}">--%>
                 <div class="form-group">

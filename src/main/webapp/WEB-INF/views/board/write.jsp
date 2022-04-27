@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <%@ include file="../layout/header.jsp" %>
@@ -12,7 +11,8 @@
     <div class="container">
         <section class="page-section" id="contact">
             <!-- Contact Section Form--> <%-- onsubmit="return writeForm();"--%>
-            <form name="form" method="post" id="writeForm" action="${path}/board/write" onsubmit="return checkAll()"> <%--onsubmit="return checkAll()"--%>
+            <form name="writeForm" method="post" id="writeForm"
+                  onsubmit="return checkAll();"> <%--onsubmit="return checkAll()"--%>
                 <%--  <input type="hidden" name="boardNo" value="${}">--%>
                 <div class="form-group">
                     <label for="category">카테고리 선택</label>
@@ -24,7 +24,7 @@
                 </div>
                 <div class="form-group">
                     <label for="userName">작성자</label>
-                    <input type="userName" class="form-control" id="userName" name="userName">
+                    <input type="text" class="form-control" id="userName" name="userName">
                 </div>
                 <div class="form-group">
                     <label for="password">비밀번호</label>
@@ -56,22 +56,23 @@
 
 <script>
     function checkAll() {
-        if (!checkUserName(form.username.value)) {
+        if (!checkUserName(document.writeForm.username.value)) {
             console.log("작성자 이름확인")
             event.preventDefault();
-        } else if (!checkPassword(form.password.value,
-            form.verifyPassword.value)) {
+        } else if (!checkPassword(document.writeForm.password.value,
+            document.writeForm.verifyPassword.value)) {
             console.log("비밀번호 확인")
             event.preventDefault();
-        } else if (!checkTitle(form.title.value)) {
+        } else if (!checkTitle(document.writeForm.title.value)) {
             console.log("제목 확인")
             event.preventDefault();
-        } else if (!checkContent(form.content.value)) {
+        } else if (!checkContent(document.writeForm.content.value)) {
             console.log("내용 확인")
             event.preventDefault();
         }
         return true;
     }
+
     // 공백확인 함수
     function checkExistData(value, dataName) {
         if (value == "") {
@@ -84,7 +85,7 @@
     function checkExistData(value, dataName) {
         if (value == "") {
             alert(dataName + " 입력해주세요!");
-            event.preventDefault();
+            return false;
         }
         return true;
     }
@@ -92,12 +93,12 @@
     function checkUserName(userName) {
         //작성자명 입력되었는지 확인
         if (!checkExistData(userName, "작성자를"))
-            event.preventDefault();
+            return false;
 
         var nameRegExp = /^[가-힣]{2,4}$/; //작성자 이름 유효성 검사
         if (!nameRegExp.test(userName)) {
             alert("이름은 2~4글자 한글로 입력해야합니다.");
-            event.preventDefault();
+            return false;
         }
         return true; //확인이 완료되었을 때
     }
@@ -105,24 +106,24 @@
     function checkPassword(password, verifyPassword) {
         //비밀번호가 입력되었는지 확인하기
         if (!checkExistData(password, "비밀번호를"))
-            event.preventDefault();
+        return false;
         //비밀번호 확인이 입력되었는지 확인하기
         if (!checkExistData(verifyPassword, "비밀번호 확인을"))
-            event.preventDefault();
 
-        var password1RegExp = /(^[a-zA-z0-9]|[~!@#$%^&*()_+|<>?:{}]){4,16}$/; //비밀번호 유효성 검사
-        if (!password1RegExp.test(password)) {
+        var passwordRegExp = /(^[a-zA-z0-9]|[~!@#$%^&*()_+|<>?:{}]){4,16}$/; //비밀번호 유효성 검사
+        if (!passwordRegExp.test(password)) {
             alert("비밀번호는 영문,숫자, 특수문자 포함 4~16자리로 입력해야합니다!");
-            form.password.value = "";
-            form.verifyPassword.focus();
-            event.preventDefault();
+            document.writeForm.password = "";
+            document.writeForm.verifyPassword.focus();
+            return false;
+
         }
         //
         if (password != verifyPassword) {
             alert("비밀번호가 일치하지 않습니다.");
-            form.password.value = "";
-            form.verifyPassword.value = "";
-            form.verifyPassword.focus();
+            document.writeForm.password.value = "";
+            document.writeForm.verifyPassword.value = "";
+            document.writeForm.verifyPassword.focus();
             return false;
         }
     }
@@ -136,16 +137,16 @@
             return true
         }
         alert("카테고리를 선택해주세요!");
-        event.preventDefault();
+        return false;
     }
 
     function checkTitle(title) {
         //작성자명 입력되었는지 확인
         if (!checkExistData(title, "제목을"))
-            event.preventDefault();
+        return false;
         if (title.length < 4 || title.length > 2000) {
             alert("제목은 4자 이상 16글자 미만이어야합니다.")
-            event.preventDefault();
+            return false;
         }
         return true; //확인이 완료되었을 때
     }
@@ -153,10 +154,10 @@
     function checkContent(content) {
         //작성자명 입력되었는지 확인
         if (!checkExistData(content, "내용을"))
-            event.preventDefault();
+        return false;
         if (content.length < 4 || content.length > 2000) {
             alert("내용은 4자 이상 2000자 미만이어야합니다.")
-            event.preventDefault();
+            return false;
         }
         return true; //확인이 완료되었을 때
     }
@@ -248,9 +249,4 @@
 --%>
 
 <script>
-    const result = "${msg}";
-    if (result === "regSuccess") {
-        alert("게시글 등록이 완료되었습니다.")
-    }
-
 </script>

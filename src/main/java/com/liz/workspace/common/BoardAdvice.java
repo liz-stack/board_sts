@@ -1,4 +1,4 @@
-package com.liz.workspace.handler;
+package com.liz.workspace.common;
 
 import lombok.extern.slf4j.Slf4j;
 

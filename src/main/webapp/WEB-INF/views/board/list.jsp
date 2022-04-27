@@ -2,11 +2,8 @@
 
 <%@ include file="../layout/header.jsp" %>
 
-<%@page import="java.util.ArrayList" %>
-<%@page import="java.sql.SQLException" %>
-<%@page import="java.util.Date" %>
 <!-- datepicker -->
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css"/>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 
@@ -199,3 +196,14 @@
     })
 </script>--%>
 <%@ include file="../layout/footer.jsp" %>
+<script>
+    const result = "${msg}";
+    if (result === "regSuccess") {
+        alert("게시글 등록이 완료되었습니다.")
+    } else if (result == "modSuccess") {
+        alert("게시글 수정이 완료되었습니다.");
+    } else if (result == "delSuccess") {
+        alert("게시글 삭제가 완료되었습니다.");
+    }
+
+</script>

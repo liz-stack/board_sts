@@ -86,7 +86,8 @@
         <button type="submit" class="btn btn-dark mt-3 listBtn">목록</button>
         <%--href="/board/list"--%>
         <button type="submit" class="btn btn-dark mt-3 modBtn">수정</button>
-        <button type="submit" class="btn btn-dark mt-3 delBtn" >삭제</button> <%--TODO 220427 : 삭제안됨--%>
+        <%--TODO 220428: 삭제 전 alert--%>
+        <button type="submit" class="btn btn-dark mt-3 delBtn" >삭제</button>
     </div>
 
 </div>

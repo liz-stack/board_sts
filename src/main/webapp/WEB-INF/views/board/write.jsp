@@ -125,7 +125,7 @@
             alert("비밀번호는 영문,숫자, 특수문자 포함 4~16자리로 입력해야합니다!");
             return false;
         }
-        //TODO 220428 여기서 화면전환됨
+
         if (password != verifyPassword) {
             alert("비밀번호가 일치하지 않습니다.");
             password.value = "";

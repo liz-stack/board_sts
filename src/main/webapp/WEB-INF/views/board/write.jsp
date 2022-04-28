@@ -9,38 +9,61 @@
     <br/>
     <%--TODO: 220420 form좀 이쁘게 바꾸고 싶다--%>
     <div class="container">
+
+
         <section class="page-section" id="contact">
             <!-- Contact Section Form-->
             <%--form id: input 요소가 포함될 form 요소를 명시함--%>
-            <form role="form" method="post" action="${path}/board/write" onsubmit="return checkAll()">
+            <form class="form-horizontal" role="form" method="post" action="${path}/board/write"
+                  onsubmit="return checkAll()">
                 <%--  <input type="hidden" name="boardNo" value="${}">--%>
-                <div class="form-group">
-                    <label for="category">카테고리 선택</label>
-                    <select class="form-control" id="category" name="category">
-                        <option>JAVA</option>
-                        <option>Javascript</option>
-                        <option>Database</option>
-                    </select>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-xs-12 col-form-label" for="category">카테고리 선택</label>
+                    <div class="col-sm-3 col-xs-12">
+                        <select class="form-control" id="category" name="category">
+                            <option>JAVA</option>
+                            <option>Javascript</option>
+                            <option>Database</option>
+                        </select>
+                    </div>
+
                 </div>
-                <div class="form-group">
-                    <label for="userName">작성자</label>
-                    <input type="text" class="form-control" id="userName" name="userName">
+                <div class="form-group row">
+                    <label class="col-sm-2 col-xs-12 col-form-label" for="userName">작성자</label>
+                    <div class="col-sm-10 col-xs-12">
+                        <input type="text" class="form-control" id="userName" name="userName">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="password">비밀번호</label>
-                    <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호">
+                <div class="form-group row">
+                    <label class="col-sm-2 col-xs-12 col-form-label" for="password">비밀번호</label>
+                    <div class="col-sm-3 col-xs-12">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호">
+                        <input type="password" class="form-control" id="verifyPassword" name="verifyPassword"
+                               placeholder="비밀번호 확인">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <input type="password" class="form-control" id="verifyPassword" name="verifyPassword"
-                           placeholder="비밀번호 확인">
+                <div class="form-group row">
+
                 </div>
-                <div class="form-group">
-                    <label for="title">제목</label>
-                    <textarea class="form-control" id="title" name="title" rows="1"></textarea>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-xs-12 col-form-label" for="title">제목</label>
+                    <div class="col-sm-10 col-xs-12">
+                        <textarea class="form-control" id="title" name="title" rows="1"></textarea>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="content">내용</label>
-                    <textarea class="form-control" id="content" name="content" rows="15"></textarea>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-xs-12 col-form-label" for="content">내용</label>
+                    <div class="col-sm-10 col-xs-12">
+                        <textarea class="form-control" id="content" name="content" rows="10"></textarea>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-xs-12 col-form-label" for="bfile">파일 첨부</label>
+                    <div class="col-sm-3 col-xs-12">
+                        <input class="form-control" type="file" name="bfile">
+                        <input class="form-control" type="file" name="bfile">
+                        <input class="form-control" type="file" name="bfile">
+                    </div>
                 </div>
                 <%--SOLVED: 220420 취소 버튼 누르면 sql에러. pk를 ai로 바꿔줘야한다는데 fk에러 (input type 바꿔서 해결)--%>
                 <%--TODO: 220421 취소,저장 버튼 alert--%>
@@ -70,14 +93,17 @@
     function checkAll() {
         if (!checkUserName(userName.value)) {
             console.log("작성자 이름확인")
-        } if (!checkPassword(password.value,
+        }
+        if (!checkPassword(password.value,
             verifyPassword.value)) {
             console.log("비밀번호 확인")
             return false;
-        } if (!checkTitle(title.value)) {
+        }
+        if (!checkTitle(title.value)) {
             console.log("제목 확인")
             return false;
-        } if (!checkContent(content.value)) {
+        }
+        if (!checkContent(content.value)) {
             console.log("내용 확인")
             return false;
         }

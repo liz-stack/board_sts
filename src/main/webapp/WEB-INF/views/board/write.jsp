@@ -58,11 +58,11 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-sm-2 col-xs-12 col-form-label" for="bfile">파일 첨부</label>
+                    <label class="col-sm-2 col-xs-12 col-form-label" for="">파일 첨부</label>
                     <div class="col-sm-3 col-xs-12">
-                        <input class="form-control" type="file" name="bfile">
-                        <input class="form-control" type="file" name="bfile">
-                        <input class="form-control" type="file" name="bfile">
+                        <input class="form-control" type="file" name="files">
+                        <input class="form-control" type="file" name="files">
+                        <input class="form-control" type="file" name="files">
                     </div>
                 </div>
                 <%--SOLVED: 220420 취소 버튼 누르면 sql에러. pk를 ai로 바꿔줘야한다는데 fk에러 (input type 바꿔서 해결)--%>

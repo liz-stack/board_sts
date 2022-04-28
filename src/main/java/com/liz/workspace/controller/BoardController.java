@@ -12,10 +12,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.nio.file.Files;
 import java.util.List;
 
 @Slf4j
@@ -46,7 +48,7 @@ public class BoardController {
     }
 
     @PostMapping("/write")
-    public String writeBoard(@Valid BoardDTO boardDTO, BindingResult bindingResult, RedirectAttributes rttr) {
+    public String writeBoard(@Valid BoardDTO boardDTO, BindingResult bindingResult, List<MultipartFile> files, RedirectAttributes rttr) {
         log.info("에러확인: " + bindingResult.hasErrors());
 
         if (bindingResult.hasErrors()) { //에러 존재하는지 확인하고 처리

@@ -10,9 +10,9 @@ import lombok.Setter;
 @Getter
 public class FileVO {
         private int fileNo;
-        private String fileOriginName;
-        private String fileChangeName;
-        private String fileOriginPath;
-        private String fileChangePath;
+        private String originFileName;
+        private String uploadFileName;
+        private String originFilePath;
+        private String uploadFilePath;
         private int boardNo;
 }

@@ -108,7 +108,6 @@ public class BoardController {
         return "redirect:/board/list";
     }
 
-
     /* 예외처리*/
     /*@ExceptionHandler({NullPointerException.class, SQLException.class, IOException.class})
     public Object CustomEx(Exception e) {

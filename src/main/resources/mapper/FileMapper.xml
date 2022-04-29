@@ -11,8 +11,16 @@
         </foreach>
     </insert>
 
-    <!--파일 목록 -->
+
+    <!--파일 불러오기-->
     <select id="selectFile" parameterType="int" resultType="fileVO">
+        SELECT file_no, origin_file_name, modify_file_name, origin_file_path, modify_file_path
+        FROM file
+        WHERE file_no = #{fileNo}
+    </select>
+
+    <!--게시글 파일 목록 불러오기 -->
+    <select id="selectFileList" parameterType="int" resultType="fileVO">
         SELECT file_no, origin_file_name, modify_file_name, origin_file_path, modify_file_path
         FROM file
         WHERE board_no = #{boardNo}

@@ -48,7 +48,7 @@ public class BoardController {
     }
 
     @PostMapping("/write")
-    public String writeBoard(@Valid BoardDTO boardDTO, BindingResult bindingResult, List<MultipartFile> files, RedirectAttributes rttr) {
+    public String writeBoard(@Valid BoardDTO boardDTO, BindingResult bindingResult, MultipartFile[] files, RedirectAttributes rttr) {
         log.info("에러확인: " + bindingResult.hasErrors());
 
 

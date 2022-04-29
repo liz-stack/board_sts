@@ -2,10 +2,16 @@ package com.liz.workspace.service;
 
 import com.liz.workspace.domain.BoardDTO;
 import com.liz.workspace.domain.Criteria;
+import com.liz.workspace.domain.FileVO;
 import com.liz.workspace.mapper.BoardMapper;
+import com.liz.workspace.mapper.FileMapper;
+import com.liz.workspace.util.FileUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -15,7 +21,11 @@ import java.util.List;
 public class BoardServiceImpl implements BoardService {
 
     private final BoardMapper boardMapper;
+    @Autowired
+    private FileMapper fileMapper;
 
+    @Autowired
+    private FileUtils fileUtils;
     //총 게시글수
     @Override
     public int getBoardCount(Criteria cri) {
@@ -44,8 +54,13 @@ public class BoardServiceImpl implements BoardService {
     /* 글 작성 */
     @Override
     public void writeBoard(BoardDTO boardDTO) {
-
         boardMapper.writeBoard(boardDTO);
+    }
+
+    @Override
+    public void writeBoard(BoardDTO boardDTO, MultipartFile[] files) {
+        List<FileVO> fileList = fileUtils.uploadFiles(files, boardDTO.getBoardNo() );
+        fileMapper.insertFile(fileList);
     }
 
     /*글 상세보기*/
@@ -53,7 +68,6 @@ public class BoardServiceImpl implements BoardService {
     public BoardDTO getBoardDetail(int boardNo) {
         return boardMapper.getBoardDetail(boardNo);
     }
-
     @Override
     public int updateViewCount(int boardNo) {    //조회수 증가
         return boardMapper.updateViewCount(boardNo);
@@ -65,6 +79,7 @@ public class BoardServiceImpl implements BoardService {
         boardMapper.editBoard(boardDTO);
     }
 
+    /* 글 삭제 */
     @Override
     public void deleteBoard(int boardNo) {
         boardMapper.deleteBoard(boardNo);

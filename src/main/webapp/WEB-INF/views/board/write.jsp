@@ -14,7 +14,7 @@
         <section class="page-section" id="contact">
             <!-- Contact Section Form-->
             <%--form id: input 요소가 포함될 form 요소를 명시함--%>
-            <form class="form-horizontal" role="form" method="post" action="${path}/board/write"
+            <form class="form-horizontal" name="writeForm" method="post" action="${path}/board/write"
                   onsubmit="return checkAll()">
                 <%--  <input type="hidden" name="boardNo" value="${}">--%>
                 <div class="form-group row">
@@ -193,5 +193,26 @@
     }
 
 </script>
-
+<script type="text/javascript">
+    $(document).ready(function(){
+        var formObj = $("form[name='writeForm']");
+        $(".write_btn").on("click", function(){
+            if(fn_valiChk()){
+                return false;
+            }
+            formObj.attr("action", "/board/write");
+            formObj.attr("method", "post");
+            formObj.submit();
+        });
+    })
+    function fn_valiChk(){
+        var regForm = $("form[name='writeForm'] .chk").length;
+        for(var i = 0; i<regForm; i++){
+            if($(".chk").eq(i).val() == "" || $(".chk").eq(i).val() == null){
+                alert($(".chk").eq(i).attr("title"));
+                return true;
+            }
+        }
+    }
+</script>
 

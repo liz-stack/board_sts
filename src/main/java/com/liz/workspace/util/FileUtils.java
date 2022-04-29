@@ -69,6 +69,8 @@ public class FileUtils {
                 fileList.add(fileVO);
             } catch (IOException e) {
                 throw new FileException("[" + file.getOriginalFilename() + "] failed to save file...");
+            } catch (Exception e) {
+                throw new FileException("[" + file.getOriginalFilename() + "] failed to save file...");
             }
         }//end of for
 

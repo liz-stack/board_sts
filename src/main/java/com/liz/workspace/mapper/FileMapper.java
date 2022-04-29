@@ -9,7 +9,8 @@ import java.util.List;
 public interface FileMapper {
 
     int insertFile(List<FileVO> fileList);
-    FileVO selectFile(int boardNo);
+    FileVO selectFile(int fileNo);
+    List<FileVO> selectFileList(int boardNo);
     int deleteFile(int boardNo);
 
     //List<FileVO> selectFileList(int boardNo);

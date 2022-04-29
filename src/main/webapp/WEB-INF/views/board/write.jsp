@@ -78,7 +78,6 @@
 <%@ include file="../layout/footer.jsp" %>
 
 <script>
-
     var category = document.getElementById("category");
     var userName = document.getElementById("userName");
     var password = document.getElementById("password");
@@ -195,87 +194,4 @@
 
 </script>
 
-<%--<script>
-    $(document).ready(function(){
-        $('#saveBtn').submit(function(e){
-           return writeFormChk();
-        });
-    });
 
-    function writeFormChk() {
-        var category = document.getElementById("category");
-        var userName = document.getElementById("userName");
-        var password = document.getElementById("password");
-        var verifyPassword = document.getElementById("verifyPassword");
-        var title = document.getElementById("title");
-        var content = document.getElementById("content");
-
-        var userNameChk = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]{3,5}$/;
-        var passwordChk = /(^[a-zA-z0-9]|[`~!@@#$%^&*|₩₩₩'₩";:₩/?]){4,16}$/; //비밀번호 유효성 검사
-
-        if(category.value == ""){
-            alert("카테고리를 입력하세요.")
-            category.focus();
-            e.preventDefault();
-        }
-
-        /* userName 유효성검사*/
-
-        if(userName.value == ""){
-            alert("작성자를 입력하세요.")
-            userName.focus();
-            e.preventDefault();
-        }
-        if(!userNameChk.test(userName.value)){
-            alert("이름은 3~5글자 한글로만 입력해야합니다.");
-            userName.value = "";
-            userName.focus();
-            e.preventDefault();
-        }
-
-        /*비밃번호 유효성검사 */
-        if(password.value == ""){
-            alert("비밀번호를 입력하세요.")
-            password.focus();
-            e.preventDefault();
-        }
-        if(!passwordChk.test(password.value)){
-            alert("비밀번호는 영문, 숫자, 특수문자 포함 4~16자리로 입력해야합니다!");
-            password.value = "";
-            password.focus();
-            e.preventDefault();
-        }
-        if(password.value !== verifyPassword.value){
-            alert("비밀번호가 일치하지 않습니다.")
-            verifyPassword.focus();
-            e.preventDefault();
-        }
-
-        /* title 유효성검사 */
-        if(title.value == ""){
-            alert("제목을 입력하세요.")
-            title.focus();
-            e.preventDefault();
-        }
-        if (title.value>2000 || title.value < 4) {
-            alert("제목을 입력하세요.")
-            title.focus();
-            e.preventDefault();
-        }
-
-        /* 내용 유효성 검사 */
-        if(content.value == ""){
-            alert("내용을 입력하세요.")
-            content.focus();
-            e.preventDefault();
-        }
-        if (content.value>2000 || content.value < 4) {
-            alert("제목은 4자 이상 2000자 미만이어야 합니다.")
-            content.focus();
-            e.preventDefault();
-        }
-    }
-</script>--%>
-
-<script>
-</script>

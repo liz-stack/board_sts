@@ -1,4 +1,4 @@
-package com.liz.workspace.common;
+package com.liz.workspace.exception;
 
 import lombok.extern.slf4j.Slf4j;
 

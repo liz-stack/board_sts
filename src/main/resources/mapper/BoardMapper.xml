@@ -7,7 +7,6 @@
         <result column="board_no" property="boardNo"/>
         <result column="category" property="category"/>
         <result column="user_name" property="userName"/>
-        <result column="user_no" property="userNo"/>
         <result column="password" property="password"/>
         <result column="title" property="title"/>
         <result column="content" property="content"/>
@@ -19,10 +18,10 @@
     <!-- fileVO -->
     <resultMap id="fileMap" type="FileVO">
         <result column="file_no" property="fileNo"/>
-        <result column="file_origin_name" property="fileOriginName"/>
-        <result column="file_change_name" property="fileChangeName"/>
-        <result column="file_origin_path" property="fileOriginPath"/>
-        <result column="file_change_path" property="fileChangePath"/>
+        <result column="origin_file_name" property="originFileName"/>
+        <result column="modify_file_name" property="originFilePath"/>
+        <result column="origin_file_path" property="modifyFileName"/>
+        <result column="modify_file_path" property="modifyFilePath"/>
     </resultMap>
 
     <!-- replyVO -->
@@ -110,6 +109,7 @@
         FROM board
         WHERE board_no = #{boardNo}
     </delete>
+
 
     <!-- 검색 참고-->
     <!--<select id="">

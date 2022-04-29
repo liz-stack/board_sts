@@ -1,24 +1,28 @@
-package test;
+package com.liz.workspace;
 
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
+import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 
-@Slf4j
-@Controller
 public class UploadController {
+    Logger log = (Logger) LoggerFactory.getLogger(UploadController.class);
+
+    @Autowired
+
+
 
     @GetMapping("/uploadForm")
     public void uploadForm() {
         log.info("upload form");
     }
 
-    @PostMapping("/uploadFormAction")
+    @Test
     public void uploadFormPost(MultipartFile[] uploadFile, Model model) {
 
         String uploadFolder = "C:\\Intellij\\upload";

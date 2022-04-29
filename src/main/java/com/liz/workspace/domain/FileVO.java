@@ -11,8 +11,8 @@ import lombok.Setter;
 public class FileVO {
         private int fileNo;
         private String originFileName;
-        private String uploadFileName;
+        private String modifyFileName;
         private String originFilePath;
-        private String uploadFilePath;
+        private String modifyFilePath;
         private int boardNo;
 }

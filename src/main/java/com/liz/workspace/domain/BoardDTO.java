@@ -18,6 +18,7 @@ public class BoardDTO {
     private String category;
 
     @NotBlank(message = "이름을 입력해주세요.")
+    //TODO 220429 정규식 수정
     //@Pattern(regexp = "(^[가-힣]){2,4}", message = "이름은 2~4글자 한글로 입력해야합니다.")
     private String userName;
 

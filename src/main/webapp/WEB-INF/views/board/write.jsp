@@ -57,14 +57,38 @@
                         <textarea class="form-control" id="content" name="content" rows="10"></textarea>
                     </div>
                 </div>
+                <%-- <div class="form-group row">
+                     <label class="col-sm-2 col-xs-12 col-form-label" for="">파일 첨부</label>
+                     <div class="col-sm-3 col-xs-12">
+                         <input class="form-control" type="file" name="files" value="파일 찾기">
+                         <input class="form-control" type="file" name="files">
+                         <input class="form-control" type="file" name="files">
+                     </div>
+                 </div>--%>
                 <div class="form-group row">
                     <label class="col-sm-2 col-xs-12 col-form-label" for="">파일 첨부</label>
-                    <div class="col-sm-3 col-xs-12">
-                        <input class="form-control" type="file" name="files">
-                        <input class="form-control" type="file" name="files">
-                        <input class="form-control" type="file" name="files">
+                    <div class="input-group col-sm-10">
+                        <div class="custom-file">
+                            <input type="file" name="files" class="custom-file-input" id="inputGroupFile01"
+                                   aria-describedby="inputGroupFileAddon01">
+                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" name="files" class="custom-file-input" id="inputGroupFile02"
+                                   aria-describedby="inputGroupFileAddon01">
+                            <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" name="files" class="custom-file-input" id="inputGroupFile02"
+                                   aria-describedby="inputGroupFileAddon01">
+                            <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+                        </div>
                     </div>
+
+
                 </div>
+
+
                 <%--SOLVED: 220420 취소 버튼 누르면 sql에러. pk를 ai로 바꿔줘야한다는데 fk에러 (input type 바꿔서 해결)--%>
                 <%--TODO: 220421 취소,저장 버튼 alert--%>
                 <input type="button" class="btn btn-secondary" id="cancleBtn" value="취소"
@@ -194,10 +218,10 @@
 
 </script>
 <script type="text/javascript">
-    $(document).ready(function(){
+    $(document).ready(function () {
         var formObj = $("form[name='writeForm']");
-        $(".saveBtn").on("click", function(){
-            if(fn_valiChk()){
+        $(".saveBtn").on("click", function () {
+            if (fn_valiChk()) {
                 return false;
             }
             formObj.attr("action", "/board/write");
@@ -205,14 +229,21 @@
             formObj.submit();
         });
     })
-    function fn_valiChk(){
+
+    function fn_valiChk() {
         var regForm = $("form[name='writeForm'] .chk").length;
-        for(var i = 0; i<regForm; i++){
-            if($(".chk").eq(i).val() == "" || $(".chk").eq(i).val() == null){
+        for (var i = 0; i < regForm; i++) {
+            if ($(".chk").eq(i).val() == "" || $(".chk").eq(i).val() == null) {
                 alert($(".chk").eq(i).attr("title"));
                 return true;
             }
         }
     }
+
+    $("#file").on('change', function () {
+        var fileName = $("#file").val();
+        $(".upload-name").val(fileName);
+    });
+
 </script>
 

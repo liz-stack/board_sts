@@ -21,11 +21,9 @@ import java.util.List;
 public class BoardServiceImpl implements BoardService {
 
     private final BoardMapper boardMapper;
-    @Autowired
-    private FileMapper fileMapper;
+    private final FileMapper fileMapper;
 
-    @Autowired
-    private FileUtils fileUtils;
+    private final FileUtils fileUtils;
     //총 게시글수
     @Override
     public int getBoardCount(Criteria cri) {

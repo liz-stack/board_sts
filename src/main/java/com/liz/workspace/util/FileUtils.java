@@ -8,7 +8,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -20,15 +19,17 @@ import java.util.UUID;
 public class FileUtils {
 
     //경로에 넣을 날짜추가
+    // fileDateFormat -> "yyyyMMdd" 형식의 String 으로 리턴
     private final String fileDateFormat = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 
     //업로드 경로
     private final String originFilePath = "C:/Intellij/upload";
-    private final String uploadPath = Paths.get(originFilePath, fileDateFormat).toString();
+    //private final String modifyFilePath = Paths.get(originFilePath, fileDateFormat).toString();
 
     private final String getRandomString() {
         return UUID.randomUUID().toString().replaceAll("-", "");
     }
+
 
     public List<FileVO> uploadFiles(MultipartFile[] files, int boardNo) {
 
@@ -40,11 +41,13 @@ public class FileUtils {
         /*업로드 파일 정보를 담을 비어있는 리스트*/
         List<FileVO> fileList = new ArrayList<>();
 
-        /* uploadPath에 해당하는 디렉터리가 존재하지 않으면, 부모 디렉터리를 포함한 모든 디렉터리 생성*/
-        File dir = new File(uploadPath);
-        if (dir.exists() == false) {
-            dir.mkdir(); /*Creates the directory named by this abstract pathname.
-                               Returns: true if and only if the directory was created; false otherwise*/
+        File modifyFilePath = new File(originFilePath + fileDateFormat);
+        // uploadPath = "C:/Intellij/upload/2021/12/29"
+
+        // 폴더 경로가 존재 하는지 체크
+        if (modifyFilePath.exists() == false) { // 경로가 존재하지 않을때
+            modifyFilePath.mkdirs();  /* Creates the directory named by this abstract pathname.
+                                        Returns: true if and only if the directory was created; false otherwise */
         }
 
         for (MultipartFile file : files) {
@@ -56,17 +59,19 @@ public class FileUtils {
                 final String modifyFileName = getRandomString() + "." + extension;
 
                 //업로드 경로에 modifyFileName과 동일한 이름을 가진 파일 생성
-                File target = new File(uploadPath, modifyFileName);
+                File target = new File(modifyFilePath, modifyFileName);
                 //Transfer the received file to the given destination file.
                 file.transferTo(target);
 
-
+                /* 파일 정보 저장 */
                 FileVO fileVO = new FileVO();
                 fileVO.setBoardNo(boardNo);
                 fileVO.setOriginFileName(file.getOriginalFilename());
                 fileVO.setModifyFileName(file.getOriginalFilename());
 
+                /* 파일 정보 추가 */
                 fileList.add(fileVO);
+
             } catch (IOException e) {
                 throw new FileException("[" + file.getOriginalFilename() + "] failed to save file...");
             } catch (Exception e) {

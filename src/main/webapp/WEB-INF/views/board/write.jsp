@@ -196,7 +196,7 @@
 <script type="text/javascript">
     $(document).ready(function(){
         var formObj = $("form[name='writeForm']");
-        $(".write_btn").on("click", function(){
+        $(".saveBtn").on("click", function(){
             if(fn_valiChk()){
                 return false;
             }

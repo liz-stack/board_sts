@@ -54,17 +54,39 @@
         <textarea class="form-control" name="content" rows="15"
                   readonly>${boardDetail.content}</textarea>
     </div>
-    <div class="form-group"><label>파일첨부</label>
-        <input id="fileInput" filestyle="" type="file" data-class-button="btn btn-default"
-               data-class-input="form-control" data-button-text="" data-icon-name="fa fa-upload"
-               class="form-control" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);">
-        <div class="bootstrap-filestyle input-group"><input type="text" id="userfile" class="form-control"
-                                                            name="userfile" disabled=""> <span
-                class="group-span-filestyle input-group-btn" tabindex="0"> <label for="fileInput"
-                                                                                  class="btn btn-default"> <span
-                class="glyphicon fa fa-upload"></span> </label> </span></div>
+    <%--<div class="row rows">
+        <h3>첨부파일</h3>
+        <c:choose>
+            <c:when test="${ fn:length(board.attachList) gt 0 }" >
+                <c:forEach var="attach" items="${ board.attachList }">
+
+                    <c:if test="${ attach.filetype eq 'O' }">
+                        <!-- 일반파일 -->
+                        <!-- 다운로드할 일반파일 경로 변수 만들기 pageScope로 저장 -->
+                        <c:set var="fileCallPath"
+                               value="${ attach.uploadpath }/${ attach.uuid }_${ attach.filename }" />
+                        <li>
+                            <a href="/download?fileName=${ fileCallPath }">
+                                💾 ${ attach.filename }
+                            </a>
+                        </li>
+                    </c:if>
+                </c:forEach>
+            </c:when>
+            <c:otherwise>
+                첨부파일 없음
+            </c:otherwise>
+        </c:choose>
+    </div>--%>
+    <div class="form-group">
+        <div class="col-sm-3 col-xs-12">
+            <input class="form-control" type="file" name="files">
+            <input class="form-control" type="file" name="files">
+            <input class="form-control" type="file" name="files">
+        </div>
     </div>
 
+    <%--댓글--%>
     <div class="card mb-2">
         <div class="card-header bg-light">
             <i class="fa fa-comment fa"></i> REPLY
@@ -87,7 +109,7 @@
         <%--href="/board/list"--%>
         <button type="submit" class="btn btn-dark mt-3 modBtn">수정</button>
         <%--TODO 220428: 삭제 전 alert--%>
-        <button type="submit" class="btn btn-dark mt-3 delBtn" >삭제</button>
+        <button type="submit" class="btn btn-dark mt-3 delBtn">삭제</button>
     </div>
 
 </div>
@@ -99,21 +121,21 @@
 
 <%@ include file="../layout/footer.jsp" %>
 <script>
-        /*     $(document).ready(function () {
+    /*     $(document).ready(function () {
 $("#fileInput").on('change', function () { // 값이 변경되면
-             if (window.FileReader) { // modern browser
-                 var filename = $(this)[0].files[0].name;
-             } else { // old IE
-                 var filename = $(this).val().split('/').pop().split('\\').pop(); // 파일명만 추출
-             }
-             // 추출한 파일명 삽입
-             $("#userfile").val(filename);
-         })    });
+         if (window.FileReader) { // modern browser
+             var filename = $(this)[0].files[0].name;
+         } else { // old IE
+             var filename = $(this).val().split('/').pop().split('\\').pop(); // 파일명만 추출
+         }
+         // 추출한 파일명 삽입
+         $("#userfile").val(filename);
+     })    });
 */
 
 </script>
 <script type="text/javascript">
-//TODO: 220427 alert 안뜸, 삭제버튼 클릭안됨
+    //TODO: 220427 alert 안뜸, 삭제버튼 클릭안됨
     var result = "${msg}";
     console.log(result);
     if (result == "regSuccess") {
@@ -122,7 +144,8 @@ $("#fileInput").on('change', function () { // 값이 변경되면
         alert("게시글이 수정되었습니다.")
     } else if (result == "delSuccess") {
         alert("게시글이 삭제되었습니다.")
-    };
+    }
+    ;
 
 
 </script>
@@ -130,7 +153,7 @@ $("#fileInput").on('change', function () { // 값이 변경되면
     $(document).ready(function () {
 
         let formObj = $("form[role='form']");
-        console.log("formObj: "+ formObj); //object Object 라고 뜸
+        console.log("formObj: " + formObj); //object Object 라고 뜸
         console.log(formObj); //init [form, prevObject: init(1), context: document, selector: "form[role='form']"]
 
         $('.listBtn').on("click", function () {

@@ -23,7 +23,7 @@ public class FileUtils {
     private final String fileDateFormat = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 
     //업로드 경로
-    private final String originFilePath = "C:/Intellij/upload";
+    private final String originFilePath = "C:\\Intellij\\upload";
     //private final String modifyFilePath = Paths.get(originFilePath, fileDateFormat).toString();
 
     private final String getRandomString() {
@@ -67,7 +67,7 @@ public class FileUtils {
                 FileVO fileVO = new FileVO();
                 fileVO.setBoardNo(boardNo);
                 fileVO.setOriginFileName(file.getOriginalFilename());
-                fileVO.setModifyFileName(file.getOriginalFilename());
+                fileVO.setModifyFileName(modifyFileName);
 
                 /* 파일 정보 추가 */
                 fileList.add(fileVO);

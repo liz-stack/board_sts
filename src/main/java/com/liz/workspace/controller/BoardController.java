@@ -51,7 +51,6 @@ public class BoardController {
     public String writeBoard(@Valid BoardDTO boardDTO, BindingResult bindingResult, MultipartFile[] files, RedirectAttributes rttr) {
         log.info("에러확인: " + bindingResult.hasErrors());
 
-
         if (bindingResult.hasErrors()) { //에러 존재하는지 확인하고 처리
             List<ObjectError> list = bindingResult.getAllErrors();
             //에러 리스트
@@ -61,7 +60,7 @@ public class BoardController {
             return "/board/list";
         }
 
-        boardServiceImpl.writeBoard(boardDTO);
+        boardServiceImpl.writeBoard(boardDTO, files);
        // log.info("글번호 : " + boardDTO.getBoardNo());
        // log.info("조회수: " + boardDTO.getViewCount());
         rttr.addFlashAttribute("msg", "regSuccess"); //게시글 등록 후 임시데이터(그 순간만)를 전송

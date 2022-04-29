@@ -66,7 +66,7 @@
                      </div>
                  </div>--%>
                 <div class="form-group row">
-                    <label class="col-sm-2 col-xs-12 col-form-label" for="">파일 첨부</label>
+                    <label class="col-sm-2 col-xs-12 col-form-label">파일 첨부</label>
                     <div class="input-group col-sm-10">
                         <div class="custom-file">
                             <input type="file" name="files" class="custom-file-input" id="inputGroupFile01"
@@ -79,9 +79,9 @@
                             <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
                         </div>
                         <div class="custom-file">
-                            <input type="file" name="files" class="custom-file-input" id="inputGroupFile02"
+                            <input type="file" name="files" class="custom-file-input" id="inputGroupFile03"
                                    aria-describedby="inputGroupFileAddon01">
-                            <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+                            <label class="custom-file-label" for="inputGroupFile03">Choose file</label>
                         </div>
                     </div>
 
@@ -240,8 +240,8 @@
         }
     }
 
-    $("#file").on('change', function () {
-        var fileName = $("#file").val();
+    $(".custom-file-input").on('change',function(){
+        var fileName = $(".custom-file-input").val();
         $(".upload-name").val(fileName);
     });
 

@@ -5,14 +5,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Data
-@NoArgsConstructor
-@Setter
-@Getter
 public class FileVO {
         private int fileNo;
         private String originFileName;
         private String modifyFileName;
         private String originFilePath;
         private String modifyFilePath;
+        private int fileSize;
         private int boardNo;
 }

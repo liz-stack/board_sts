@@ -4,10 +4,10 @@
 
     <!--파일 업로드-->
     <insert id="insertFile" parameterType="list">
-        INSERT INTO file (file_no, origin_file_name, modify_file_name, origin_file_path, modify_file_path)
+        INSERT INTO file (file_no, origin_file_name, modify_file_name, origin_file_path, modify_file_path, file_size, board_no )
         VALUES
         <foreach collection="list" item="item" separator=",">
-        (#{item.fileNo}, #{item.orginFileName}, #{item.modifyFileName}, #{item.orginFilePath}, #{item.modifyFilePath})
+        (#{item.fileNo}, #{item.orginFileName}, #{item.modifyFileName}, #{item.orginFilePath}, #{item.modifyFilePath}, #{item.fileSize}, #{item.boarNo} )
         </foreach>
     </insert>
 

@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -20,16 +21,15 @@ public class FileUtils {
 
     //경로에 넣을 날짜추가
     // fileDateFormat -> "yyyyMMdd" 형식의 String 으로 리턴
-    private final String fileDateFormat = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+    private final String today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 
     //업로드 경로
-    private final String originFilePath = "C:\\Intellij\\upload";
-    //private final String modifyFilePath = Paths.get(originFilePath, fileDateFormat).toString();
+    //private final String originFilePath = "C:\\Intellij\\upload";
+    private final String originFilePath = Paths.get("C:", "Intellij", "upload", today).toString();
 
     private final String getRandomString() {
         return UUID.randomUUID().toString().replaceAll("-", "");
     }
-
 
     public List<FileVO> uploadFiles(MultipartFile[] files, int boardNo) {
 
@@ -41,8 +41,10 @@ public class FileUtils {
         /*업로드 파일 정보를 담을 비어있는 리스트*/
         List<FileVO> fileList = new ArrayList<>();
 
-        File modifyFilePath = new File(originFilePath + fileDateFormat);
-        // uploadPath = "C:/Intellij/upload/2021/12/29"
+
+        // File modifyFilePath = new File(originFilePath + fileDateFormat);
+        // uploadPath = "C:/Intellij/upload/20220428"
+        File modifyFilePath = new File(originFilePath);
 
         // 폴더 경로가 존재 하는지 체크
         if (modifyFilePath.exists() == false) { // 경로가 존재하지 않을때
@@ -68,12 +70,14 @@ public class FileUtils {
                 fileVO.setBoardNo(boardNo);
                 fileVO.setOriginFileName(file.getOriginalFilename());
                 fileVO.setModifyFileName(modifyFileName);
+                fileVO.setFileSize((int) file.getSize());
 
                 /* 파일 정보 추가 */
                 fileList.add(fileVO);
 
             } catch (IOException e) {
                 throw new FileException("[" + file.getOriginalFilename() + "] failed to save file...");
+
             } catch (Exception e) {
                 throw new FileException("[" + file.getOriginalFilename() + "] failed to save file...");
             }

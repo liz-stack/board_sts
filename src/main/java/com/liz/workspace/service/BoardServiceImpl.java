@@ -16,14 +16,16 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor //Mapper 생성자
 @Transactional(readOnly = false)
 public class BoardServiceImpl implements BoardService {
 
-    private final BoardMapper boardMapper;
-    private final FileMapper fileMapper;
+    @Autowired
+    private BoardMapper boardMapper;
+    @Autowired
+    private FileMapper fileMapper;
 
-    private final FileUtils fileUtils;
+    @Autowired
+    private FileUtils fileUtils;
     //총 게시글수
     @Override
     public int getBoardCount(Criteria cri) {
@@ -38,16 +40,6 @@ public class BoardServiceImpl implements BoardService {
         return boardMapper.getBoardList(cri);
     }
 
-    // 글 작성시 유효성 체크
-   /* public Map<String, String> validateHandling(Errors errors) {
-        Map<String, String> validatorResult = new HashMap<>();
-
-        for (FieldError error : errors.getFieldErrors()) {
-            String validKeyName = String.format("valid_%s", error.getField());
-            validatorResult.put(validKeyName, error.getDefaultMessage());
-        }
-        return validatorResult;
-    }*/
 
     /* 글 작성 */
     @Override
@@ -57,7 +49,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public void writeBoard(BoardDTO boardDTO, MultipartFile[] files) {
-        List<FileVO> fileList = fileUtils.uploadFiles(files, boardDTO.getBoardNo() );
+        List<FileVO> fileList = fileUtils.uploadFiles(files, boardDTO.getBoardNo());
         fileMapper.insertFile(fileList);
     }
 

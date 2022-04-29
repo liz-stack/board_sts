@@ -14,7 +14,6 @@ public interface BoardService {
 
     /* 글 작성 */
     void writeBoard(BoardDTO boardDTO);
-
     void writeBoard(BoardDTO boardDTO, MultipartFile[] files);
 
     /* 글 상세보기 */

@@ -10,14 +10,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.nio.file.Files;
 import java.util.List;
 
 @Slf4j
@@ -48,9 +49,9 @@ public class BoardController {
     }
 
     @PostMapping("/write")
-    public String writeBoard(@Valid BoardDTO boardDTO, BindingResult bindingResult, MultipartFile[] files, RedirectAttributes rttr) {
-        log.info("에러확인: " + bindingResult.hasErrors());
-
+    public String writeBoard(@RequestParam("boardNo") int boardNo, @Valid BoardDTO boardDTO, Model model, MultipartFile[] files, RedirectAttributes rttr, BindingResult bindingResult) {
+        //@RequestParam("boardNo")int boardNo 사용시 MethodArgumentTypeMismatchException ERROR
+        model.addAttribute(boardDTO.getBoardNo());
         if (bindingResult.hasErrors()) { //에러 존재하는지 확인하고 처리
             List<ObjectError> list = bindingResult.getAllErrors();
             //에러 리스트
@@ -59,11 +60,12 @@ public class BoardController {
             }
             return "/board/list";
         }
+        // boardServiceImpl.writeBoard(boardDTO, files);
 
-        boardServiceImpl.writeBoard(boardDTO, files);
-       // log.info("글번호 : " + boardDTO.getBoardNo());
-       // log.info("조회수: " + boardDTO.getViewCount());
-        rttr.addFlashAttribute("msg", "regSuccess"); //게시글 등록 후 임시데이터(그 순간만)를 전송
+        model.addAttribute(boardDTO);
+        model.addAttribute(files);
+        log.info("boardNo" + boardDTO.getBoardNo());
+        //rttr.addFlashAttribute("msg", "regSuccess"); //게시글 등록 후 임시데이터(그 순간만)를 전송
         return "redirect:/board/list";
     }
 

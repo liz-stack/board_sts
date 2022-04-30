@@ -4,24 +4,24 @@
 
     <!--파일 업로드-->
     <insert id="insertFile" parameterType="list">
-        INSERT INTO file (file_no, origin_file_name, modify_file_name, origin_file_path, modify_file_path, file_size, board_no )
+        INSERT INTO file (file_no, origin_file_name, modify_file_name, origin_file_path, file_size, board_no, create_date )
         VALUES
         <foreach collection="list" item="item" separator=",">
-        (#{item.fileNo}, #{item.orginFileName}, #{item.modifyFileName}, #{item.orginFilePath}, #{item.modifyFilePath}, #{item.fileSize}, #{item.boarNo} )
+        (#{item.fileNo}, #{item.originFileName}, #{item.modifyFileName}, #{item.originFilePath}, #{item.fileSize}, #{item.boardNo}, NOW() )
         </foreach>
     </insert>
 
 
     <!--파일 불러오기-->
     <select id="selectFile" parameterType="int" resultType="fileVO">
-        SELECT file_no, origin_file_name, modify_file_name, origin_file_path, modify_file_path
+        SELECT file_no, origin_file_name, modify_file_name, origin_file_path
         FROM file
         WHERE file_no = #{fileNo}
     </select>
 
     <!--게시글 파일 목록 불러오기 -->
     <select id="selectFileList" parameterType="int" resultType="fileVO">
-        SELECT file_no, origin_file_name, modify_file_name, origin_file_path, modify_file_path
+        SELECT file_no, origin_file_name, modify_file_name, origin_file_path
         FROM file
         WHERE board_no = #{boardNo}
     </select>

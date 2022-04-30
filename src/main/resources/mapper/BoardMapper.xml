@@ -21,7 +21,6 @@
         <result column="origin_file_name" property="originFileName"/>
         <result column="modify_file_name" property="originFilePath"/>
         <result column="origin_file_path" property="modifyFileName"/>
-        <result column="modify_file_path" property="modifyFilePath"/>
     </resultMap>
 
     <!-- replyVO -->
@@ -67,8 +66,11 @@
     <insert id="writeBoard" parameterType="boardDTO" useGeneratedKeys="true"
             keyProperty="boardNo">
         INSERT INTO board
-            (`board_no`, `category`, `user_name`, `password`, `title`, `content`)
-        VALUES (#{boardNo}, #{category}, #{userName}, #{password}, #{title}, #{content})
+            (`board_no`, `category`, `user_name`, `password`, `title`, `content`, 'create_date')
+        VALUES (#{boardNo}, #{category}, #{userName}, #{password}, #{title}, #{content}, now())
+        <selectKey resultType="int" keyProperty="boardNo" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
     </insert>
 
     <!-- 게시판 상세보기 -->

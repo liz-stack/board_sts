@@ -7,16 +7,15 @@
     <br/>
     <h2>게시판 - 등록</h2>
     <br/>
-    <%--TODO: 220420 form좀 이쁘게 바꾸고 싶다--%>
     <div class="container">
 
 
         <section class="page-section" id="contact">
             <!-- Contact Section Form-->
             <%--form id: input 요소가 포함될 form 요소를 명시함--%>
-            <form class="form-horizontal" name="writeForm" method="post" action="${path}/board/write"
-                  onsubmit="return checkAll()">
-                <%--  <input type="hidden" name="boardNo" value="${}">--%>
+            <form class="form-horizontal" value=${BoardDTO} method="post" action="${path}/board/write"
+                  onsubmit="return writeBoard()"> <%--return !!( registerBoard() & checkAll())"--%>
+                <input type="hidden" class="form-control" id="boardNo" name="boardNo">
                 <div class="form-group row">
                     <label class="col-sm-2 col-xs-12 col-form-label" for="category">카테고리 선택</label>
                     <div class="col-sm-3 col-xs-12">
@@ -65,31 +64,19 @@
                          <input class="form-control" type="file" name="files">
                      </div>
                  </div>--%>
-                <div class="form-group row">
-                    <label class="col-sm-2 col-xs-12 col-form-label">파일 첨부</label>
-                    <div class="input-group col-sm-10">
-                        <div class="custom-file">
-                            <input type="file" name="files" class="custom-file-input" id="inputGroupFile01"
-                                   aria-describedby="inputGroupFileAddon01">
-                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                        </div>
-                        <div class="custom-file">
-                            <input type="file" name="files" class="custom-file-input" id="inputGroupFile02"
-                                   aria-describedby="inputGroupFileAddon01">
-                            <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
-                        </div>
-                        <div class="custom-file">
-                            <input type="file" name="files" class="custom-file-input" id="inputGroupFile03"
-                                   aria-describedby="inputGroupFileAddon01">
-                            <label class="custom-file-label" for="inputGroupFile03">Choose file</label>
-                        </div>
-                    </div>
-
-
+                <div data-name="fileDiv" class="filebox bs3-primary form-group row">
+                    <label class="col-sm-2 file_0 col-xs-12  control-label">파일 첨부</label>
+                    <input type="file" name="files" id="file_0" class="upload-hidden"
+                           onchange="changeFilename(this)"/>
+                    <button type="button" onclick="addFile()"
+                            class="btn btn-bordered btn-xs visible-xs-inline visible-sm-inline visible-md-inline visible-lg-inline">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                    </button>
+                    <button type="button" onclick="removeFile(this)"
+                            class="btn btn-bordered btn-xs visible-xs-inline visible-sm-inline visible-md-inline visible-lg-inline">
+                        <i class="fa fa-minus" aria-hidden="true"></i>
+                    </button>
                 </div>
-
-
-                <%--SOLVED: 220420 취소 버튼 누르면 sql에러. pk를 ai로 바꿔줘야한다는데 fk에러 (input type 바꿔서 해결)--%>
                 <%--TODO: 220421 취소,저장 버튼 alert--%>
                 <input type="button" class="btn btn-secondary" id="cancleBtn" value="취소"
                        onclick="location.href='/board/list'">
@@ -97,18 +84,34 @@
                        style="float: right">
             </form>
         </section>
-    </div>
+    </div> <%--container end--%>
+
+</div><%--contentContainer end--%>
+
+
+
+</div>
 </div>
 <%@ include file="../layout/footer.jsp" %>
-
 <script>
+    function writeBoard(){
+        if(!checkAll()){
+            return false;
+        }
+        if(registerBoard()){
+            return false;
+        }
+        return  true;
+    }
+
+    console.log(boardNo);
     var category = document.getElementById("category");
     var userName = document.getElementById("userName");
     var password = document.getElementById("password");
     var verifyPassword = document.getElementById("verifyPassword");
     var title = document.getElementById("title");
     var content = document.getElementById("content");
-
+    var boardNo = document.getElementById("boardNo");
     let userNameChk = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]{3,5}$/;
     let passwordChk = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{4,16}$/; //비밀번호 유효성 검사
 
@@ -216,34 +219,64 @@
         return true; //확인이 완료되었을 때
     }
 
-</script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        var formObj = $("form[name='writeForm']");
-        $(".saveBtn").on("click", function () {
-            if (fn_valiChk()) {
+    function registerBoard() {
+        let fileIdx = 0; /*[- 파일 인덱스 처리용 전역 변수 -]*/
+
+        function addFile() {
+
+            const fileDivs = $('div[data-name="fileDiv"]');
+            if (fileDivs.length > 2) {
+                alert('파일은 최대 세 개까지 업로드 할 수 있습니다.');
                 return false;
             }
-            formObj.attr("action", "/board/write");
-            formObj.attr("method", "post");
-            formObj.submit();
-        });
-    })
+            console.log(boardNo);
+            fileIdx++;
 
-    function fn_valiChk() {
-        var regForm = $("form[name='writeForm'] .chk").length;
-        for (var i = 0; i < regForm; i++) {
-            if ($(".chk").eq(i).val() == "" || $(".chk").eq(i).val() == null) {
-                alert($(".chk").eq(i).attr("title"));
-                return true;
+            const fileHtml = `
+		<div data-name="fileDiv" class="filebox bs3-primary form-group row">
+                        <label class="col-sm-2 file_0 col-xs-12  control-label">파일 첨부</label>
+                        <input type="file" name="files" id="file_0" class="upload-hidden"
+                               onchange="changeFilename(this)"/>
+                        <button type="button" onclick="addFile()"
+                                class="btn btn-bordered btn-xs visible-xs-inline visible-sm-inline visible-md-inline visible-lg-inline">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" onclick="removeFile(this)"
+                                class="btn btn-bordered btn-xs visible-xs-inline visible-sm-inline visible-md-inline visible-lg-inline">
+                            <i class="fa fa-minus" aria-hidden="true"></i>
+                        </button>
+                    </div>
+	`;
+
+            $('#saveBtn').before(fileHtml);
+        }
+
+        function removeFile(elem) {
+            const prevTag = $(elem).prev().prop('tagName');
+            if (prevTag === 'BUTTON') {
+                const file = $(elem).prevAll('input[type="file"]');
+                const filename = $(elem).prevAll('input[type="text"]');
+                file.val('');
+                filename.val('파일 찾기');
+                return false;
             }
+
+            const target = $(elem).parents('div[data-name="fileDiv"]');
+            target.remove();
+        }
+
+        function changeFilename(file) {
+
+            file = $(file);
+            const filename = file[0].files[0].name;
+            const target = file.prevAll('input');
+            target.val(filename);
         }
     }
+</script>
+<script>
 
-    $(".custom-file-input").on('change',function(){
-        var fileName = $(".custom-file-input").val();
-        $(".upload-name").val(fileName);
-    });
 
 </script>
+
 

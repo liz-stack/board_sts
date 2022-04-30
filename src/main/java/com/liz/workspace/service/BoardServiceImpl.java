@@ -7,14 +7,17 @@ import com.liz.workspace.mapper.BoardMapper;
 import com.liz.workspace.mapper.FileMapper;
 import com.liz.workspace.util.FileUtils;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @Transactional(readOnly = false)
 public class BoardServiceImpl implements BoardService {
@@ -48,8 +51,9 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public void writeBoard(BoardDTO boardDTO, MultipartFile[] files) {
+    public void writeBoard( BoardDTO boardDTO, MultipartFile[] files) {
         List<FileVO> fileList = fileUtils.uploadFiles(files, boardDTO.getBoardNo());
+        log.info("boardNo: "+boardDTO.getBoardNo());
         fileMapper.insertFile(fileList);
     }
 

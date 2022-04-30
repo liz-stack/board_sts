@@ -35,6 +35,4 @@ public class BoardDTO {
     private Date createDate;
     private Date modifyDate;
     private int viewCount;
-
-    private List<FileVO> fileList;
 }

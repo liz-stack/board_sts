@@ -36,6 +36,10 @@
         </collection>
     </resultMap>&ndash;&gt;-->
 
+    <select id="findByBoardNo">
+        select * from board where board_no=1
+    </select>
+
     <!-- 총 게시글수 -->
     <select id="getBoardCount" resultType="int">
         SELECT count(board_no) AS count

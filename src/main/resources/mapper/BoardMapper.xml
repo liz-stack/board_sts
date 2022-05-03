@@ -3,7 +3,7 @@
 <mapper namespace="com.liz.workspace.mapper.BoardMapper">
 
     <!-- BoardVO -->
-    <resultMap id="boardList" type="BoardDTO">
+    <resultMap id="boardMap" type="BoardDTO">
         <result column="board_id" property="boardId"/>
         <result column="category" property="category"/>
         <result column="user_name" property="userName"/>
@@ -56,7 +56,7 @@
        </select>
    -->
     <!-- 페이징 -->
-    <select id="getBoardList" resultMap="boardList">
+    <select id="getBoardList" resultMap="boardMap">
         <![CDATA[
         SELECT board_id, category, user_name, title, view_count, create_date, modify_date
         FROM board
@@ -78,9 +78,10 @@
     </insert>
 
     <!-- 게시판 상세보기 -->
-    <select id="getBoardDetail" resultMap="boardList">
+    <select id="getBoardDetail" resultMap="boardMap">
         select board_id,
                user_name,
+               password,
                create_date,
                modify_date,
                category,

@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +19,6 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/board")
 public class BoardApiController {
 
     @Autowired
@@ -30,20 +30,24 @@ public class BoardApiController {
      * @param boardId
      * @return
      */
-    @GetMapping(value = "/{boardId}")
+    @GetMapping(value = "/api/board/{boardId}")
     public ResponseEntity<BoardDTO> getBoardDetail(@PathVariable Long boardId) {
-        BoardDTO boardDTO = new BoardDTO();
+        //BoardDTO boardDTO = new BoardDTO();
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
-        boardDTO.setBoardId(boardId);
-        log.info("boardDTO: "+boardDTO);
-        return new ResponseEntity<BoardDTO>(boardDTO, headers, HttpStatus.OK);
+        //boardDTO.setBoardId(boardId);
+        //log.info("boardDTO: "+boardDTO);
+
+        BoardDTO boardDetail = boardService.getBoardDetail(boardId);
+        return new ResponseEntity<BoardDTO>(boardDetail, headers, HttpStatus.OK);
     }
 
 
     @GetMapping
     public ResponseEntity<List<BoardDTO>> getBoardList(){
+
+
         return null;
     }
 

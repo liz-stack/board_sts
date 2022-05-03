@@ -13,10 +13,10 @@ public interface BoardMapper {
     List<BoardDTO> getBoardList(Criteria cri);
     void writeBoard(BoardDTO boardDTO);
 
-    BoardDTO getBoardDetail(int boardId);
-    int updateViewCount(int boardId);
+    BoardDTO getBoardDetail(Long boardId);
+    boolean updateViewCount(Long boardId);
 
     void editBoard(BoardDTO boardDTO);
-    void deleteBoard(int boardId);
+    void deleteBoard(Long boardId);
 
 }

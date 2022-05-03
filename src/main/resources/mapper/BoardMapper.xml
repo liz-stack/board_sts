@@ -92,7 +92,7 @@
     </select>
 
     <!-- 조회수 증가 -->
-    <update id="updateViewCount" parameterType="int"><![CDATA[
+    <update id="updateViewCount" parameterType="Long"><![CDATA[
         UPDATE board
         SET view_count = view_count + 1
         WHERE board_id = #{boardId}

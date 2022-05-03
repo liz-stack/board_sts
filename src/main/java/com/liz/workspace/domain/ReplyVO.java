@@ -13,8 +13,8 @@ import java.util.Date;
 @Setter
 @Getter
 public class ReplyVO {
-    private int replyId;
+    private Long replyId;
     private String replyContent;
     private Date replyDate;
-    private int boardId;
+    private Long boardId;
 }

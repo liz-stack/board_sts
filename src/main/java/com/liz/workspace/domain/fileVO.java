@@ -7,10 +7,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class fileVO {
-        private int fileId;
+        private Long fileId;
         private String originFileName;
         private String modifyFileName;
         private String originFilePath;
         private int fileSize;
-        private int boardId;
+        private Long boardId;
 }

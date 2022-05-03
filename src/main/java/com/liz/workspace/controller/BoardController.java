@@ -3,9 +3,10 @@ package com.liz.workspace.controller;
 import com.liz.workspace.domain.BoardDTO;
 import com.liz.workspace.domain.Criteria;
 import com.liz.workspace.domain.PageDTO;
-import com.liz.workspace.service.BoardServiceImpl;
+import com.liz.workspace.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -24,16 +24,23 @@ import java.util.List;
 @Slf4j
 @Controller
 @RequestMapping("/board")
-@RequiredArgsConstructor
 public class BoardController {
 
-    private final BoardServiceImpl boardServiceImpl;
+    @Autowired
+    private BoardService boardService;
 
-    //전체 게시글 조회
+    /**
+     * 전체 게시글 조회
+     *
+     * @param cri
+     * @param model
+     * @return
+     * @throws Exception
+     */
     @GetMapping("/list")
     public String getBoardList(Criteria cri, Model model) throws Exception {
-        List<BoardDTO> boardList = boardServiceImpl.getBoardList(cri);
-        int boardCount = boardServiceImpl.getBoardCount(cri);
+        List<BoardDTO> boardList = boardService.getBoardList(cri);
+        int boardCount = boardService.getBoardCount(cri);
 
         PageDTO pageMaker = new PageDTO(cri, boardCount);
         model.addAttribute("getBoardCount", boardCount);
@@ -42,15 +49,30 @@ public class BoardController {
         return "/board/list";
     }
 
-    /* 글 작성 */
+    /**
+     * 글 작성폼
+     *
+     * @return
+     * @throws Exception
+     */
     @GetMapping("/write")
     public String writeForm() throws Exception {
         return "board/write";
     }
 
+    /**
+     * 글 작성
+     *
+     * @param boardId
+     * @param boardDTO
+     * @param model
+     * @param files
+     * @param bindingResult
+     * @return
+     */
     @PostMapping("/write")
-    public String writeBoard(@RequestParam("boardId") int boardId, @Valid BoardDTO boardDTO, Model model, MultipartFile[] files, RedirectAttributes rttr, BindingResult bindingResult) {
-        //@RequestParam("boardId")int boardId 사용시 MethodArgumentTypeMismatchException ERROR
+    public String writeBoard(@RequestParam("boardId") Long boardId, @Valid BoardDTO boardDTO, Model model, MultipartFile[] files, BindingResult bindingResult) {
+        //@RequestParam("boardId")Long boardId 사용시 MethodArgumentTypeMismatchException ERROR
         model.addAttribute(boardDTO.getBoardId());
         if (bindingResult.hasErrors()) { //에러 존재하는지 확인하고 처리
             List<ObjectError> list = bindingResult.getAllErrors();
@@ -60,11 +82,8 @@ public class BoardController {
             }
             return "/board/list";
         }
-        // boardServiceImpl.writeBoard(boardDTO, files);
-
         model.addAttribute(boardDTO);
         model.addAttribute(files);
-        log.info("boardId" + boardDTO.getBoardId());
         //rttr.addFlashAttribute("msg", "regSuccess"); //게시글 등록 후 임시데이터(그 순간만)를 전송
         return "redirect:/board/list";
     }
@@ -72,26 +91,27 @@ public class BoardController {
 
     /* 글 상세보기 */
     @RequestMapping("/view")
-    public ModelAndView getBoardDetail(@RequestParam("boardId") int boardId) throws Exception {
+    public String getBoardDetail(@RequestParam("boardId") Long boardId, Model model) throws Exception {
         //TODO: 220425 새로고침해도 조회수 올라가지 않게 수정
-        boardServiceImpl.updateViewCount(boardId); //boardId 넘김
-        ModelAndView mav = new ModelAndView();
+        boardService.updateViewCount(boardId); //boardId 넘김
+       /* ModelAndView mav = new ModelAndView();
         //  mav.addObject("updateViewCount", boardServiceImpl.updateViewCount(boardId));
         //  log.error("조회수: "+ boardVO.getViewCount());
         mav.setViewName("/board/view");
-        mav.addObject("boardDetail", boardServiceImpl.getBoardDetail(boardId));
-        return mav;
+        mav.addObject("boardDetail", boardServiceImpl.getBoardDetail(boardId));*/
+        model.addAttribute("boardDetail", boardService.getBoardDetail(boardId));
+        return "/board/view";
     }
 
 
     /* 글 수정 */
     @GetMapping("/modify")
-    public String editForm(@RequestParam(value = "boardId") int boardId, Model model) throws Exception {
+    public String editForm(@RequestParam(value = "boardId") Long boardId, Model model) throws Exception {
         /*ModelAndView mav = new ModelAndView();
         mav.setViewName("/board/modify");
         mav.addObject("", boardServiceImpl.getBoardDetail(boardId));
         return mav;*/
-        model.addAttribute("boardDetail", boardServiceImpl.getBoardDetail(boardId));
+        model.addAttribute("boardDetail", boardService.getBoardDetail(boardId));
         return "/board/modify";
     }
 
@@ -99,16 +119,16 @@ public class BoardController {
     @PostMapping("/modify")
     public String editBoard(BoardDTO boardDTO, RedirectAttributes rttr) throws Exception { //c.f. @PathVariable : url에 있는 정보를 긁어오고 싶은 경우
         log.info("수정처리!" + boardDTO.getBoardId());
-        boardServiceImpl.editBoard(boardDTO);
+        boardService.editBoard(boardDTO);
         rttr.addFlashAttribute("msg", "modSuccess");
-        int boardId = boardDTO.getBoardId();
+        Long boardId = boardDTO.getBoardId();
         return "redirect:/board/view?boardId=" + boardId;
     }
 
     /* 글 삭제 */
     @RequestMapping("/delete")
-    public String deleteBoard(@RequestParam("boardId") int boardId, RedirectAttributes rttr) throws Exception {
-        boardServiceImpl.deleteBoard(boardId);
+    public String deleteBoard(@RequestParam("boardId") Long boardId, RedirectAttributes rttr) throws Exception {
+        boardService.deleteBoard(boardId);
         rttr.addFlashAttribute("msg", "delSuccess");
         return "redirect:/board/list";
     }

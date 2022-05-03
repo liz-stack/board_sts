@@ -18,22 +18,19 @@ import java.util.UUID;
 
 @Component
 public class FileUtils {
-    /**
-     * 오늘 날짜
-     */
-    private final String today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyMMdd"));
+    
+    //오늘 날짜
+    private String today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyMMdd"));
 
-    /**
-     * 업로드 경로
-     */
-    private final String uploadPath = Paths.get("C:", "Intellij", "upload", today).toString();
+    //업로드 경로
+    private String uploadPath = Paths.get("C:", "Intellij", "upload", today).toString();
 
     /**
      * 서버에 생성할 파일명을 처리할 랜덤 문자열 반환
      *
      * @return 랜덤 문자열
      */
-    private final String getRandomString() {
+    private String getRandomString() {
         return UUID.randomUUID().toString().replaceAll("-", "");
     }
 
@@ -44,7 +41,7 @@ public class FileUtils {
      * @param boardId - 게시글 번호
      * @return 업로드 파일 목록
      */
-    public List<fileVO> uploadFiles(MultipartFile[] files, int boardId) {
+    public List<fileVO> uploadFiles(MultipartFile[] files, Long boardId) {
 
         /* 파일이 비어있으면 비어있는 리스트 반환 */
         if (files[0].getSize() < 1) {

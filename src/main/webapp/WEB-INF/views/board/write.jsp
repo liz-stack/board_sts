@@ -98,9 +98,9 @@
         if(!checkAll()){
             return false;
         }
-        if(registerBoard()){
+       /* if(registerBoard()){
             return false;
-        }
+        }*/
         return  true;
     }
 

@@ -56,11 +56,11 @@ public class BoardServiceImpl implements BoardService {
 
     /*글 상세보기*/
     @Override
-    public BoardDTO getBoardDetail(int boardId) {
+    public BoardDTO getBoardDetail(Long boardId) {
         return boardMapper.getBoardDetail(boardId);
     }
     @Override
-    public int updateViewCount(int boardId) {    //조회수 증가
+    public boolean updateViewCount(Long boardId) {    //조회수 증가
         return boardMapper.updateViewCount(boardId);
     }
 
@@ -72,7 +72,7 @@ public class BoardServiceImpl implements BoardService {
 
     /* 글 삭제 */
     @Override
-    public void deleteBoard(int boardId) {
+    public void deleteBoard(Long boardId) {
         boardMapper.deleteBoard(boardId);
     }
 }

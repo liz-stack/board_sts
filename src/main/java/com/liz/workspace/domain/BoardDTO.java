@@ -10,7 +10,7 @@ import java.util.Date;
 @Data
 public class BoardDTO {
 
-    private int boardId;
+    private Long boardId;
 
     @NotBlank(message = "카테고리를 입력해주세요.")
     private String category;
@@ -32,5 +32,5 @@ public class BoardDTO {
 
     private Date createDate;
     private Date modifyDate;
-    private int viewCount;
+    private Long viewCount;
 }

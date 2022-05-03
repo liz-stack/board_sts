@@ -4,7 +4,7 @@
 
     <!-- BoardVO -->
     <resultMap id="boardList" type="BoardDTO">
-        <result column="board_no" property="boardNo"/>
+        <result column="board_id" property="boardId"/>
         <result column="category" property="category"/>
         <result column="user_name" property="userName"/>
         <result column="password" property="password"/>
@@ -16,8 +16,8 @@
     </resultMap>
 
     <!-- fileVO -->
-    <resultMap id="fileMap" type="FileVO">
-        <result column="file_no" property="fileNo"/>
+    <resultMap id="fileMap" type="fileVO">
+        <result column="file_id" property="fileId"/>
         <result column="origin_file_name" property="originFileName"/>
         <result column="modify_file_name" property="originFilePath"/>
         <result column="origin_file_path" property="modifyFileName"/>
@@ -25,61 +25,61 @@
 
     <!-- replyVO -->
     <resultMap id="replyMap" type="ReplyVO">
-        <result column="reply_no" property="replyNo"/>
+        <result column="reply_id" property="replyId"/>
         <result column="reply_content" property="replyContent"/>
         <result column="reply_date" property="replyDate"/>
     </resultMap>
 
     <!--TODO: 220420 resultMap_ board+collection => fileVo -->
     <!--<resultMap id="boardDetail" type="boardDetail" >
-        <collection column="board_no" property=""  resultMap="fileMap">
+        <collection column="board_id" property=""  resultMap="fileMap">
         </collection>
     </resultMap>&ndash;&gt;-->
 
-    <select id="findByBoardNo">
-        select * from board where board_no=1
+    <select id="findByBoardId">
+        select * from board where board_id=1
     </select>
 
     <!-- 총 게시글수 -->
     <select id="getBoardCount" resultType="int">
-        SELECT count(board_no) AS count
+        SELECT count(board_id) AS count
         FROM board
-        WHERE board_no > 0
+        WHERE board_id > 0
     </select>
 
     <!-- 게시판 목록 -->
     <!--   <select id="getBoardList" resultMap="boardList">
-           SELECT board_no, category, user_name, title, view_count, create_date, modify_date
+           SELECT board_id, category, user_name, title, view_count, create_date, modify_date
            FROM board
-           order by board_no desc
-           LIMIT #{pageNo}, #{pageAmount}
+           order by board_id desc
+           LIMIT #{page}, #{pageAmount}
        </select>
    -->
     <!-- 페이징 -->
     <select id="getBoardList" resultMap="boardList">
         <![CDATA[
-        SELECT board_no, category, user_name, title, view_count, create_date, modify_date
+        SELECT board_id, category, user_name, title, view_count, create_date, modify_date
         FROM board
-        where board_no > 0
-        order by board_no desc
+        where board_id > 0
+        order by board_id desc
         LIMIT #{startRow}, #{pageAmount}
         ]]>
     </select>
 
     <!-- 게시판 등록 -->
     <insert id="writeBoard" parameterType="boardDTO" useGeneratedKeys="true"
-            keyProperty="boardNo">
+            keyProperty="boardId">
         INSERT INTO board
-            (`board_no`, `category`, `user_name`, `password`, `title`, `content`, 'create_date')
-        VALUES (#{boardNo}, #{category}, #{userName}, #{password}, #{title}, #{content}, now())
-        <selectKey resultType="int" keyProperty="boardNo" order="AFTER">
+            (`board_id`, `category`, `user_name`, `password`, `title`, `content`, 'create_date')
+        VALUES (#{boardId}, #{category}, #{userName}, #{password}, #{title}, #{content}, now())
+        <selectKey resultType="int" keyProperty="boardId" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
     </insert>
 
     <!-- 게시판 상세보기 -->
     <select id="getBoardDetail" resultMap="boardList">
-        select board_no,
+        select board_id,
                user_name,
                create_date,
                modify_date,
@@ -88,14 +88,14 @@
                view_count,
                content
         from board
-        where board_no = #{boardNo}
+        where board_id = #{boardId}
     </select>
 
     <!-- 조회수 증가 -->
     <update id="updateViewCount" parameterType="int"><![CDATA[
         UPDATE board
         SET view_count = view_count + 1
-        WHERE board_no = #{boardNo}
+        WHERE board_id = #{boardId}
         ]]></update>
 
     <!-- 글 수정 -->
@@ -106,14 +106,14 @@
             title = #{title},
             content = #{content},
             modify_date = now()
-        WHERE board_no = #{boardNo}
+        WHERE board_id = #{boardId}
     ]]></update>
 
     <!--글 삭제-->
     <delete id="deleteBoard">
         DELETE
         FROM board
-        WHERE board_no = #{boardNo}
+        WHERE board_id = #{boardId}
     </delete>
 
 
@@ -121,7 +121,7 @@
     <!--<select id="">
         select * from
         ( select
-        row rn, board_no, user_name, title, view_count, create_date, modify_date
+        row rn, board_id, user_name, title, view_count, create_date, modify_date
         from board
         where
         (title like '%Test%' or content like '%Test%')

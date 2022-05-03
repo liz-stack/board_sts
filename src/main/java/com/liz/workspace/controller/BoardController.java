@@ -49,9 +49,9 @@ public class BoardController {
     }
 
     @PostMapping("/write")
-    public String writeBoard(@RequestParam("boardNo") int boardNo, @Valid BoardDTO boardDTO, Model model, MultipartFile[] files, RedirectAttributes rttr, BindingResult bindingResult) {
-        //@RequestParam("boardNo")int boardNo 사용시 MethodArgumentTypeMismatchException ERROR
-        model.addAttribute(boardDTO.getBoardNo());
+    public String writeBoard(@RequestParam("boardId") int boardId, @Valid BoardDTO boardDTO, Model model, MultipartFile[] files, RedirectAttributes rttr, BindingResult bindingResult) {
+        //@RequestParam("boardId")int boardId 사용시 MethodArgumentTypeMismatchException ERROR
+        model.addAttribute(boardDTO.getBoardId());
         if (bindingResult.hasErrors()) { //에러 존재하는지 확인하고 처리
             List<ObjectError> list = bindingResult.getAllErrors();
             //에러 리스트
@@ -64,7 +64,7 @@ public class BoardController {
 
         model.addAttribute(boardDTO);
         model.addAttribute(files);
-        log.info("boardNo" + boardDTO.getBoardNo());
+        log.info("boardId" + boardDTO.getBoardId());
         //rttr.addFlashAttribute("msg", "regSuccess"); //게시글 등록 후 임시데이터(그 순간만)를 전송
         return "redirect:/board/list";
     }
@@ -72,43 +72,43 @@ public class BoardController {
 
     /* 글 상세보기 */
     @RequestMapping("/view")
-    public ModelAndView getBoardDetail(@RequestParam("boardNo") int boardNo) throws Exception {
+    public ModelAndView getBoardDetail(@RequestParam("boardId") int boardId) throws Exception {
         //TODO: 220425 새로고침해도 조회수 올라가지 않게 수정
-        boardServiceImpl.updateViewCount(boardNo); //boardNo 넘김
+        boardServiceImpl.updateViewCount(boardId); //boardId 넘김
         ModelAndView mav = new ModelAndView();
-        //  mav.addObject("updateViewCount", boardServiceImpl.updateViewCount(boardNo));
+        //  mav.addObject("updateViewCount", boardServiceImpl.updateViewCount(boardId));
         //  log.error("조회수: "+ boardVO.getViewCount());
         mav.setViewName("/board/view");
-        mav.addObject("boardDetail", boardServiceImpl.getBoardDetail(boardNo));
+        mav.addObject("boardDetail", boardServiceImpl.getBoardDetail(boardId));
         return mav;
     }
 
 
     /* 글 수정 */
     @GetMapping("/modify")
-    public String editForm(@RequestParam(value = "boardNo") int boardNo, Model model) throws Exception {
+    public String editForm(@RequestParam(value = "boardId") int boardId, Model model) throws Exception {
         /*ModelAndView mav = new ModelAndView();
         mav.setViewName("/board/modify");
-        mav.addObject("", boardServiceImpl.getBoardDetail(boardNo));
+        mav.addObject("", boardServiceImpl.getBoardDetail(boardId));
         return mav;*/
-        model.addAttribute("boardDetail", boardServiceImpl.getBoardDetail(boardNo));
+        model.addAttribute("boardDetail", boardServiceImpl.getBoardDetail(boardId));
         return "/board/modify";
     }
 
     //TODO: 220426 수정시 리턴화면 목록-> 해당글 상세보기 화면으로
     @PostMapping("/modify")
     public String editBoard(BoardDTO boardDTO, RedirectAttributes rttr) throws Exception { //c.f. @PathVariable : url에 있는 정보를 긁어오고 싶은 경우
-        log.info("수정처리!" + boardDTO.getBoardNo());
+        log.info("수정처리!" + boardDTO.getBoardId());
         boardServiceImpl.editBoard(boardDTO);
         rttr.addFlashAttribute("msg", "modSuccess");
-        int boardNo = boardDTO.getBoardNo();
-        return "redirect:/board/view?boardNo=" + boardNo;
+        int boardId = boardDTO.getBoardId();
+        return "redirect:/board/view?boardId=" + boardId;
     }
 
     /* 글 삭제 */
     @RequestMapping("/delete")
-    public String deleteBoard(@RequestParam("boardNo") int boardNo, RedirectAttributes rttr) throws Exception {
-        boardServiceImpl.deleteBoard(boardNo);
+    public String deleteBoard(@RequestParam("boardId") int boardId, RedirectAttributes rttr) throws Exception {
+        boardServiceImpl.deleteBoard(boardId);
         rttr.addFlashAttribute("msg", "delSuccess");
         return "redirect:/board/list";
     }

@@ -58,7 +58,7 @@
             </button>
             <button class="btn btn-secondary" type="submit" id="modifyWrite modBtn">저장</button>
         </form>
-        <input type="hidden" name="boardNo" value="${boardDetail.boardNo}" >
+        <input type="hidden" name="boardId" value="${boardDetail.boardId}" >
 
     </div>
 </section>

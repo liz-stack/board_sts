@@ -1,22 +1,21 @@
 package com.liz.workspace.mapper;
 
-import com.liz.workspace.domain.FileVO;
+import com.liz.workspace.domain.fileVO;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Mapper
 public interface FileMapper {
 
-    int insertFile(List<FileVO> fileList);
-    FileVO selectFile(int fileNo);
-    List<FileVO> selectFileList(int boardNo);
-    int deleteFile(int boardNo);
+    int insertFile(List<fileVO> fileList);
+    fileVO selectFile(int fileId);
+    List<fileVO> selectFileList(int boardId);
+    int deleteFile(int boardId);
 
-    //List<FileVO> selectFileList(int boardNo);
+    //List<FileVO> selectFileList(int boardId);
 
-    //int FileTotalCount(int boardNo);
+    //int FileTotalCount(int boardId);
 
 
 }

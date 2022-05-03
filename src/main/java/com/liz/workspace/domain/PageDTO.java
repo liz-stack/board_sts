@@ -19,7 +19,7 @@ public class PageDTO {
         this.cri = cri;
         this.totalCount = totalCount;
 
-        endPage = (int) Math.ceil((double) cri.getPageNo() / PAGE_BLOCK) * PAGE_BLOCK;
+        endPage = (int) Math.ceil((double) cri.getPage() / PAGE_BLOCK) * PAGE_BLOCK;
 
         startPage = endPage - (PAGE_BLOCK - 1);
 

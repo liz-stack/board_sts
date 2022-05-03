@@ -15,7 +15,7 @@
             <%--form id: input 요소가 포함될 form 요소를 명시함--%>
             <form class="form-horizontal" value=${BoardDTO} method="post" action="${path}/board/write"
                   onsubmit="return writeBoard()"> <%--return !!( registerBoard() & checkAll())"--%>
-                <input type="hidden" class="form-control" id="boardNo" name="boardNo">
+                <input type="hidden" class="form-control" id="boardId" name="boardId">
                 <div class="form-group row">
                     <label class="col-sm-2 col-xs-12 col-form-label" for="category">카테고리 선택</label>
                     <div class="col-sm-3 col-xs-12">
@@ -104,14 +104,13 @@
         return  true;
     }
 
-    console.log(boardNo);
     var category = document.getElementById("category");
     var userName = document.getElementById("userName");
     var password = document.getElementById("password");
     var verifyPassword = document.getElementById("verifyPassword");
     var title = document.getElementById("title");
     var content = document.getElementById("content");
-    var boardNo = document.getElementById("boardNo");
+    var boardId = document.getElementById("boardId");
     let userNameChk = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]{3,5}$/;
     let passwordChk = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{4,16}$/; //비밀번호 유효성 검사
 
@@ -229,7 +228,7 @@
                 alert('파일은 최대 세 개까지 업로드 할 수 있습니다.');
                 return false;
             }
-            console.log(boardNo);
+            console.log(boardId);
             fileIdx++;
 
             const fileHtml = `

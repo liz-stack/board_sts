@@ -17,13 +17,13 @@ public interface BoardService {
     void writeBoard(BoardDTO boardDTO, MultipartFile[] files);
 
     /* 글 상세보기 */
-    BoardDTO getBoardDetail(int boardNo);
-    int updateViewCount(int boardNo);
+    BoardDTO getBoardDetail(int boardId);
+    int updateViewCount(int boardId);
 
     /* 글 수정 */
     void editBoard(BoardDTO boardDTO);
 
     /* 글 삭제 */
-    void deleteBoard(int boardNo);
+    void deleteBoard(int boardId);
 
 }

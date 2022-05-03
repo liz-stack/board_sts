@@ -1,6 +1,6 @@
 package com.liz.workspace.util;
 
-import com.liz.workspace.domain.FileVO;
+import com.liz.workspace.domain.fileVO;
 import com.liz.workspace.exception.FileException;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Component;
@@ -41,10 +41,10 @@ public class FileUtils {
      * 서버에 첨부 파일을 생성하고, 업로드 파일 목록 반환
      *
      * @param files    - 파일 Array
-     * @param boardNo - 게시글 번호
+     * @param boardId - 게시글 번호
      * @return 업로드 파일 목록
      */
-    public List<FileVO> uploadFiles(MultipartFile[] files, int boardNo) {
+    public List<fileVO> uploadFiles(MultipartFile[] files, int boardId) {
 
         /* 파일이 비어있으면 비어있는 리스트 반환 */
         if (files[0].getSize() < 1) {
@@ -52,7 +52,7 @@ public class FileUtils {
         }
 
         /* 업로드 파일 정보를 담을 비어있는 리스트 */
-        List<FileVO> fileList = new ArrayList<>();
+        List<fileVO> fileList = new ArrayList<>();
 
         /* uploadPath에 해당하는 디렉터리가 존재하지 않으면, 부모 디렉터리를 포함한 모든 디렉터리를 생성 */
         File dir = new File(uploadPath);
@@ -73,8 +73,8 @@ public class FileUtils {
                 file.transferTo(target);
 
                 /* 파일 정보 저장 */
-                FileVO fileVO = new FileVO();
-                fileVO.setBoardNo(boardNo);
+                fileVO fileVO = new fileVO();
+                fileVO.setBoardId(boardId);
                 fileVO.setOriginFileName(file.getOriginalFilename());
                 fileVO.setModifyFileName(modifyFileName);
                 fileVO.setOriginFilePath(uploadPath);

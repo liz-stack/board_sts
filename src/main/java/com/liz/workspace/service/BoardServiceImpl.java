@@ -2,17 +2,14 @@ package com.liz.workspace.service;
 
 import com.liz.workspace.domain.BoardDTO;
 import com.liz.workspace.domain.Criteria;
-import com.liz.workspace.domain.FileVO;
+import com.liz.workspace.domain.fileVO;
 import com.liz.workspace.mapper.BoardMapper;
 import com.liz.workspace.mapper.FileMapper;
 import com.liz.workspace.util.FileUtils;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -38,7 +35,7 @@ public class BoardServiceImpl implements BoardService {
     //페이징 출력
     @Override
     public List<BoardDTO> getBoardList(Criteria cri) {
-        int startRow = (cri.getPageNo() - 1) * cri.getPageAmount();
+        int startRow = (cri.getPage() - 1) * cri.getPageAmount();
         cri.setStartRow(startRow);
         return boardMapper.getBoardList(cri);
     }
@@ -52,19 +49,19 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public void writeBoard( BoardDTO boardDTO, MultipartFile[] files) {
-        List<FileVO> fileList = fileUtils.uploadFiles(files, boardDTO.getBoardNo());
-        log.info("boardNo: "+boardDTO.getBoardNo());
+        List<fileVO> fileList = fileUtils.uploadFiles(files, boardDTO.getBoardId());
+        log.info("boardId: "+boardDTO.getBoardId());
         fileMapper.insertFile(fileList);
     }
 
     /*글 상세보기*/
     @Override
-    public BoardDTO getBoardDetail(int boardNo) {
-        return boardMapper.getBoardDetail(boardNo);
+    public BoardDTO getBoardDetail(int boardId) {
+        return boardMapper.getBoardDetail(boardId);
     }
     @Override
-    public int updateViewCount(int boardNo) {    //조회수 증가
-        return boardMapper.updateViewCount(boardNo);
+    public int updateViewCount(int boardId) {    //조회수 증가
+        return boardMapper.updateViewCount(boardId);
     }
 
     /* 글 수정 */
@@ -75,7 +72,7 @@ public class BoardServiceImpl implements BoardService {
 
     /* 글 삭제 */
     @Override
-    public void deleteBoard(int boardNo) {
-        boardMapper.deleteBoard(boardNo);
+    public void deleteBoard(int boardId) {
+        boardMapper.deleteBoard(boardId);
     }
 }

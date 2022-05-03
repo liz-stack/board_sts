@@ -10,7 +10,7 @@ import java.util.Date;
 @Data
 public class BoardDTO {
 
-    private int boardNo;
+    private int boardId;
 
     @NotBlank(message = "카테고리를 입력해주세요.")
     private String category;

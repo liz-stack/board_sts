@@ -4,26 +4,26 @@
 
     <!--파일 업로드-->
     <insert id="insertFile" parameterType="list">
-        INSERT INTO file (file_no, origin_file_name, modify_file_name, origin_file_path, file_size, board_no, create_date )
+        INSERT INTO file (file_id, origin_file_name, modify_file_name, origin_file_path, file_size, board_id, create_date )
         VALUES
         <foreach collection="list" item="item" separator=",">
-        (#{item.fileNo}, #{item.originFileName}, #{item.modifyFileName}, #{item.originFilePath}, #{item.fileSize}, #{item.boardNo}, NOW() )
+        (#{item.fileId}, #{item.originFileName}, #{item.modifyFileName}, #{item.originFilePath}, #{item.fileSize}, #{item.boardId}, NOW() )
         </foreach>
     </insert>
 
 
     <!--파일 불러오기-->
     <select id="selectFile" parameterType="int" resultType="fileVO">
-        SELECT file_no, origin_file_name, modify_file_name, origin_file_path
+        SELECT file_id, origin_file_name, modify_file_name, origin_file_path
         FROM file
-        WHERE file_no = #{fileNo}
+        WHERE file_id = #{fileId}
     </select>
 
     <!--게시글 파일 목록 불러오기 -->
     <select id="selectFileList" parameterType="int" resultType="fileVO">
-        SELECT file_no, origin_file_name, modify_file_name, origin_file_path
+        SELECT file_id, origin_file_name, modify_file_name, origin_file_path
         FROM file
-        WHERE board_no = #{boardNo}
+        WHERE board_id = #{boardId}
     </select>
 
 
@@ -31,7 +31,7 @@
     <delete id="deleteFile">
         DELETE
         FROM file
-        WHERE board_no = #{boardNo}
+        WHERE board_id = #{boardId}
     </delete>
 
 </mapper>

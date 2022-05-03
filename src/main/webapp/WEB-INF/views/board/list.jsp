@@ -126,7 +126,7 @@
 
                         <td><c:out value="${board.category}"/></td>
                         <td style=" white-space:nowrap; overflow:hidden; text-overflow: ellipsis;"><a class='move'
-                                                                                                      href='<c:out value="/board/view?boardNo=${board.boardNo}"/>'>
+                                                                                                      href='<c:out value="/board/view?boardId=${board.boardId}"/>'>
                             <c:out
                                     value="${board.title}"/></a></td>
                         <td><c:out value="${board.userName}"/></td>
@@ -146,30 +146,30 @@
         <nav aria-label="Contacts Page Navigation">
             <ul class="pagination justify-content-center">
                 <li class="page-item"><a class="page-link"
-                                         href="/board/list?pageNo=1">&laquo; </a></li>
+                                         href="/board/list?page=1">&laquo; </a></li>
                 <c:if test="${ pageMaker.prev eq true }">
                     <li class="page-item"><a class="page-link"
-                                             href="/board/list?pageNo=${ pageMaker.startPage - 1 }">&lsaquo;</a></li>
+                                             href="/board/list?page=${ pageMaker.startPage - 1 }">&lsaquo;</a></li>
                 </c:if>
                 <c:forEach var="idx" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
                     <%--현재 페이지 표시--%>
-                    <li class="page-item"  <c:out value="${pageMaker.cri.pageNo == idx ? 'class=active' : ''}"/> >
+                    <li class="page-item"  <c:out value="${pageMaker.cri.page == idx ? 'class=active' : ''}"/> >
                         <a class="page-link"
-                           href="/board/list?pageNo=${idx}&type=${ pageMaker.cri.type }&keyword=${ pageMaker.cri.keyword }">${ idx }</a>
+                           href="/board/list?page=${idx}&type=${ pageMaker.cri.type }&keyword=${ pageMaker.cri.keyword }">${ idx }</a>
                     </li>
                 </c:forEach>
                 <c:if test="${ pageMaker.next eq true }">
                     <li class="page-item"><a class="page-link"
-                                             href="/board/list?pageNo=${ pageMaker.endPage + 1}">&rsaquo; </a></li>
+                                             href="/board/list?page=${ pageMaker.endPage + 1}">&rsaquo; </a></li>
                 </c:if>
                 <%--TODO: 220422 endPage의 총 개수? 조건추가해야--%>
                 <li class="page-item"><a class="page-link"
-                                         href="/board/list?pageNo=${ pageMaker.totalPage}">&raquo; </a></li>
+                                         href="/board/list?page=${ pageMaker.totalPage}">&raquo; </a></li>
             </ul>
         </nav>
 
         <form id='actionForm' action="/board/list" method="get">
-            <input type="hidden" name="pageNo" value="${pageMaker.cri.pageNo}">
+            <input type="hidden" name="page" value="${pageMaker.cri.page}">
             <input type="hidden" name="pageAmount" value="${pageMaker.cri.pageAmount}">
         </form>
 

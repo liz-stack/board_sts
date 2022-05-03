@@ -103,7 +103,7 @@
 
     <div class="boxFooter" style="display: flex; justify-content: center;">
         <form role="form" method="post">
-            <input type="hidden" name="boardNo" value="${boardDetail.boardNo}">
+            <input type="hidden" name="boardId" value="${boardDetail.boardId}">
         </form>
         <button type="submit" class="btn btn-dark mt-3 listBtn">목록</button>
         <%--href="/board/list"--%>

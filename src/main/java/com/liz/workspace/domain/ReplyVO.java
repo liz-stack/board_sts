@@ -13,8 +13,8 @@ import java.util.Date;
 @Setter
 @Getter
 public class ReplyVO {
-    private int replyNo;
+    private int replyId;
     private String replyContent;
     private Date replyDate;
-    private int boardNo;
+    private int boardId;
 }

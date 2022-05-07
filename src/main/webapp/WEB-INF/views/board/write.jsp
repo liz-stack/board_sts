@@ -13,9 +13,8 @@
         <section class="page-section" id="contact">
             <!-- Contact Section Form-->
             <%--form id: input 요소가 포함될 form 요소를 명시함--%>
-            <form class="form-horizontal" value=${BoardDTO} method="post" action="${path}/board/write"
-                  onsubmit="return writeBoard()"> <%--return !!( registerBoard() & checkAll())"--%>
-                <input type="hidden" class="form-control" id="boardId" name="boardId">
+            <form class="form-horizontal" method="post" action="${path}/board/write"
+                  onsubmit="return writeBoard()" enctype="multipart/form-data"> <%--return !!( registerBoard() & checkAll())"--%>
                 <div class="form-group row">
                     <label class="col-sm-2 col-xs-12 col-form-label" for="category">카테고리 선택</label>
                     <div class="col-sm-3 col-xs-12">
@@ -84,25 +83,16 @@
                        style="float: right">
             </form>
         </section>
-    </div> <%--container end--%>
+    </div>
+    <%--container end--%>
 
 </div><%--contentContainer end--%>
-
 
 
 </div>
 </div>
 <%@ include file="../layout/footer.jsp" %>
 <script>
-    function writeBoard(){
-        if(!checkAll()){
-            return false;
-        }
-       /* if(registerBoard()){
-            return false;
-        }*/
-        return  true;
-    }
 
     var category = document.getElementById("category");
     var userName = document.getElementById("userName");
@@ -114,6 +104,16 @@
     let userNameChk = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]{3,5}$/;
     let passwordChk = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{4,16}$/; //비밀번호 유효성 검사
 
+
+    function writeBoard() {
+        if (!checkAll()) {
+            return false;
+        }
+        /* if(registerBoard()){
+             return false;
+         }*/
+        return true;
+    }
 
     function checkAll() {
         if (!checkUserName(userName.value)) {
@@ -218,8 +218,9 @@
         return true; //확인이 완료되었을 때
     }
 
-    function registerBoard() {
-        let fileIdx = 0; /*[- 파일 인덱스 처리용 전역 변수 -]*/
+
+    /*function registerBoard() {
+        let fileIdx = 0; /!*[- 파일 인덱스 처리용 전역 변수 -]*!/
 
         function addFile() {
 
@@ -270,12 +271,7 @@
             const filename = file[0].files[0].name;
             const target = file.prevAll('input');
             target.val(filename);
-        }
-    }
+        }  }*/
+  
 </script>
-<script>
-
-
-</script>
-
 

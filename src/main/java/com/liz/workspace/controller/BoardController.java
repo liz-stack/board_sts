@@ -71,9 +71,8 @@ public class BoardController {
      * @return
      */
     @PostMapping("/write")
-    public String writeBoard(@RequestParam("boardId") Long boardId, @Valid BoardDTO boardDTO, Model model, MultipartFile[] files, BindingResult bindingResult) {
+    public String writeBoard(@Valid BoardDTO boardDTO, Model model, MultipartFile[] files, BindingResult bindingResult) {
         //@RequestParam("boardId")Long boardId 사용시 MethodArgumentTypeMismatchException ERROR
-        model.addAttribute(boardDTO.getBoardId());
         if (bindingResult.hasErrors()) { //에러 존재하는지 확인하고 처리
             List<ObjectError> list = bindingResult.getAllErrors();
             //에러 리스트
@@ -83,9 +82,9 @@ public class BoardController {
             return "/board/list";
         }
         model.addAttribute(boardDTO);
-        model.addAttribute(files);
+        //model.addAttribute(files);
         //rttr.addFlashAttribute("msg", "regSuccess"); //게시글 등록 후 임시데이터(그 순간만)를 전송
-        return "redirect:/board/list";
+        return "/board/list";
     }
 
 

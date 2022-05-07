@@ -70,11 +70,8 @@
     <insert id="writeBoard" parameterType="boardDTO" useGeneratedKeys="true"
             keyProperty="boardId">
         INSERT INTO board
-            (`board_id`, `category`, `user_name`, `password`, `title`, `content`, 'create_date')
-        VALUES (#{boardId}, #{category}, #{userName}, #{password}, #{title}, #{content}, now())
-        <selectKey resultType="int" keyProperty="boardId" order="AFTER">
-            SELECT LAST_INSERT_ID()
-        </selectKey>
+            (`board_id`, `category`, `user_name`, `password`, `title`, `content`)
+        VALUES (#{boardId}, #{category}, #{userName}, #{password}, #{title}, #{content})
     </insert>
 
     <!-- 게시판 상세보기 -->

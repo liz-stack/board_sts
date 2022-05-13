@@ -38,8 +38,8 @@ public class BoardController {
      * @throws Exception
      */
     @GetMapping("/list")
-    public String getBoardList(Criteria cri, Model model) throws Exception {
-        List<BoardDTO> boardList = boardService.getBoardList(cri);
+    public String getBoardListCri(Criteria cri, Model model) throws Exception {
+        List<BoardDTO> boardList = boardService.getBoardListCri(cri);
         int boardCount = boardService.getBoardCount(cri);
 
         PageDTO pageMaker = new PageDTO(cri, boardCount);

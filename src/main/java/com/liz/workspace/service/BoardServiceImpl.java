@@ -34,12 +34,16 @@ public class BoardServiceImpl implements BoardService {
 
     //페이징 출력
     @Override
-    public List<BoardDTO> getBoardList(Criteria cri) {
+    public List<BoardDTO> getBoardListCri(Criteria cri) {
         int startRow = (cri.getPage() - 1) * cri.getPageAmount();
         cri.setStartRow(startRow);
-        return boardMapper.getBoardList(cri);
+        return boardMapper.getBoardListCri(cri);
     }
 
+    @Override
+    public List<BoardDTO> getBoardList() {
+        return boardMapper.getBoardList();
+    }
 
     /* 글 작성 */
     @Override

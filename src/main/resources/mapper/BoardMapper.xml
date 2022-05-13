@@ -48,15 +48,21 @@
     </select>
 
     <!-- 게시판 목록 -->
-    <!--   <select id="getBoardList" resultMap="boardList">
+     <select id="getBoardList" resultMap="boardMap">
            SELECT board_id, category, user_name, title, view_count, create_date, modify_date
            FROM board
            order by board_id desc
-           LIMIT #{page}, #{pageAmount}
        </select>
-   -->
+
+    <!-- 검색옵션 -->
+    <!-- <where>
+         <if test="type == 'title'.toString()">subject LIKE CONCAT('%', #{keyword}, '%') </if>
+         <if test="type == 'content'.toString()">content LIKE CONCAT('%', #{keyword}, '%') </if>
+         <if test="type == 'userName'.toString()">userName LIKE CONCAT('%', #{keyword}, '%') </if>
+        </where>-->
+
     <!-- 페이징 -->
-    <select id="getBoardList" resultMap="boardMap">
+    <select id="getBoardListCri" resultMap="boardMap">
         <![CDATA[
         SELECT board_id, category, user_name, title, view_count, create_date, modify_date
         FROM board

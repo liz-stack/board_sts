@@ -10,7 +10,8 @@ import java.util.List;
 public interface BoardMapper {
 
     int getBoardCount(Criteria cri);
-    List<BoardDTO> getBoardList(Criteria cri);
+    List<BoardDTO> getBoardListCri(Criteria cri);
+    List<BoardDTO> getBoardList();
     void writeBoard(BoardDTO boardDTO);
 
     BoardDTO getBoardDetail(Long boardId);

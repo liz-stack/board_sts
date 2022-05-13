@@ -9,8 +9,8 @@ public class Criteria { //Criteria : 검색 기준, 분류 기준
 
     private int startRow; // 가져올 글의 시작 행번호
 
-    private String type = ""; //검색 유형
-    private String keyword = ""; //검색어
+   /* private String searchType = ""; //검색 유형
+    private String keyword = ""; //검색어*/
 
 
     public Criteria() {

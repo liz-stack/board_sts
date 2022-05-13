@@ -10,7 +10,9 @@ public interface BoardService {
 
     /* 글 목록 */
     int getBoardCount(Criteria cri);
-    List<BoardDTO> getBoardList(Criteria cri);
+
+    List<BoardDTO> getBoardListCri(Criteria cri);
+    List<BoardDTO> getBoardList();
 
     /* 글 작성 */
     void writeBoard(BoardDTO boardDTO);
